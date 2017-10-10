@@ -197,6 +197,7 @@ public class BluetoothService {
                 return;
             r = mConnectedThread;
         }
+        r.write(out);
     }
 
     private void connectionFailed() {
@@ -382,8 +383,13 @@ public class BluetoothService {
         {
             try
             {
+                String a = String.valueOf(buffer.length);
+                Log.e("Bluetooth Check 2 " , a);
                 mmOutStream.write(buffer);
-                mHandler.obtainMessage(3, -1, -1, buffer).sendToTarget();
+
+                mHandler.obtainMessage(BluetoothPlugin.MESSAGE_WRITE, -1, -1, buffer)
+                        .sendToTarget();
+
             } catch (IOException e) {
                 Log.e("BluetoothService", "Exception during write", e);
             }

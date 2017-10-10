@@ -340,6 +340,7 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
         if (message.length() > 0) {
             byte[] send = message.getBytes();
+            Log.e("Bluetooth Check " , message);
             mBtService.write(send);
             mOutStringBuffer.setLength(0);
         }
