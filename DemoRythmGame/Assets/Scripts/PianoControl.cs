@@ -18,9 +18,10 @@ public class PianoControl : MonoBehaviour {
 	public bool move; //move when practice mode
 	public bool Play; //play mode
 	public bool Practice; 
-
+	public bool Reset; //reset piano
 
 	//seperate two kind of mode and partial repeat move (using sequence) 
+
 	private Vector3 _location;
 
 	// Use this for initialization
@@ -36,10 +37,13 @@ public class PianoControl : MonoBehaviour {
 		speed = 0;
 	
 		currentSquence = CurrentObject.GetComponent<GameTime> ();
+		transform.position = new Vector3 (0, 0, 0);
 		pitch = "";
 
-		move = false;
+		Reset = false;
+		InitSetMode (2);
 
+		move = false;
 		androidSetting ();
 		StartCoroutine ("PlayPiano");
 	}
@@ -48,7 +52,6 @@ public class PianoControl : MonoBehaviour {
 	void Update () {
 		KeyInput ();
 		SelectMode ();
-		//movePiano();
 		EndCheck (); 
 	}
 
@@ -162,6 +165,7 @@ public class PianoControl : MonoBehaviour {
 		NodeCheck ();
 	}
 
+
 	void NodeCheck(){
 		
 		if (pitch != "") {
@@ -171,13 +175,46 @@ public class PianoControl : MonoBehaviour {
 
 	void NodeRest(){
 		if (RestCheck()) {
-			_location = transform.position;
+			Debug.Log ("Rest! ");
+			StartCoroutine ("SetRestPosition");
 			move = true;
+			StartCoroutine ("MovePiano");
 		}
+	}
+
+	void InitSetMode(int num){
+
+		switch (num) {
+
+		case 1: 
+			Debug.Log ("Play Mode");
+			Play = true;
+			Practice = false;
+			break;
+
+		case 2:
+			Debug.Log ("Practice Mode");
+			Play = false;
+			Practice = true;
+			break;
+		}
+
 	}
 
 	void SelectMode(){
 
+		PlayMode ();
+		ResetMode ();
+	
+	}
+
+	void LoadVelocity(){
+		speed = Metronume.gameObject.GetComponent<Metronume> ().Velocity;
+
+	}
+
+	void PlayMode(){
+		
 		if (Practice) {
 			Play = false;
 
@@ -186,47 +223,18 @@ public class PianoControl : MonoBehaviour {
 
 		} else if (Play) {
 			Practice = false;
-
 			movePiano ();
 		} 
 
 	}
 
-	void LoadVelocity(){
-		speed = Metronume.gameObject.GetComponent<Metronume> ().Velocity;
-
-	}
-
-
-	IEnumerator MovePiano(){
-
-		if (transform.position.y >= _location.y + duration - 0.2f) {
-			move = false;
-		} else {
-			transform.Translate (Vector3.up * Time.deltaTime * speed);
+	void ResetMode(){
+		if (Reset) {
+			StartCoroutine ("ResetPiano");
 		}
-		yield return new WaitForSeconds (1);
 	}
 
-	IEnumerator SearchSequence(int num){
 
-		string tag = "Note";
-
-		GameObject[] find = GameObject.FindGameObjectsWithTag (tag);
-
-		if (!NoteTagObjectFind (find, num)) {
-			tag = "Rest";
-
-			find = GameObject.FindGameObjectsWithTag (tag);
-			NoteTagObjectFind (find, num);
-		} 
-
-		Sequence = (num - 1) ; //modifiy now location sequence
-		Debug.Log(Sequence);
-		transform.position = new Vector3 (transform.position.x, (transform.position.y + (Target_Sequence - 1.8f)), transform.position.z);
-
-		yield return null;
-	}
 
 	/*
 	IEnumerator DeleteBeforeNote (int num){
@@ -269,7 +277,54 @@ public class PianoControl : MonoBehaviour {
 			Screen.sleepTimeout = SleepTimeout.NeverSleep;
 		} //set android landscape mode
 	}
+		
 
+	IEnumerator SetRestPosition(){
+		_location = transform.position;
+
+		Debug.Log ("Position : " + _location.y);
+
+		yield return null;
+	}
+
+	IEnumerator ResetPiano(){
+	
+		Debug.Log ("Reset Piano position");
+		InitDevice ();
+
+		yield return new WaitForSeconds (3);
+	}
+
+	IEnumerator MovePiano(){
+
+		if (transform.position.y >= _location.y + duration - 0.2f) {
+			move = false;
+		} else {
+			transform.Translate (Vector3.up * Time.deltaTime * speed);
+		}
+
+		yield return new WaitForSeconds (1);
+	}
+
+	IEnumerator SearchSequence(int num){
+
+		string tag = "Note";
+
+		GameObject[] find = GameObject.FindGameObjectsWithTag (tag);
+
+		if (!NoteTagObjectFind (find, num)) {
+			tag = "Rest";
+
+			find = GameObject.FindGameObjectsWithTag (tag);
+			NoteTagObjectFind (find, num);
+		} 
+
+		Sequence = (num - 1) ; //modifiy now location sequence
+		Debug.Log(Sequence);
+		transform.position = new Vector3 (transform.position.x, (transform.position.y + (Target_Sequence - 1.8f)), transform.position.z);
+
+		yield return null;
+	}
 	IEnumerator PlayPiano(){
 		yield return new WaitForSeconds (1);
 		LoadVelocity (); 
