@@ -23,7 +23,7 @@ public class Metronume : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
-		StartCoroutine("Init");
+	//	StartCoroutine("Init");
 	}
 
 	void Start () {
@@ -56,7 +56,7 @@ public class Metronume : MonoBehaviour {
 		StopCoroutine("DoTick");
 	}
 
-
+	/*
 
 	IEnumerator Init(){
 
@@ -72,7 +72,7 @@ public class Metronume : MonoBehaviour {
 
 		yield return null;
 	}
-
+*/
 	IEnumerator DoTick()
 	{
 		for (; ; )

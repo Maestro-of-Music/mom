@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class PianoControl : MonoBehaviour {
 
 	public int Sequence;
-	private float Target_Sequence; //height 
 
 	public GameObject Metronume;
-	public GameObject CurrentObject;
+	public GameObject GameManager;
 	public GameTime currentSquence;
 	public Text Score;
 
-
+	public int Mode;
 	public string pitch; 
 	public string Target_pitch;
 	public int duration; 
@@ -23,14 +22,16 @@ public class PianoControl : MonoBehaviour {
 	public bool Play; //play mode
 	public bool Practice; 
 	public bool Reset; //reset piano
+	public bool Repeat;
 
 	public bool Scorechange;
+
+	public int Repeat_Count; 
 
 	//seperate two kind of mode and partial repeat move (using sequence) 
 
 	private Vector3 _location;
 
-	// Use this for initialization
 	void Start () {
 		InitDevice ();
 	}
@@ -41,28 +42,35 @@ public class PianoControl : MonoBehaviour {
 		
 		Sequence = 0; 
 		speed = 0;
+		Repeat_Count = 0;
+		gameObject.GetComponent<ScoreManager> ().InitScore ();
 
-		currentSquence = CurrentObject.GetComponent<GameTime> ();
-		transform.position = new Vector3 (0, 0, 0);
+		currentSquence = GameManager.GetComponent<GameTime> ();
+		InitPosition ();
 		pitch = "";
-		Scorechange = true;
-		Reset = false;
-		InitSetMode (2);
 
+		Reset = false;
+		Repeat = false;
 		move = false;
+
+		InitSetMode (Mode); 
+
 		androidSetting ();
 		StartCoroutine ("PlayPiano");
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		NodeCheck ();  //IOManager send Data
 		SelectMode ();
+		NodeCheck ();  //IOManager send Data 
 		EndCheck (); 
 	}
 
-	void LoadVelocity(){
-		speed = Metronume.gameObject.GetComponent<Metronume> ().Velocity;
+	public void InitPosition(){
+		transform.position = new Vector3 (0, 0, 0);
+	}
+
+	public void LoadVelocity(){
+		speed = GameManager.gameObject.GetComponent<GameTime> ().Velocity;
 	}
 
 
@@ -77,11 +85,16 @@ public class PianoControl : MonoBehaviour {
 		if (Target_pitch == pitch) {
 			_location = transform.position; 
 
-			StartCoroutine ("ScoreManager");
-
 			//check point which calculate score
-
+			if (Practice)
+				StartCoroutine ("ScoreManager");
+			else if (Play) {
+				Scorechange = true;
+				StartCoroutine ("ScoreManager");
+				Scorechange = false;
+			}
 			move = true;
+
 		}
 
 		else {
@@ -100,33 +113,45 @@ public class PianoControl : MonoBehaviour {
 	}
 
 	void EndCheck(){
-		
-		if (Sequence >= CurrentObject.gameObject.GetComponent<LoadData> ().notedatas.Length) {
-			speed = 0.0f;
-			move = false;
-		} 
+
+		if (Play == true || Practice == true) {
+			if (Sequence >= GameManager.gameObject.GetComponent<LoadData> ().notedatas.Length) {
+				speed = 0.0f;
+				move = false;
+			}
+		}
+		else if (Repeat) {
+			if (Repeat_Count < gameObject.GetComponent<RepeatControl> ().count) {
+				if (transform.position.y >= gameObject.GetComponent<RepeatControl> ().Last_position.y) {
+					Repeat_Count++;
+					gameObject.GetComponent<RepeatControl> ().Reset_Sequence ();
+				}
+			} 
+			else {
+				Debug.Log ("Repeat End!");
+				gameObject.GetComponent<RepeatControl> ().Repeat_start = false;
+			}
+		}
+	
 	}
 
 	void MoveCheck (){
 
 		if (move) {
 			//restore now location and compare future location
-			//MovePiano (_location);
-			//pitch = null;
-
 			StartCoroutine("MovePiano");
+			
 		} else {
 			PositionCheck ();
-			//pitch = null;
-			Scorechange = true;
-			//check this part!!
+			if (Mode == 2) { //when practice mode is opened
+				Scorechange = true;
+			}
 		}
 	}
 		
 	void NodeCheck(){
 		
 		if (pitch != "") {
-			//Debug.Log ("Pitch Check : " + pitch);
 			PitchCheck (); //check
 		} 
 	}
@@ -148,13 +173,29 @@ public class PianoControl : MonoBehaviour {
 			Debug.Log ("Play Mode");
 			Play = true;
 			Practice = false;
+			Repeat = false;
+			Scorechange = false;
+
 			break;
 
 		case 2:
 			Debug.Log ("Practice Mode");
 			Play = false;
 			Practice = true;
+			Repeat = false;
+			Scorechange = true;
+
 			break;
+		case 3:
+			Debug.Log ("Repeat Mode");
+			Repeat = true;
+			Play = false;
+			Practice = false;
+
+			//StartCoroutine start position init
+
+			break;
+
 		}
 
 	}
@@ -170,14 +211,24 @@ public class PianoControl : MonoBehaviour {
 		
 		if (Practice) {
 			Play = false;
+			Repeat = false;
 
 			MoveCheck (); 
 			NodeRest ();
 
 		} else if (Play) {
+			Repeat = false;
 			Practice = false;
+		
 			movePiano ();
 
+		}  else if (Repeat) {
+			Play = false;
+			Practice = false;
+
+			if (gameObject.GetComponent<RepeatControl> ().Repeat_start == true) {
+				movePiano ();
+			}
 		} 
 
 	}
@@ -187,7 +238,6 @@ public class PianoControl : MonoBehaviour {
 			StartCoroutine ("ResetPiano");
 		}
 	}
-
 
 
 	/*
@@ -203,7 +253,7 @@ public class PianoControl : MonoBehaviour {
 
 		yield return new WaitForSeconds (3);
 	}
-	*/
+
 
 	bool NoteTagObjectFind(GameObject [] find, int num){
 		bool result = false;
@@ -219,10 +269,26 @@ public class PianoControl : MonoBehaviour {
 		}
 		return result;
 	}
+	*/
+	/*
+	int NoteTagObjectFind(GameObject [] find, int num){
+		int result = 0;
 
+		for (int i = 0; i < find.Length; i++) {
+			Debug.Log ("Sequence :  " + find [i].gameObject.GetComponent<NoteDetail> ().sequence);	
 
+			if (find [i].gameObject.GetComponent<NoteDetail> ().sequence == num) {
+				Debug.Log ("Y position : " + find [i].gameObject.transform.position.y);	
+				Target_Sequence = find [i].gameObject.transform.position.y;
+				result = true;
+			}
+		}
+		return result;
+	}
+	*/
 	void movePiano(){
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
+	
 	}
 
 	void androidSetting(){
@@ -261,42 +327,46 @@ public class PianoControl : MonoBehaviour {
 		yield return new WaitForSeconds (1);
 	}
 
-	IEnumerator SearchSequence(int num){
+	IEnumerator SearchSequence(int [] arr){
+		Debug.Log ("Arr [0] : " + arr [0]);
+		Debug.Log ("Arr [1] : " + arr [1]);
 
-		string tag = "Note";
+		Sequence = arr [0];
 
-		GameObject[] find = GameObject.FindGameObjectsWithTag (tag);
+		transform.position = gameObject.GetComponent<RepeatControl> ().Start_position;
+		gameObject.GetComponent<RepeatControl> ().Last_position = new Vector3 (0, (0 + (1.29f * (arr[1]))), 0);
 
-		if (!NoteTagObjectFind (find, num)) {
-			tag = "Rest";
-
-			find = GameObject.FindGameObjectsWithTag (tag);
-			NoteTagObjectFind (find, num);
-		} 
-
-		Sequence = (num - 1) ; //modifiy now location sequence
-		Debug.Log(Sequence);
-		transform.position = new Vector3 (transform.position.x, (transform.position.y + (Target_Sequence - 1.8f)), transform.position.z);
-
-		yield return null;
+		yield return new WaitForSeconds(4);
 	}
+
 	IEnumerator PlayPiano(){
 		yield return new WaitForSeconds (1);
 		LoadVelocity (); 
 	}
+
 	IEnumerator ScoreManager(){
 	
+		if (Sequence == 0)
+			yield return new WaitForSeconds (5);
+
 		int temp = 0;
 
-		if(Scorechange == true){
+		if (Scorechange) {
 			temp = this.duration;
-			Scorechange = false;
+		} else {
+			temp = 0;
 		}
+
+		Debug.Log ("Temp : " + temp);
 
 		gameObject.GetComponent<ScoreManager> ().SetScore (temp);
 		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
 			
-		yield return null;
+		yield return new WaitForSeconds(1);
+	}
+
+	IEnumerator WaitTime(int seconds){
+		yield return new WaitForSeconds (seconds);
 	}
 
 }

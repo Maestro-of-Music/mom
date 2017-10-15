@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\RepeatControl.cs" />
      <Compile Include="Assets\Scripts\BluetoothIOManager.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\Bluetooth.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
