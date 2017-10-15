@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PianoControl : MonoBehaviour {
 
@@ -10,6 +11,9 @@ public class PianoControl : MonoBehaviour {
 	public GameObject Metronume;
 	public GameObject CurrentObject;
 	public GameTime currentSquence;
+	public Text Score;
+
+
 	public string pitch; 
 	public string Target_pitch;
 	public int duration; 
@@ -19,6 +23,8 @@ public class PianoControl : MonoBehaviour {
 	public bool Play; //play mode
 	public bool Practice; 
 	public bool Reset; //reset piano
+
+	public bool Scorechange;
 
 	//seperate two kind of mode and partial repeat move (using sequence) 
 
@@ -35,11 +41,11 @@ public class PianoControl : MonoBehaviour {
 		
 		Sequence = 0; 
 		speed = 0;
-	
+
 		currentSquence = CurrentObject.GetComponent<GameTime> ();
 		transform.position = new Vector3 (0, 0, 0);
 		pitch = "";
-
+		Scorechange = true;
 		Reset = false;
 		InitSetMode (2);
 
@@ -50,10 +56,15 @@ public class PianoControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		KeyInput ();
+		NodeCheck ();  //IOManager send Data
 		SelectMode ();
 		EndCheck (); 
 	}
+
+	void LoadVelocity(){
+		speed = Metronume.gameObject.GetComponent<Metronume> ().Velocity;
+	}
+
 
 	void PositionCheck(){
 		float temp = transform.position.y;
@@ -66,13 +77,16 @@ public class PianoControl : MonoBehaviour {
 		if (Target_pitch == pitch) {
 			_location = transform.position; 
 
+			StartCoroutine ("ScoreManager");
+
 			//check point which calculate score
+
 			move = true;
 		}
 
 		else {
 			move = false;
-			Debug.Log ("Wrong Key!");
+			Scorechange = false;
 		}
 
 	}
@@ -91,84 +105,28 @@ public class PianoControl : MonoBehaviour {
 			speed = 0.0f;
 			move = false;
 		} 
-	
 	}
-
 
 	void MoveCheck (){
 
 		if (move) {
 			//restore now location and compare future location
 			//MovePiano (_location);
+			//pitch = null;
+
 			StartCoroutine("MovePiano");
 		} else {
 			PositionCheck ();
+			//pitch = null;
+			Scorechange = true;
+			//check this part!!
 		}
 	}
-
-	void KeyInput(){
-		//Key press input
-
-		/* White Key Input */ 
-		if (Input.GetKeyDown (KeyCode.A)) {
-			pitch = "4C";
-
-		} // Do 
-		else if (Input.GetKeyDown (KeyCode.S)) {
-			pitch = "4D";
-
-		} // Re
-		else if (Input.GetKeyDown (KeyCode.D)) {
-			pitch = "4E";
-
-		} // Me 
-		else if (Input.GetKeyDown (KeyCode.F)) {
-			pitch = "4F";
-
-		} // Fa 
-		else if (Input.GetKeyDown (KeyCode.G)) {
-			pitch = "4G";
-
-		} // Sol 
-		else if (Input.GetKeyDown (KeyCode.H)) {
-			pitch = "4A";
-
-		} // Ra
-		else if (Input.GetKeyDown (KeyCode.J)) {
-			pitch = "4B";
-
-		} // Si
-
-		/* Black Key Input */ 
-		else if (Input.GetKeyDown (KeyCode.Q)) {
-			pitch = "4C#";
-
-		} // Do# 
-		else if (Input.GetKeyDown (KeyCode.W)) {
-			pitch = "4D#";
-
-		} // Re#
-		else if (Input.GetKeyDown (KeyCode.E)) {
-			pitch = "4F#";
-
-		} // Fa# 
-		else if (Input.GetKeyDown (KeyCode.R)) {
-			pitch = "4G#";
-
-		} // Sol# 
-		else if (Input.GetKeyDown (KeyCode.T)) {
-			pitch = "4A#";
-
-		} // Ra# 
-
-
-		NodeCheck ();
-	}
-
-
+		
 	void NodeCheck(){
 		
 		if (pitch != "") {
+			//Debug.Log ("Pitch Check : " + pitch);
 			PitchCheck (); //check
 		} 
 	}
@@ -207,12 +165,7 @@ public class PianoControl : MonoBehaviour {
 		ResetMode ();
 	
 	}
-
-	void LoadVelocity(){
-		speed = Metronume.gameObject.GetComponent<Metronume> ().Velocity;
-
-	}
-
+		
 	void PlayMode(){
 		
 		if (Practice) {
@@ -224,6 +177,7 @@ public class PianoControl : MonoBehaviour {
 		} else if (Play) {
 			Practice = false;
 			movePiano ();
+
 		} 
 
 	}
@@ -298,6 +252,7 @@ public class PianoControl : MonoBehaviour {
 	IEnumerator MovePiano(){
 
 		if (transform.position.y >= _location.y + duration - 0.2f) {
+			pitch = null;
 			move = false;
 		} else {
 			transform.Translate (Vector3.up * Time.deltaTime * speed);
@@ -329,4 +284,19 @@ public class PianoControl : MonoBehaviour {
 		yield return new WaitForSeconds (1);
 		LoadVelocity (); 
 	}
+	IEnumerator ScoreManager(){
+	
+		int temp = 0;
+
+		if(Scorechange == true){
+			temp = this.duration;
+			Scorechange = false;
+		}
+
+		gameObject.GetComponent<ScoreManager> ().SetScore (temp);
+		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
+			
+		yield return null;
+	}
+
 }

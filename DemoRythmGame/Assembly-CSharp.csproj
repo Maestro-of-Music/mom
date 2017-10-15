@@ -51,10 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\JsonTest.cs" />
+     <Compile Include="Assets\Scripts\BluetoothIOManager.cs" />
+     <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\Bluetooth.cs" />
+     <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
+     <Compile Include="Assets\Scripts\BluetoothScripts\BluetoothController.cs" />
      <Compile Include="Assets\Scripts\CameraMove.cs" />
      <Compile Include="Assets\Scripts\CreateNote.cs" />
      <Compile Include="Assets\Scripts\GameTime.cs" />
+     <Compile Include="Assets\Scripts\IOManager.cs" />
+     <Compile Include="Assets\Scripts\JsonTest.cs" />
      <Compile Include="Assets\Scripts\LoadData.cs" />
      <Compile Include="Assets\Scripts\Metronume.cs" />
      <Compile Include="Assets\Scripts\NextSequence.cs" />
@@ -64,6 +69,8 @@
      <Compile Include="Assets\Scripts\Observer.cs" />
      <Compile Include="Assets\Scripts\PianoControl.cs" />
      <Compile Include="Assets\Scripts\PlayNote.cs" />
+     <Compile Include="Assets\Scripts\SceneChange.cs" />
+     <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\XMLManager.cs" />
      <None Include="Assets\Resources\school.xml" />
      <None Include="Assets\StreamingAssets\school.txt" />
@@ -71,6 +78,7 @@
      <None Include="Assets\school.xml" />
      <None Include="Assets\StreamingAssets\school.xml" />
      <None Include="Assets\Resources\school.txt" />
+     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
