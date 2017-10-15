@@ -15,13 +15,21 @@ public class Metronume : MonoBehaviour {
 	private float interval;
 	private float nextTime;
 
+	public float Velocity;
+
 	public event MetronomeEvent OnTick;
 	public event MetronomeEvent OnNewMeasure;
 
+
 	// Use this for initialization
-	void Start () {
-		StartMetronome();
+	void Awake(){
+	//	StartCoroutine("Init");
 	}
+
+	void Start () {
+		//StartMetronume();
+	}
+
 
 	// Update is called once per frame
 	void Update () {
@@ -34,10 +42,37 @@ public class Metronume : MonoBehaviour {
 		var multiplier = Base / 4f;
 		var tmpInterval = 60f / BPM;
 		interval = tmpInterval / multiplier;
+
+		CalVelocity (interval);
 		nextTime = Time.time;
 		StartCoroutine("DoTick");
 	}
 
+	public void CalVelocity(float interval){
+		this.Velocity = interval * 4;  //make velocity
+	}
+
+	public void StopMetornume(){
+		StopCoroutine("DoTick");
+	}
+
+	/*
+
+	IEnumerator Init(){
+
+		yield return new WaitForSeconds (1);
+		//load json data until 3 seconds 
+
+		var multiplier = Base / 4f;
+		var tmpInterval = 60f / BPM;
+		interval = tmpInterval / multiplier;
+
+		CalVelocity (interval);
+		Debug.Log ("Velocity Setting!");
+
+		yield return null;
+	}
+*/
 	IEnumerator DoTick()
 	{
 		for (; ; )
