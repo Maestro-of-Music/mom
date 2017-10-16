@@ -16,7 +16,7 @@
         <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
       </intent-filter>
     </activity>
-    <meta-data android:name="unity.build-id" android:value="de929f62-198c-4415-bf0d-afccf3fa502c" />
+    <meta-data android:name="unity.build-id" android:value="0a7822da-f784-4342-85b0-0cb2177bf8a3" />
     <meta-data android:name="unity.splash-mode" android:value="0" />
     <meta-data android:name="unity.splash-enable" android:value="True" />
   </application>

@@ -9,6 +9,15 @@ public class IOManager : MonoBehaviour {
 	public GameObject BluetoothController;
 	public Text UIText;
 
+	private Bluetooth bluetooth;
+
+	bool click = true;
+	public bool send = false;
+
+	private void Awake() {
+		this.bluetooth = Bluetooth.getInstance();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		KeyInput ();
@@ -70,12 +79,32 @@ public class IOManager : MonoBehaviour {
 			} // Ra#
 
 		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "A") {
-			UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-			PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4G";
+
+			if (click) {
+
+				UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4G";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+
+				click = false;
+			} else {
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
+				click = true;
+			}
 
 		} else if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "B") {
-			UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-			PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4A";
+
+			if (click) {
+				
+				UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
+				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4A";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+
+				click = false;
+			} else {
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
+				click = true;
+			}
 
 		}
 
@@ -84,8 +113,13 @@ public class IOManager : MonoBehaviour {
 	//Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
 	public void KeyOutput(string data){
 		//send data to arduino 
-		Debug.Log("Data : " + data);
-		BluetoothController.gameObject.GetComponent<BluetoothIOManager>().OnSendMessage(data);
-	}
+		if (send == false) {
+			Debug.Log("Data : " + data);
+			this.bluetooth.Send (data);
+			send = true;
+		}
 
+	
+	}
+		
 }

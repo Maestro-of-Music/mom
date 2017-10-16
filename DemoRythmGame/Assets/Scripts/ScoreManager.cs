@@ -13,7 +13,10 @@ public class ScoreManager : MonoBehaviour {
 
 	public void SetScore(int duration){
 		//propotional duration 
-		this.score += duration * 100; //if correct , 1 duration 100 score
+		if(gameObject.GetComponent<PianoControl>().Scorechange){
+			this.score += duration * 100; //if correct , 1 duration 100 score
+			gameObject.GetComponent<PianoControl>().Scorechange = false;
+		}
  	}
 
 	public int GetScore(){
@@ -31,5 +34,4 @@ public class ScoreManager : MonoBehaviour {
 	public void LoadScore(){
 		//previous data load 
 	}
-
 }

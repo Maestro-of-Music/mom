@@ -15,6 +15,9 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	[SerializeField]
 	public string GetData;
 
+	[SerializeField]
+	public string SendData;
+
 	private void Awake() {
 		this.bluetooth = Bluetooth.getInstance();
 	}
@@ -27,8 +30,7 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	public void OnStateChanged(string _State){}
 
 	public void OnSendMessage(string _Message){
-		Debug.Log ("Send to Arduino : " + _Message);
-		this.bluetooth.Send (_Message);
+		
 	}
 
 	public void OnGetMessage(string _Message){

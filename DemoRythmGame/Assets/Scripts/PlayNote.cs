@@ -24,7 +24,7 @@ public class PlayNote : MonoBehaviour {
 	void OnPlay(){
 		audioOne.pitch = Mathf.Pow (2f, semitone_offest/12.0f);
 		audioOne.Play ();
-		PianoObject.gameObject.GetComponent<PianoControl> ().pitch = "";
+		PianoObject.gameObject.GetComponent<PianoControl> ().pitch = null;
 		OnRelease ();
 	}
 
