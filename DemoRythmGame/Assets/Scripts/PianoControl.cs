@@ -93,10 +93,10 @@ public class PianoControl : MonoBehaviour {
 				StartCoroutine ("ScoreManager");
 				Scorechange = false;
 			}
+
 			move = true;
 
 		}
-
 		else {
 			move = false;
 			Scorechange = false;
@@ -118,6 +118,7 @@ public class PianoControl : MonoBehaviour {
 			if (Sequence >= GameManager.gameObject.GetComponent<LoadData> ().notedatas.Length) {
 				speed = 0.0f;
 				move = false;
+				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
 			}
 		}
 		else if (Repeat) {
@@ -158,10 +159,10 @@ public class PianoControl : MonoBehaviour {
 
 	void NodeRest(){
 		if (RestCheck()) {
-			Debug.Log ("Rest! ");
+			Debug.Log ("Rest!");
 			StartCoroutine ("SetRestPosition");
+			pitch = "-1";
 			move = true;
-			StartCoroutine ("MovePiano");
 		}
 	}
 
@@ -171,28 +172,31 @@ public class PianoControl : MonoBehaviour {
 
 		case 1: 
 			Debug.Log ("Play Mode");
+			/*
 			Play = true;
 			Practice = false;
 			Repeat = false;
+			*/
 			Scorechange = false;
-
 			break;
 
 		case 2:
 			Debug.Log ("Practice Mode");
+			/*
 			Play = false;
 			Practice = true;
 			Repeat = false;
+			*/
 			Scorechange = true;
 
 			break;
 		case 3:
 			Debug.Log ("Repeat Mode");
+			/*
 			Repeat = true;
 			Play = false;
 			Practice = false;
-
-			//StartCoroutine start position init
+			*/
 
 			break;
 
@@ -239,53 +243,6 @@ public class PianoControl : MonoBehaviour {
 		}
 	}
 
-
-	/*
-	IEnumerator DeleteBeforeNote (int num){
-
-		GameObject[] find = GameObject.FindGameObjectsWithTag ("Note");
-
-		for (int i = 0; i < num; i++) {
-			Destroy (find [i]);
-		}
-
-		Debug.Log ("Deleted!");
-
-		yield return new WaitForSeconds (3);
-	}
-
-
-	bool NoteTagObjectFind(GameObject [] find, int num){
-		bool result = false;
-
-		for (int i = 0; i < find.Length; i++) {
-			Debug.Log ("Sequence :  " + find [i].gameObject.GetComponent<NoteDetail> ().sequence);	
-
-			if (find [i].gameObject.GetComponent<NoteDetail> ().sequence == num) {
-				Debug.Log ("Y position : " + find [i].gameObject.transform.position.y);	
-				Target_Sequence = find [i].gameObject.transform.position.y;
-				result = true;
-			}
-		}
-		return result;
-	}
-	*/
-	/*
-	int NoteTagObjectFind(GameObject [] find, int num){
-		int result = 0;
-
-		for (int i = 0; i < find.Length; i++) {
-			Debug.Log ("Sequence :  " + find [i].gameObject.GetComponent<NoteDetail> ().sequence);	
-
-			if (find [i].gameObject.GetComponent<NoteDetail> ().sequence == num) {
-				Debug.Log ("Y position : " + find [i].gameObject.transform.position.y);	
-				Target_Sequence = find [i].gameObject.transform.position.y;
-				result = true;
-			}
-		}
-		return result;
-	}
-	*/
 	void movePiano(){
 		transform.Translate (Vector3.up * Time.deltaTime * speed);
 	
@@ -356,17 +313,64 @@ public class PianoControl : MonoBehaviour {
 		} else {
 			temp = 0;
 		}
+			gameObject.GetComponent<ScoreManager> ().SetScore (temp);
 
-		Debug.Log ("Temp : " + temp);
-
-		gameObject.GetComponent<ScoreManager> ().SetScore (temp);
 		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
-			
+
 		yield return new WaitForSeconds(1);
 	}
 
 	IEnumerator WaitTime(int seconds){
 		yield return new WaitForSeconds (seconds);
 	}
-
+		
 }
+
+
+
+/*
+	IEnumerator DeleteBeforeNote (int num){
+
+		GameObject[] find = GameObject.FindGameObjectsWithTag ("Note");
+
+		for (int i = 0; i < num; i++) {
+			Destroy (find [i]);
+		}
+
+		Debug.Log ("Deleted!");
+
+		yield return new WaitForSeconds (3);
+	}
+
+
+	bool NoteTagObjectFind(GameObject [] find, int num){
+		bool result = false;
+
+		for (int i = 0; i < find.Length; i++) {
+			Debug.Log ("Sequence :  " + find [i].gameObject.GetComponent<NoteDetail> ().sequence);	
+
+			if (find [i].gameObject.GetComponent<NoteDetail> ().sequence == num) {
+				Debug.Log ("Y position : " + find [i].gameObject.transform.position.y);	
+				Target_Sequence = find [i].gameObject.transform.position.y;
+				result = true;
+			}
+		}
+		return result;
+	}
+	*/
+/*
+int NoteTagObjectFind(GameObject [] find, int num){
+	int result = 0;
+
+	for (int i = 0; i < find.Length; i++) {
+		Debug.Log ("Sequence :  " + find [i].gameObject.GetComponent<NoteDetail> ().sequence);	
+
+		if (find [i].gameObject.GetComponent<NoteDetail> ().sequence == num) {
+			Debug.Log ("Y position : " + find [i].gameObject.transform.position.y);	
+			Target_Sequence = find [i].gameObject.transform.position.y;
+			result = true;
+		}
+	}
+	return result;
+}
+*/

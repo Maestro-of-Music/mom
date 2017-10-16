@@ -62,11 +62,11 @@ public class BluetoothModel : BtObservale {
 		string tempMassege = rawMessage.ToString ();
 
         for (int i = 0; i < this.observerList.Count; ++i) {
-            this.observerList[i].OnGetMessage(tempMassege);
+			this.observerList[i].OnGetMessage(tempMassege.Substring(tempMassege.Length-1, 1));
         }
 
         Debug.Log("Get Packet and Enqueue messageQueue");
-        Debug.Log(rawMessage);
+       // Debug.Log(rawMessage);
     }
 
     // ========================================

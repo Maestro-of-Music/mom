@@ -5,6 +5,7 @@ using System;
 
 public class Observer : MonoBehaviour {
 
+
 	public GameObject PianoManager;
 	//public GameObject Metronume;
 	public GameObject IOManagerCtrl;
@@ -12,12 +13,11 @@ public class Observer : MonoBehaviour {
 	public GameObject KeyBoard;
 	public GameTime Current;
 	private string Key = "Key_";
-	private bool LED_SEND;
+
 
 	//public bool MetronumePlay;
 
 	void Awake(){
-		LED_SEND = false;
 	}
 
 	// Use this for initialization
@@ -93,11 +93,8 @@ public class Observer : MonoBehaviour {
 
 		if (pitch != "") {
 			//Send data 	
-			//IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(OnSetLED(pitch).ToString());
-			//Debug.Log(OnSetLED(pitch).ToString());
-			StopCoroutine ("SendLED");
+			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
 
-			Debug.Log ("LED_SEND started!");
 			StartCoroutine ("SendLED", pitch);
 		}
 	}
@@ -164,8 +161,9 @@ public class Observer : MonoBehaviour {
 		if (col.gameObject.tag == "Note") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
 			OnPianoPlay (col);
-			//OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);
-			//repeat 
+
+			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);
+			 
 
 		} else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
@@ -215,25 +213,28 @@ public class Observer : MonoBehaviour {
 	void ColoringKeyBoard(bool Clicked){
 		if (Clicked == true) {
 			KeyBoard.GetComponent<Renderer> ().material.color = Color.yellow;
-
 		} else {
 			KeyBoard.GetComponent<Renderer> ().material.color = Color.white;
+			IOManagerCtrl.gameObject.GetComponent<IOManager> ().send = false;
 		}
 	}
 
 	IEnumerator SendLED(string pitch){
 
 		int led = OnSetLED (pitch);
+
+		/*
 		string result = "";
 		if (led == 5) {
 			result = "1";
 		} else {
 			result = "0";
 		}
+		*/
 
-		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(result);
+		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(led.ToString());
 
-		yield return new WaitForSeconds(2);
+		yield return null;
 
 	}
 }

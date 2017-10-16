@@ -7,13 +7,13 @@ using System.Collections.Generic;
 public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 
 	private Bluetooth bluetooth;
-	public GameObject IOManagerCtrl;
 
 	[SerializeField]
 	private BluetoothModel bluetoothModel;
 
 	[SerializeField]
 	public string GetData;
+
 
 	private void Awake() {
 		this.bluetooth = Bluetooth.getInstance();
@@ -27,8 +27,7 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	public void OnStateChanged(string _State){}
 
 	public void OnSendMessage(string _Message){
-		Debug.Log ("Send to Arduino : " + _Message);
-		this.bluetooth.Send (_Message);
+		
 	}
 
 	public void OnGetMessage(string _Message){

@@ -108,13 +108,14 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
-3d9671b5844340cc071bdcbdd1f78a6d Assembly-CSharp.dll:.ScoreManager
-f01e3813a9cc1d89d1c9406b7e3e6271 Assembly-CSharp.dll:.IOManager
+7c6fb094f5246b8f18656fe8bd7cfc58 Assembly-CSharp.dll:.ScoreManager
+5834907c6a2b4c93c7a321e86328f954 Assembly-CSharp.dll:.IOManager
 661d33336607a0bd9dd3964acc8c1c07 Assembly-CSharp.dll:.SceneChange
 f50ecefcc17990409097565f60a11de0 Assembly-CSharp.dll:.Observer
-85f9c15cba12451fd72f9ea7f323172f Assembly-CSharp.dll:.GameTime
-c3e614c05e1c3bec575616107207c0a2 Assembly-CSharp.dll:.PianoControl
+33575701ec05c1f964d0f751d00ba3dd Assembly-CSharp.dll:.GameTime
+bf13f33ea8ba3cb0429b21ad84dc6f02 Assembly-CSharp.dll:.PianoControl
 420308cc40b0dfff223596f98de5edac Assembly-CSharp.dll:.BluetoothModel
+2c20827b7cc8ae9f76796c45c924621d Assembly-CSharp.dll:.RepeatControl
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -139,7 +140,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
-59b0261b80b5983084bc668df21edf90 Assembly-CSharp.dll:.BluetoothIOManager
+cfaddeafa98766fdb59bb22a47424d80 Assembly-CSharp.dll:.BluetoothIOManager
 ffe46d3f686627f8458baf2124b3439a Assembly-CSharp.dll:.LoadData
 6c360e7aa8c86eb50b8646883fd29654 Assembly-CSharp.dll:.CameraMove
 2a0087e302dec042bebf62802d59aa67 Assembly-CSharp.dll:.XMLManager
