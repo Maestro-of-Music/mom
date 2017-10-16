@@ -14,7 +14,6 @@ public class Observer : MonoBehaviour {
 	public GameTime Current;
 	private string Key = "Key_";
 
-	bool SendIOManager = false;
 
 	//public bool MetronumePlay;
 
@@ -94,10 +93,6 @@ public class Observer : MonoBehaviour {
 
 		if (pitch != "") {
 			//Send data 	
-			//IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(OnSetLED(pitch).ToString());
-			//Debug.Log(OnSetLED(pitch).ToString());
-			//StopCoroutine ("SendLED");
-
 			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
 
 			StartCoroutine ("SendLED", pitch);
@@ -239,7 +234,7 @@ public class Observer : MonoBehaviour {
 
 		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(led.ToString());
 
-		yield return new WaitForSeconds(2);
+		yield return null;
 
 	}
 }

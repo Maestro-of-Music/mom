@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 
 	private Bluetooth bluetooth;
-	public GameObject IOManagerCtrl;
 
 	[SerializeField]
 	private BluetoothModel bluetoothModel;
@@ -15,8 +14,6 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	[SerializeField]
 	public string GetData;
 
-	[SerializeField]
-	public string SendData;
 
 	private void Awake() {
 		this.bluetooth = Bluetooth.getInstance();

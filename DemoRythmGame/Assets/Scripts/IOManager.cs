@@ -14,8 +14,10 @@ public class IOManager : MonoBehaviour {
 	bool click = true;
 	public bool send = false;
 
-	private void Awake() {
-		this.bluetooth = Bluetooth.getInstance();
+	 void Awake() {
+
+		if(Application.platform == RuntimePlatform.Android)
+			this.bluetooth = Bluetooth.getInstance();
 	}
 
 	// Update is called once per frame
@@ -78,6 +80,11 @@ public class IOManager : MonoBehaviour {
 
 			} // Ra#
 
+	
+	}
+
+	public void HardwareInput(){
+		
 		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "A") {
 
 			if (click) {
@@ -95,7 +102,7 @@ public class IOManager : MonoBehaviour {
 		} else if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "B") {
 
 			if (click) {
-				
+
 				UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
 				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4A";
 				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
@@ -108,14 +115,17 @@ public class IOManager : MonoBehaviour {
 
 		}
 
-
 	}
 	//Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
 	public void KeyOutput(string data){
 		//send data to arduino 
 		if (send == false) {
 			Debug.Log("Data : " + data);
-			this.bluetooth.Send (data);
+	
+			if(Application.platform == RuntimePlatform.Android){
+				this.bluetooth.Send (data);
+			}
+
 			send = true;
 		}
 

@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class RepeatControl : MonoBehaviour {
 
+	public GameObject GameManager;
+	public GameObject TempoPanel;
+	public GameObject RepeatPanel;
+
 	public InputField start_sequence;
 	public InputField end_sequence;
 	public InputField count_repeat;
@@ -23,10 +27,18 @@ public class RepeatControl : MonoBehaviour {
 
 	void Start(){
 		Repeat_start = false;
-		_Repeat.onClick.AddListener(Get_Sequence);
+
+		this._Repeat.onClick.AddListener (() => {
+			GameManager.gameObject.GetComponent<MenuManager>().OnTimer();
+		});
+
+		//delay 3 seconds
 	}
 
 	public void Get_Sequence(){
+		TempoPanel.SetActive (false);
+
+
 		gameObject.GetComponent<PianoControl> ().Repeat_Count = 0;
 		Last_position = new Vector3 (0, 0, 0);
 		gameObject.GetComponent<PianoControl> ().InitPosition ();

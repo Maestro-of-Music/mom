@@ -92,8 +92,8 @@ public class PianoControl : MonoBehaviour {
 				Scorechange = true;
 				StartCoroutine ("ScoreManager");
 				Scorechange = false;
-
 			}
+
 			move = true;
 
 		}
@@ -118,6 +118,7 @@ public class PianoControl : MonoBehaviour {
 			if (Sequence >= GameManager.gameObject.GetComponent<LoadData> ().notedatas.Length) {
 				speed = 0.0f;
 				move = false;
+				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
 			}
 		}
 		else if (Repeat) {
@@ -158,10 +159,10 @@ public class PianoControl : MonoBehaviour {
 
 	void NodeRest(){
 		if (RestCheck()) {
-			Debug.Log ("Rest! ");
+			Debug.Log ("Rest!");
 			StartCoroutine ("SetRestPosition");
+			pitch = "-1";
 			move = true;
-			StartCoroutine ("MovePiano");
 		}
 	}
 
@@ -171,26 +172,31 @@ public class PianoControl : MonoBehaviour {
 
 		case 1: 
 			Debug.Log ("Play Mode");
+			/*
 			Play = true;
 			Practice = false;
 			Repeat = false;
+			*/
 			Scorechange = false;
-
 			break;
 
 		case 2:
 			Debug.Log ("Practice Mode");
+			/*
 			Play = false;
 			Practice = true;
 			Repeat = false;
+			*/
 			Scorechange = true;
 
 			break;
 		case 3:
 			Debug.Log ("Repeat Mode");
+			/*
 			Repeat = true;
 			Play = false;
 			Practice = false;
+			*/
 
 			break;
 
