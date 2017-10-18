@@ -51,8 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\MenuManager.cs" />
-     <Compile Include="Assets\RepeatControl.cs" />
      <Compile Include="Assets\Scripts\BluetoothIOManager.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\Bluetooth.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
@@ -63,14 +61,15 @@
      <Compile Include="Assets\Scripts\IOManager.cs" />
      <Compile Include="Assets\Scripts\JsonTest.cs" />
      <Compile Include="Assets\Scripts\LoadData.cs" />
+     <Compile Include="Assets\Scripts\MenuManager.cs" />
      <Compile Include="Assets\Scripts\Metronume.cs" />
-     <Compile Include="Assets\Scripts\NextSequence.cs" />
      <Compile Include="Assets\Scripts\NoteData.cs" />
      <Compile Include="Assets\Scripts\NoteDetail.cs" />
      <Compile Include="Assets\Scripts\NoteInfo.cs" />
      <Compile Include="Assets\Scripts\Observer.cs" />
      <Compile Include="Assets\Scripts\PianoControl.cs" />
      <Compile Include="Assets\Scripts\PlayNote.cs" />
+     <Compile Include="Assets\Scripts\RepeatControl.cs" />
      <Compile Include="Assets\Scripts\SceneChange.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\XMLManager.cs" />

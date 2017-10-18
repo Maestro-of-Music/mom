@@ -94,7 +94,6 @@ public class Observer : MonoBehaviour {
 		if (pitch != "") {
 			//Send data 	
 			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
-
 			StartCoroutine ("SendLED", pitch);
 		}
 	}

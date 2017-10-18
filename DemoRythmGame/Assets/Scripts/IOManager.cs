@@ -9,15 +9,13 @@ public class IOManager : MonoBehaviour {
 	public GameObject BluetoothController;
 	public Text UIText;
 
-	private Bluetooth bluetooth;
+	//private Bluetooth bluetooth;
 
 	bool click = true;
 	public bool send = false;
 
-	 void Awake() {
-
-		if(Application.platform == RuntimePlatform.Android)
-			this.bluetooth = Bluetooth.getInstance();
+	void Awake() {
+		//this.bluetooth = Bluetooth.getInstance ();
 	}
 
 	// Update is called once per frame
@@ -80,7 +78,7 @@ public class IOManager : MonoBehaviour {
 
 			} // Ra#
 
-	
+			HardwareInput ();
 	}
 
 	public void HardwareInput(){
@@ -90,7 +88,7 @@ public class IOManager : MonoBehaviour {
 			if (click) {
 
 				UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4G";
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch;
 				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 				click = false;
@@ -121,9 +119,8 @@ public class IOManager : MonoBehaviour {
 		//send data to arduino 
 		if (send == false) {
 			Debug.Log("Data : " + data);
-	
 			if(Application.platform == RuntimePlatform.Android){
-				this.bluetooth.Send (data);
+			//	this.bluetooth.Send (data);
 			}
 
 			send = true;
