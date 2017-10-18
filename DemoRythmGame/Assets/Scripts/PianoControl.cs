@@ -28,32 +28,46 @@ public class PianoControl : MonoBehaviour {
 
 	public int Repeat_Count; 
 
+	public int count = 0;
+	public int Tempsequence = 0;
+
 	//seperate two kind of mode and partial repeat move (using sequence) 
 
 	private Vector3 _location;
 
+	void Awake(){
+		transform.position = new Vector3 (0, -0.3f, 0);
+		speed = 0;
+		Repeat_Count = 0;
+	}
+
 	void Start () {
-		InitDevice ();
+			
+		//InitDevice ();
 	}
 
 	//restart
 
-	void InitDevice(){
+ 	public void InitDevice(){
 		
 		Sequence = 0; 
-		speed = 0;
-		Repeat_Count = 0;
-		gameObject.GetComponent<ScoreManager> ().InitScore ();
+		//speed = 0;
+		//Repeat_Count = 0;
+
+		transform.position = new Vector3 (0, 0, 0); //TURN  
 
 		currentSquence = GameManager.GetComponent<GameTime> ();
 		InitPosition ();
 		pitch = "";
 
-		Reset = false;
-		Repeat = false;
-		move = false;
+		//Reset = false;
+		//Repeat = false;
+		//move = false;
 
 		InitSetMode (Mode); 
+		gameObject.GetComponent<ScoreManager> ().InitScore ();
+		Score.text = gameObject.GetComponent<ScoreManager> ().score.ToString();
+
 
 		androidSetting ();
 		StartCoroutine ("PlayPiano");
@@ -89,17 +103,21 @@ public class PianoControl : MonoBehaviour {
 			if (Practice)
 				StartCoroutine ("ScoreManager");
 			else if (Play) {
-				Scorechange = true;
-				StartCoroutine ("ScoreManager");
-				Scorechange = false;
+				//sequence 
+				//StartCoroutine ("ScoreManager");
+
+				if (Tempsequence != this.Sequence) {
+					Debug.Log ("Count :" + count);
+					Scorechange = true;
+					StartCoroutine ("ScoreManager");
+					Tempsequence = this.Sequence;
+				}
 			}
-
+	
 			move = true;
-
 		}
 		else {
 			move = false;
-			Scorechange = false;
 		}
 
 	}
@@ -140,8 +158,12 @@ public class PianoControl : MonoBehaviour {
 
 		if (move) {
 			//restore now location and compare future location
-			StartCoroutine("MovePiano");
-			
+
+			if(Practice) {
+				StartCoroutine("MovePiano");
+			}
+
+
 		} else {
 			PositionCheck ();
 			if (Mode == 2) { //when practice mode is opened
@@ -223,7 +245,7 @@ public class PianoControl : MonoBehaviour {
 		} else if (Play) {
 			Repeat = false;
 			Practice = false;
-		
+
 			movePiano ();
 
 		}  else if (Repeat) {
@@ -231,8 +253,9 @@ public class PianoControl : MonoBehaviour {
 			Practice = false;
 
 			if (gameObject.GetComponent<RepeatControl> ().Repeat_start == true) {
+//				gameObject.GetComponent<RepeatControl> ().CallSetInitMode ();
 				movePiano ();
-			}
+			} 
 		} 
 
 	}
@@ -267,21 +290,35 @@ public class PianoControl : MonoBehaviour {
 	IEnumerator ResetPiano(){
 	
 		Debug.Log ("Reset Piano position");
-		InitDevice ();
+
+		if (!Repeat) {	 
+			InitDevice (); //if play mode or practice mode init device
+			this.Reset = false;
+		}
+		else {
+			//if Repeat mode 
+			InitDevice ();
+			this.Repeat_Count = 0 ;
+			this.Reset = false;
+		}
+			
 
 		yield return new WaitForSeconds (3);
 	}
 
 	IEnumerator MovePiano(){
 
-		if (transform.position.y >= _location.y + duration - 0.2f) {
+		if (transform.position.y >= _location.y + duration) {
+			Debug.Log (transform.position.y);
 			pitch = null;
 			move = false;
 		} else {
 			transform.Translate (Vector3.up * Time.deltaTime * speed);
 		}
 
-		yield return new WaitForSeconds (1);
+		//yield return new WaitForSeconds (1);
+		yield return null;
+
 	}
 
 	IEnumerator SearchSequence(int [] arr){
@@ -302,18 +339,14 @@ public class PianoControl : MonoBehaviour {
 	}
 
 	IEnumerator ScoreManager(){
-	
-		if (Sequence == 0)
-			yield return new WaitForSeconds (5);
 
 		int temp = 0;
 
 		if (Scorechange) {
 			temp = this.duration;
-		} else {
-			temp = 0;
+			gameObject.GetComponent<ScoreManager> ().score += temp * 100;
+			Scorechange = false;
 		}
-			gameObject.GetComponent<ScoreManager> ().SetScore (temp);
 
 		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
 

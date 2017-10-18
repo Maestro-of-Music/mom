@@ -94,11 +94,11 @@ public class GameTime : MonoBehaviour {
 
 		var multiplier = MetroData.Base / 4f;
 		var tmpInterval = 60f / MetroData.BPM;
-		Debug.Log (tmpInterval + " " + multiplier);
+//		Debug.Log (tmpInterval + " " + multiplier);
 		interval = tmpInterval / multiplier;
 
 		CalVelocity (interval);
-		Debug.Log ("Velocity Setting!");
+		//Debug.Log ("Velocity Setting!");
 
 		yield return null;
 	}
