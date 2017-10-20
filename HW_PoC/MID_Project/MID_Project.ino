@@ -22,47 +22,117 @@ void setup()
 }
 bool LED_DATA[NOTE_SIZE]={0};
 int PIANO_DATA[NOTE_SIZE];
-
 double PIANO_STATE[NOTE_SIZE];
+bool PIANO_CHK[NOTE_SIZE];
+int changed=-1;
 void loop()
 {
   char data[101];
   int i,j;
   int n=0;
   int note=0;
-  while(1) 
+  char tmp;
+//////////////////////////////////////////////////////
+  if(mySerial.available() && mySerial.read()=='#')    
   {
-    LED_Control();
-    while(!mySerial.available()) int tt;
-    if(mySerial.available())
-    {
-      char tmp=mySerial.read();
-//      Serial.print(tmp);
-      if(tmp=='#') continue;
-      if(tmp=='/') break;
-      data[n++]=tmp-'0';
-     }
-     if(analogRead(A0)>300)
-     {
-       for(i=0;i<20;i++)
-       {
-         strip.setPixelColor(i, strip.Color(0,0,0));
-       }
-       strip.show();
-     }
+    char tmp2;
+    do{ if(mySerial.available()) data[n++]=mySerial.read(); }while(data[n-1]!='/');
+    for(i=0;i<n-1;i++) note=note*10+data[i]-'0';
+    Serial.println(note); 
+    
   }
+//////////////////////////////////////////////////////  
+  if(note) 
+  {
+    PIANO_STATE[note-1]=1;
+    LED_Control();
+  }
+  read_piano();
+}
+void read_piano()
+{
+  if(analogRead(A0)<500) 
+  {
+    if(PIANO_CHK[0]==0)
+    {
+      Serial.println("C");
+      PIANO_STATE[0]=0;
+      LED_Control();
+      mySerial.write("C");
+    }
+    PIANO_CHK[0]=1;
+  }
+  else PIANO_CHK[0]=0;
   
-  for(i=0;i<n;i++) note=note*10+data[i];
-//  Serial.print("->");
-  Serial.println(note);
-   PIANO_STATE[note]=10.0;
- //  update_led(note);
-//  update_led(note);
+  if(analogRead(A2)<350) 
+  {
+    if(PIANO_CHK[2]==0)
+    {
+      Serial.println("D");
+      PIANO_STATE[2]=0;
+      LED_Control();
+      mySerial.write("D");
+    }
+    PIANO_CHK[2]=1;
+  }
+  else PIANO_CHK[2]=0;
 
-  //PIANO_CHECK();
-  
+  if(analogRead(A4)<600) 
+  {
+    if(PIANO_CHK[4]==0)
+    {
+      Serial.println("E");
+      PIANO_STATE[4]=0;
+      LED_Control();
+      mySerial.write("E");
+    }
+    PIANO_CHK[4]=1;
+  }
+  else PIANO_CHK[4]=0;
+
+  if(analogRead(A1)>38) 
+  {
+    if(PIANO_CHK[1]==0)
+    {
+      Serial.println("C#");
+      PIANO_STATE[1]=0;
+      LED_Control();
+      mySerial.write("C#");
+    }
+    PIANO_CHK[1]=1;
+  }
+  else PIANO_CHK[1]=0;
+
+  if(analogRead(A3)>960) 
+  {
+    if(PIANO_CHK[3]==0)
+    {
+      Serial.println("D#");
+      PIANO_STATE[3]=0;
+      LED_Control();
+      mySerial.write("D#");
+    }
+    PIANO_CHK[3]=1;
+  }
+  else PIANO_CHK[3]=0;
 }
 void LED_Control()
+{
+  for(int i=0;i<20;i++) 
+  {
+    if(PIANO_STATE[i]) 
+    {
+      strip.setPixelColor(i, strip.Color(50,50,50));
+    }
+    else
+    {
+      strip.setPixelColor(i, strip.Color(0,0,0));
+    }
+      
+  }
+  strip.show();
+}
+void LED_Control2()
 {
   for(int i=0;i<20;i++) 
   {
@@ -72,6 +142,7 @@ void LED_Control()
   }
   strip.show();
 }
+/*
 void update_led(int note)
 {
   strip.setPixelColor(note, strip.Color(PIANO_STATE[note],PIANO_STATE[note],PIANO_STATE[note]));
@@ -89,7 +160,8 @@ int MUX(int sel)
   }
   return analogRead(A0);
 }
-
+*/
+/*
 void PIANO_CHECK()
 {
   for(int i=0;i<NOTE_SIZE;i++)
@@ -112,4 +184,4 @@ void PIANO_CHECK()
     }
   }
 }
-
+*/
