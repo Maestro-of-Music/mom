@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 public class MenuManager : MonoBehaviour {
 
 	public Button Reset_btn;
@@ -13,12 +12,18 @@ public class MenuManager : MonoBehaviour {
 	public Button Practice_btn;
 	public Button Pause_btn; //start, repeat button pause
 	public Button Restart_btn;
+	public Button Home_btn;
 
+	public Text Music_Title;
 	public Text Title;
+//	public Text Score;
+
 	public Text CurrentTime;
 	private int Mode;
 
 	public GameObject PianoManager;
+	public GameObject GameManager;
+
 	public GameObject UIPanel;
 	public GameObject TempoPanel;
 	public GameObject ScorePanel;
@@ -26,12 +31,17 @@ public class MenuManager : MonoBehaviour {
 	public GameObject RepeatPanel;
 
 
+
 	public float TimeSize;
 	public bool TurnTimer;
 
 	// Use this for initialization
-	void Start () {
+	void Awake(){
 		GameMenu ();
+	}
+
+	void Start () {
+	//	GameMenu ();
 		TurnTimer = false;
 	}
 
@@ -46,7 +56,7 @@ public class MenuManager : MonoBehaviour {
 
 		}
 	}
-
+		
 	public void GameMenu(){
 		UIPanel.SetActive (true);
 		Reset_btn.gameObject.SetActive (false);
@@ -73,6 +83,10 @@ public class MenuManager : MonoBehaviour {
 			GameStart(Mode);
 		});
 
+		this.Home_btn.onClick.AddListener (() => {
+			GoHome();
+		});
+
 		this.Restart_btn.onClick.AddListener (() => {
 			SceneManager.LoadScene ("Test");
 
@@ -81,6 +95,7 @@ public class MenuManager : MonoBehaviour {
 
 	public void GameStart(int num){
 		UIPanel.SetActive (false);
+		Music_Title.text = GameManager.gameObject.GetComponent<CreateNote> ().title;
 
 		if (num == 1) {
 			Debug.Log ("Play Mode Started");
@@ -101,6 +116,8 @@ public class MenuManager : MonoBehaviour {
 	public void GameEnd(){
 		UIPanel.SetActive (true);
 		Title.text = "End";
+		Music_Title.gameObject.SetActive (false);
+		//Score.text = PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
 
 		Restart_btn.gameObject.SetActive (true); //reload scene
 		Play_btn.gameObject.SetActive (false);
@@ -108,8 +125,13 @@ public class MenuManager : MonoBehaviour {
 		Repeat_btn.gameObject.SetActive (false);
 		Pause_btn.gameObject.SetActive (false);
 		Reset_btn.gameObject.SetActive (false);
-
-
+		/*
+		if (Mode == 2 || Mode == 3) {
+			Score.gameObject.SetActive (false);
+		}else{
+			Score.gameObject.SetActive (true);
+		}
+		*/
 	}
 
 	public void ModePause(){
@@ -160,8 +182,8 @@ public class MenuManager : MonoBehaviour {
 			PianoManager.gameObject.GetComponent<PianoControl> ().Practice = true;
 			Reset_btn.gameObject.SetActive (true); //reset button Activated
 			TempoPanel.SetActive (true);
-			TempoPanel.gameObject.transform.localPosition = new Vector3 (510, 150, 0);
-			TempoPanel.gameObject.transform.localScale = new Vector3 (3.4f, 3.4f, 3);
+			TempoPanel.gameObject.transform.localPosition = new Vector3 (305, -135, 0);
+			TempoPanel.gameObject.transform.localScale = new Vector3 (1.9f, 1.9f, 1.6f);
 
 		}
 
@@ -169,8 +191,8 @@ public class MenuManager : MonoBehaviour {
 			Debug.Log ("Repeat Start");
 
 			PianoManager.gameObject.GetComponent<PianoControl>().Repeat = true;
-			Reset_btn.gameObject.SetActive (true);
-			Pause_btn.gameObject.SetActive (true);
+			//Reset_btn.gameObject.SetActive (true);
+			//Pause_btn.gameObject.SetActive (true);
 
 			//Tempo Change
 			TempoPanel.SetActive(true);
@@ -180,7 +202,10 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
-
+	public void GoHome(){
+		Debug.Log ("Go Home Menu");
+		SceneManager.LoadScene ("Test");
+	}
 
 	public void OnTimer(){
 		TurnTimer = true;
@@ -201,7 +226,7 @@ public class MenuManager : MonoBehaviour {
 
 				if (Mode == 3) {
 					Debug.Log ("Start Repeat!");
-					RepeatPanel.SetActive (false);
+	
 					PianoManager.gameObject.GetComponent<RepeatControl> ().Get_Sequence ();
 
 				} else if (Mode == 1) {

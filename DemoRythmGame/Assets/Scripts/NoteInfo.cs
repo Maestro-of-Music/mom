@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteInfo{
-
-	public int tempo;
-	public string title;
-	public int measure;
-	public int beats;
-	public int beats_type;
+[System.Serializable]
+public class NoteInfo
+{
+	public int Tempo;    
+	public string Title;
+	public int Measure;
+	public int Beats;
+	public int Beat_type;
+	public int length = 5;
 }
-	

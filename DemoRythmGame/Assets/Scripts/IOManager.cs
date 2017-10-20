@@ -9,13 +9,13 @@ public class IOManager : MonoBehaviour {
 	public GameObject BluetoothController;
 	public Text UIText;
 
-	private Bluetooth bluetooth;
+	//private Bluetooth bluetooth;
 
 	bool click = true;
 	public bool send = false;
 
 	void Awake() {
-		this.bluetooth = Bluetooth.getInstance ();
+		//this.bluetooth = Bluetooth.getInstance ();
 	}
 
 	// Update is called once per frame
@@ -132,7 +132,7 @@ public class IOManager : MonoBehaviour {
 		if (send == false) {
 			Debug.Log("Data : " + result);
 			if(Application.platform == RuntimePlatform.Android){
-				this.bluetooth.Send (result);
+			//	this.bluetooth.Send (result);
 			}
 
 			send = true;

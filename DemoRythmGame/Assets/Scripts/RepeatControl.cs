@@ -9,6 +9,7 @@ public class RepeatControl : MonoBehaviour {
 	public GameObject GameManager;
 	public GameObject TempoPanel;
 	public GameObject RepeatPanel;
+	public GameObject ScorePanel;
 
 	public InputField start_sequence;
 	public InputField end_sequence;
@@ -26,35 +27,55 @@ public class RepeatControl : MonoBehaviour {
 	public Vector3 Start_position;
 
 	void Start(){
+		ScorePanel.SetActive (false);
 		Repeat_start = false;
 
 		this._Repeat.onClick.AddListener (() => {
-			GameManager.gameObject.GetComponent<MenuManager>().OnTimer();
+			if (CheckSetting (start_sequence.text, end_sequence.text, count_repeat.text)){
+				TempoPanel.SetActive (false);
+				RepeatPanel.SetActive(false);
+				GameManager.gameObject.GetComponent<MenuManager>().OnTimer();
+			}
 		});
 
 		//delay 3 seconds
 	}
 
+	public bool CheckSetting(string _start, string _end , string _count){
+		if (_start != "" && _end != "" && _count != "") {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void Get_Sequence(){
-		TempoPanel.SetActive (false);
 
 		gameObject.GetComponent<PianoControl> ().Repeat_Count = 0;
 		Last_position = new Vector3 (0, 0, 0);
 		gameObject.GetComponent<PianoControl> ().InitPosition ();
 
-		start_index = int.Parse (start_sequence.text);
-		end_index = int.Parse (end_sequence.text);
-		count = int.Parse (count_repeat.text);
+		if (CheckSetting (start_sequence.text, end_sequence.text, count_repeat.text)) {
+			start_index = int.Parse (start_sequence.text);
+			end_index = int.Parse (end_sequence.text);
+			count = int.Parse (count_repeat.text);
 
-		//repeat mode try catch needed!!
+			//repeat mode try catch needed!!
 
-		int [] arr = new int[] {start_index, end_index}; 
-		Start_position = new Vector3 (0, (0 + (1.29f * (arr[0]))), 0);
-		gameObject.GetComponent<PianoControl> ().StartCoroutine ("SearchSequence", arr);
-		//move piano where start_index started;
+			int[] arr = new int[] { start_index, end_index }; 
+			Start_position = new Vector3 (0, (0 + (1.29f * (arr [0]))), 0);
+			gameObject.GetComponent<PianoControl> ().StartCoroutine ("SearchSequence", arr);
+			//move piano where start_index started;
 
-		Repeat_start = true;
+			ScorePanel.SetActive(true);
+
+			Repeat_start = true;
+		} else {
+			Repeat_start = false;
+		}
 	}
+
+
 
 	public void Reset_Sequence(){
 		gameObject.GetComponent<ScoreManager> ().score = 0;

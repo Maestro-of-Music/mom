@@ -62,11 +62,14 @@ public class CreateNote : MonoBehaviour {
 		//load notedata and instanstiate each music note 
 		for (int i = 0; i < notedatas.Length; i++) 
 		{
+
 			string Pitch = SetNotePitch (notedatas [i]);
+			Debug.Log (Pitch);
 
 			try{
 				NoteLocation = GameObject.Find (Pitch); //refer to each pitch's location data 
 			}
+
 			catch(NullReferenceException){
 				//instantiate rest note using duration note
 				Debug.Log("rest note ");
@@ -96,13 +99,19 @@ public class CreateNote : MonoBehaviour {
 		string result = ""; 
 
 		if (data.octave != -1) {
-			result = data.octave + data.step;		
-		} // case note 
-
+			if (data.alter == true) { 
+				result = data.octave + data.step + "#";
+			} else {
+				result = data.octave + data.step;	
+			}
+		} 
+		// case note 
 		else {
 			result = "rest";
 		} // case rest
+		Debug.Log (result);
 		 
+
 		return result;
 	}
 
@@ -115,7 +124,6 @@ public class CreateNote : MonoBehaviour {
 
 		//instantiate measure index 
 		note = (GameObject)Instantiate(MeasurePrefab,new Vector3(noteObject.GetComponent<Transform>().transform.position.x+50, Height, noteObject.GetComponent<Transform>().transform.position.z ),Quaternion.identity);
-	
 	}
 
 	//setting NoteObject
@@ -126,11 +134,22 @@ public class CreateNote : MonoBehaviour {
 
 		if (noteObject != null) {
 
+			Debug.Log ("pitch : " + pitch);
+
 			note = (GameObject) Instantiate(NotePrefab, new Vector3 (noteObject.GetComponent<Transform>().transform.position.x, Height, noteObject.GetComponent<Transform>().transform.position.z),Quaternion.identity);
 			note.transform.localScale = new Vector3 (1, duration, 1);
 			note.GetComponent<NoteDetail> ().duration = duration;
 			note.GetComponent<NoteDetail> ().pitch = pitch;
 			note.GetComponent<NoteDetail> ().sequence = sequence;
+
+			if (pitch.EndsWith ("#")) {
+				Debug.Log ("alter note");
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = Color.blue;
+				note.transform.localScale = new Vector3 (1, duration, 0.5f);
+			} else {
+				note.transform.localScale = new Vector3 (1, duration, 1);
+			}
+
 		} 
 		else if(noteObject == null){ 
 			note = (GameObject) Instantiate(RestNotePrefab, new Vector3 (-3.8f, Height, 3),Quaternion.identity);

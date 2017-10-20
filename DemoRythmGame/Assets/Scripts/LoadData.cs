@@ -59,7 +59,9 @@ public class LoadData : MonoBehaviour {
 			temp.duration = int.Parse(jsonObj ["NoteData"] [i] ["duration"].ToString());
 			temp.rest =  bool.Parse(jsonObj["NoteData"] [i] ["rest"].ToString());
 			temp.measureIndex = int.Parse(jsonObj ["NoteData"] [i] ["measureIndex"].ToString());
-		
+			temp.alter = bool.Parse(jsonObj ["NoteData"] [i] ["alter"].ToString());
+
+
 			notedatas [i] = temp;
 		}
 			
