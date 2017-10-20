@@ -11,6 +11,7 @@ public class PianoControl : MonoBehaviour {
 	public GameObject GameManager;
 	public GameTime currentSquence;
 	public Text Score;
+	public Text ScoreDisplay;
 
 	public int Mode;
 	public string pitch; 
@@ -106,6 +107,7 @@ public class PianoControl : MonoBehaviour {
 
 				if (Tempsequence != this.Sequence) {
 					Debug.Log ("Count :" + count);
+					ScoreDisplay.text = "";
 					Scorechange = true;
 					StartCoroutine ("ScoreManager");
 					Tempsequence = this.Sequence;
@@ -142,6 +144,7 @@ public class PianoControl : MonoBehaviour {
 				if (transform.position.y >= gameObject.GetComponent<RepeatControl> ().Last_position.y) {
 					Repeat_Count++;
 					gameObject.GetComponent<RepeatControl> ().Reset_Sequence ();
+					Score.text = "";
 				}
 			}
 			else if(gameObject.GetComponent<RepeatControl> ().count!= 0 && Repeat_Count == gameObject.GetComponent<RepeatControl> ().count) {
@@ -349,7 +352,7 @@ public class PianoControl : MonoBehaviour {
 			gameObject.GetComponent<ScoreManager> ().score += temp * 100;
 			Scorechange = false;
 		}
-
+		ScoreDisplay.text ="+ : " + temp * 100;
 		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
 
 		yield return new WaitForSeconds(1);
