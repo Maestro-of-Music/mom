@@ -16,7 +16,7 @@ public class MenuManager : MonoBehaviour {
 
 	public Text Music_Title;
 	public Text Title;
-//	public Text Score;
+	public Text Score;
 
 	public Text CurrentTime;
 	private int Mode;
@@ -117,7 +117,7 @@ public class MenuManager : MonoBehaviour {
 		UIPanel.SetActive (true);
 		Title.text = "End";
 		Music_Title.gameObject.SetActive (false);
-		//Score.text = PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
+		Score.text = "Total Score : " + PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
 
 		Restart_btn.gameObject.SetActive (true); //reload scene
 		Play_btn.gameObject.SetActive (false);
@@ -125,13 +125,15 @@ public class MenuManager : MonoBehaviour {
 		Repeat_btn.gameObject.SetActive (false);
 		Pause_btn.gameObject.SetActive (false);
 		Reset_btn.gameObject.SetActive (false);
-		/*
+
 		if (Mode == 2 || Mode == 3) {
 			Score.gameObject.SetActive (false);
+			PianoManager.gameObject.GetComponent<PianoControl> ().Repeat = false;
+
 		}else{
 			Score.gameObject.SetActive (true);
 		}
-		*/
+
 	}
 
 	public void ModePause(){

@@ -125,7 +125,7 @@ public class CreateNote : MonoBehaviour {
 		//instantiate measure index 
 		note = (GameObject)Instantiate(MeasurePrefab,new Vector3(noteObject.GetComponent<Transform>().transform.position.x+50, Height, noteObject.GetComponent<Transform>().transform.position.z ),Quaternion.identity);
 	}
-
+		
 	//setting NoteObject
 	void SetNoteObject(GameObject noteObject , int duration, string pitch, int sequence ){
 
@@ -142,9 +142,41 @@ public class CreateNote : MonoBehaviour {
 			note.GetComponent<NoteDetail> ().pitch = pitch;
 			note.GetComponent<NoteDetail> ().sequence = sequence;
 
+			switch (duration) {
+			case 1: //white
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32(255, 0, 0, 0);
+				break;
+			case 2: 
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32(255, 80, 80,0);
+				break;
+			case 3: 
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (255, 168, 82,0);
+				break;
+			case 4: 
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (255, 212, 82,0);
+				break; 
+			case 5:  
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (212, 255, 82,0);
+				break; 
+			case 6:  
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (168, 255, 82,0);
+				break; 
+			case 7:  
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (125, 255, 82,0);
+				break; 
+			case 8:  
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (82, 255, 82,0);
+				break; 
+			default:
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32 (82, 255, 125,0);
+				break; 
+
+			}
+		
+
 			if (pitch.EndsWith ("#")) {
 				Debug.Log ("alter note");
-				note.gameObject.GetComponentInChildren<Renderer> ().material.color = Color.blue;
+				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32(255, 80+88, 80,0);
 				note.transform.localScale = new Vector3 (1, duration, 0.5f);
 			} else {
 				note.transform.localScale = new Vector3 (1, duration, 1);

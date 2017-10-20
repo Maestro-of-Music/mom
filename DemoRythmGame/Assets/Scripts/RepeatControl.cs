@@ -62,7 +62,7 @@ public class RepeatControl : MonoBehaviour {
 
 			//repeat mode try catch needed!!
 
-			int[] arr = new int[] { start_index, end_index }; 
+			int[] arr = new int[] { (start_index-1), (end_index-1) }; 
 			Start_position = new Vector3 (0, (0 + (1.29f * (arr [0]))), 0);
 			gameObject.GetComponent<PianoControl> ().StartCoroutine ("SearchSequence", arr);
 			//move piano where start_index started;
