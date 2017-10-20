@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class NoteData
 {
 	public int octave;
@@ -9,4 +10,5 @@ public class NoteData
 	public int duration;
 	public bool rest;
 	public int measureIndex;
+	public bool alter;
 }

@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Piano_setPosition.cs" />
      <Compile Include="Assets\Scripts\BluetoothIOManager.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\Bluetooth.cs" />
      <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
@@ -79,6 +80,7 @@
      <None Include="Assets\school.xml" />
      <None Include="Assets\StreamingAssets\school.xml" />
      <None Include="Assets\Resources\school.txt" />
+     <None Include="Assets\Resources\planeSong.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

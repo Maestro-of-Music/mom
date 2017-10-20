@@ -38,13 +38,20 @@ public class XMLManager : MonoBehaviour {
 
     IEnumerator Xml_load(string Filename)
     {
-        //TextAsset textAsset = (TextAsset)Resources.Load(Filename);
-		//
-		/*
-        XmlDocument xmldoc = new XmlDocument();
-        xmldoc.LoadXml(textAsset.text);
-		*/
-		XmlDocument xmldoc = XMLread ();
+		XmlDocument xmldoc;
+
+		if (Application.platform == RuntimePlatform.Android) {
+			Debug.Log ("Load in Android");
+			xmldoc = XMLread ();
+		} 
+
+		else {
+			Debug.Log ("Load in PC");
+			TextAsset textAsset = (TextAsset)Resources.Load(Filename);
+			xmldoc = new XmlDocument();
+			xmldoc.LoadXml(textAsset.text);		
+		}
+ 
 
         SetNodeInfo(xmldoc);
         SetNodeData(xmldoc);
@@ -95,6 +102,10 @@ public class XMLManager : MonoBehaviour {
 				int octave = 0;
 				int duration = 0;
 				bool rest = false;
+				bool alter = false;
+
+				XmlElement pitch = (XmlElement)Ele.GetElementsByTagName ("note").Item(j);
+				alter = SetAlter (pitch); //check alter 
 
                 try
                 {
@@ -115,11 +126,28 @@ public class XMLManager : MonoBehaviour {
 					temp.duration = duration;
 					temp.measureIndex = (i+1) ;
 					temp.rest = rest;
+					temp.alter = alter;
                     arr.Add(temp);
                 }
             }
         }
     }
+
+	bool SetAlter(XmlElement content){
+		bool alter = false;
+		int num = 0;
+
+		try{
+			num = int.Parse(content.GetElementsByTagName("alter").Item(0).InnerText);
+		}catch(Exception){
+			num = 0;
+		}finally{
+			if (num != 0)
+				alter = true;
+		}
+	
+		return alter;
+	}
 
 	public string SetTitle(XmlDocument content)
 	{
@@ -168,7 +196,12 @@ public class XMLManager : MonoBehaviour {
 		return tempo;
 	}
 
+
+
 }
+
+
+
 
 public class NoteJson
 {

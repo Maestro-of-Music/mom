@@ -33,7 +33,7 @@ public class PianoControl : MonoBehaviour {
 
 	//seperate two kind of mode and partial repeat move (using sequence) 
 
-	private Vector3 _location;
+	public Vector3 _location;
 
 	void Awake(){
 		transform.position = new Vector3 (0, -0.3f, 0);
@@ -43,7 +43,6 @@ public class PianoControl : MonoBehaviour {
 
 	void Start () {
 			
-		//InitDevice ();
 	}
 
 	//restart
@@ -97,14 +96,13 @@ public class PianoControl : MonoBehaviour {
 	void PitchCheck(){
 		
 		if (Target_pitch == pitch) {
-			_location = transform.position; 
+			_location = transform.position;  
 
 			//check point which calculate score
 			if (Practice)
 				StartCoroutine ("ScoreManager");
-			else if (Play) {
+			else if (Play || Repeat) {
 				//sequence 
-				//StartCoroutine ("ScoreManager");
 
 				if (Tempsequence != this.Sequence) {
 					Debug.Log ("Count :" + count);
@@ -115,10 +113,10 @@ public class PianoControl : MonoBehaviour {
 			}
 	
 			move = true;
-		}
+		}/*
 		else {
 			move = false;
-		}
+		}*/
 
 	}
 
@@ -145,10 +143,11 @@ public class PianoControl : MonoBehaviour {
 					Repeat_Count++;
 					gameObject.GetComponent<RepeatControl> ().Reset_Sequence ();
 				}
-			} 
-			else {
+			}
+			else if(gameObject.GetComponent<RepeatControl> ().count!= 0 && Repeat_Count == gameObject.GetComponent<RepeatControl> ().count) {
 				Debug.Log ("Repeat End!");
-				gameObject.GetComponent<RepeatControl> ().Repeat_start = false;
+				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
+
 			}
 		}
 	
@@ -310,6 +309,9 @@ public class PianoControl : MonoBehaviour {
 
 		if (transform.position.y >= _location.y + duration) {
 			Debug.Log (transform.position.y);
+			Debug.Log (transform.position.y);
+
+
 			pitch = null;
 			move = false;
 		} else {
