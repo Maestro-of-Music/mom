@@ -110,12 +110,12 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 7d6f6554ea36a96e51c1dfafee504f19 Assembly-CSharp.dll:.ScoreManager
-56a2df03dfd68e7cd190d118d92ef85b Assembly-CSharp.dll:.IOManager
+900a4195cd8494c9212394a83d00018f Assembly-CSharp.dll:.IOManager
 661d33336607a0bd9dd3964acc8c1c07 Assembly-CSharp.dll:.SceneChange
 f50ecefcc17990409097565f60a11de0 Assembly-CSharp.dll:.Observer
 33575701ec05c1f964d0f751d00ba3dd Assembly-CSharp.dll:.GameTime
 e606e4775b4ab8f38c8a948a3b1ce158 Assembly-CSharp.dll:.PianoControl
-420308cc40b0dfff223596f98de5edac Assembly-CSharp.dll:.BluetoothModel
+6293ae8fc9f1db55c58ca4a644b40160 Assembly-CSharp.dll:.BluetoothModel
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Piano_setPosition
 4e29696f1ce1c0618df7241112874f92 Assembly-CSharp.dll:.RepeatControl
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator

@@ -22,17 +22,17 @@ public abstract class BtObservale : MonoBehaviour {
 public class BluetoothModel : BtObservale {
 
     [SerializeField]
-    private int bufferSize = 256;
+    private int bufferSize = 1024;
 
     public List<string> macAddresses = null;
-  //  private Queue<string> messageQueue = null;
+    //private Queue<string> messageQueue = null;
     private StringBuilder rawMessage = null;
+	public GameObject IOManager;
 
     void Awake() {
         this.observerList = new List<IBtObserver>();
 
         this.macAddresses = new List<string>();
-        //this.messageQueue = new Queue<string>();
         this.rawMessage = new StringBuilder(this.bufferSize);
     }
 
@@ -61,12 +61,19 @@ public class BluetoothModel : BtObservale {
 
 		string tempMassege = rawMessage.ToString ();
 
-        for (int i = 0; i < this.observerList.Count; ++i) {
-			this.observerList[i].OnGetMessage(tempMassege.Substring(tempMassege.Length-1, 1));
-        }
+		for (int i = 0; i < rawMessage.Length; i++) {
+			rawMessage.Remove (0, rawMessage.Length);
+		}
+		Debug.Log ("Delete !");
 
-        Debug.Log("Get Packet and Enqueue messageQueue");
-       // Debug.Log(rawMessage);
+		Debug.Log ("rawMessage :" + tempMassege + " " + IOManager.GetComponent<IOManager> ().GetData);
+		IOManager.GetComponent<IOManager> ().HardwareInput2(tempMassege);
+		Debug.Log ("SEND!");
+
+		//BluetoothIOManager.GetComponent<BluetoothIOManager> ().GetData = tempMassege;
+		//Debug.Log ("GetData :" + BluetoothIOManager.GetComponent<BluetoothIOManager> ().GetData);
+
+
     }
 
     // ========================================
@@ -106,8 +113,18 @@ public class BluetoothModel : BtObservale {
 
 	void OnReadMessage(string _Message) {
         this.rawMessage.Append(_Message);
-        this.CheckMessageFormat();
-        Debug.Log("On Read Message : " + _Message);
+		//string temp = this.rawMessage.ToString (); //change to string 
+		this.CheckMessageFormat();
+		/*
+		if (_Message.Contains ("#")) {
+			_Message = _Message.Substring (0, 2);
+			Debug.Log ("Alter #");
+		} else {
+			_Message = _Message.Substring (0, 1);
+			Debug.Log ("Normal ");
+		}
+		*/	
+		//Debug.Log("On Read Message : " + _Message);
     }
 
     void OnFoundNoDevice(string _s) {

@@ -123,7 +123,8 @@ public class Observer : MonoBehaviour {
 
 				if (_pitch == "C") {
 					result = 1;
-				}else if(_pitch == "C#"){
+				}
+				else if(_pitch == "C#"){
 					result = 2;
 				}
 				else if (_pitch == "D") {
@@ -249,7 +250,7 @@ public class Observer : MonoBehaviour {
 
 		for (int i = 0; i < ClickedObjs.Length; i++) {
 			//Debug.Log ("Clicked Objects : " + i); 
-			Debug.Log("Pitch  : " + pitch);
+			//Debug.Log("Pitch  : " + pitch);
 
 			if (ClickedObjs[i].gameObject.name.EndsWith("#")) {
 				ClickedObjs [i].gameObject.GetComponent<Renderer> ().material.color = Color.black;

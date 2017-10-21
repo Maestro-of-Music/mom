@@ -2086,7 +2086,7 @@ RectTransform:
   - {fileID: 424501977}
   - {fileID: 994784449}
   m_Father: {fileID: 1598296434}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4455,8 +4455,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PianoManager: {fileID: 163334526}
   BluetoothController: {fileID: 1321442348}
-  UIText: {fileID: 0}
   send: 0
+  GetData: 
 --- !u!4 &1192876559
 Transform:
   m_ObjectHideFlags: 0
@@ -5158,6 +5158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bufferSize: 256
   macAddresses: []
+  IOManager: {fileID: 1192876557}
 --- !u!4 &1390808443
 Transform:
   m_ObjectHideFlags: 0
@@ -6031,7 +6032,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 800, y: 650}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6073,9 +6074,9 @@ RectTransform:
   - {fileID: 647601181}
   - {fileID: 972122565}
   - {fileID: 332101637}
-  - {fileID: 532546604}
   - {fileID: 2103793403}
   - {fileID: 1837614469}
+  - {fileID: 532546604}
   - {fileID: 203626540}
   - {fileID: 550190610}
   - {fileID: 2004155221}
@@ -6801,7 +6802,7 @@ RectTransform:
   - {fileID: 1328024288}
   - {fileID: 1975722367}
   m_Father: {fileID: 1598296434}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7673,7 +7674,7 @@ RectTransform:
   - {fileID: 1371192463}
   - {fileID: 550696763}
   m_Father: {fileID: 1598296434}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
