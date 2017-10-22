@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System.Xml;
 
 public class MenuManager : MonoBehaviour {
 
@@ -13,6 +15,7 @@ public class MenuManager : MonoBehaviour {
 	public Button Pause_btn; //start, repeat button pause
 	public Button Restart_btn;
 	public Button Home_btn;
+    public Button Convert_btn;
 
 	public Text Music_Title;
 	public Text Title;
@@ -30,10 +33,9 @@ public class MenuManager : MonoBehaviour {
 	public GameObject TimerPanel;
 	public GameObject RepeatPanel;
 
-
-
 	public float TimeSize;
 	public bool TurnTimer;
+    public string ServerUrl = "http://52.78.228.8/restapi/convert_sheet.php";
 
 	// Use this for initialization
 	void Awake(){
@@ -91,6 +93,11 @@ public class MenuManager : MonoBehaviour {
 			SceneManager.LoadScene ("Test");
 
 		});
+
+        this.Convert_btn.onClick.AddListener(() => {
+            Debug.Log("Http conncting to get XML");
+            HttpGet(ServerUrl);
+        });
 	}
 
 	public void GameStart(int num){
@@ -249,4 +256,44 @@ public class MenuManager : MonoBehaviour {
 		yield return new WaitForSeconds(1); //wait for init Device
 	}
 
+    // Request to Server for XML coverted by Audiveris.
+    public WWW HttpGet(string url)
+    {
+        WWW www = new WWW(url);
+        StartCoroutine(WaitForRequest(www));
+        return www;
+    }
+
+    private IEnumerator WaitForRequest(WWW www)
+    {
+        yield return www;
+        if (www.error == null)
+        {
+            Debug.Log("WWW Success");
+        }
+        else
+        {
+            Debug.Log("WWW Error : " + www.error);
+        }
+        if (www.isDone)
+        {
+            Debug.Log("Complete!");
+            WriteXML(www);
+        }
+    }
+
+    void WriteXML(WWW XmlFile)
+    {
+        string strFile = "test_audiveris.xml";
+        //string strFilePath = Application.persistentDataPath + "/" + strFile;
+        string strFilePath = "Assets/" + strFile;
+
+        if (!File.Exists(strFilePath))
+        {
+            File.WriteAllBytes(strFilePath, XmlFile.bytes);
+        }
+        XmlDocument Xmldoc = new XmlDocument();
+        Xmldoc.Load(strFilePath);
+        Debug.Log(Xmldoc.InnerText);
+    }
 }
