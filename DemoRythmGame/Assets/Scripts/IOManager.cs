@@ -7,12 +7,15 @@ public class IOManager : MonoBehaviour {
 
 	public GameObject PianoManager;
 	public GameObject BluetoothController;
-//	public Text UIText;
+//	public Text UIText; 
+	//여기서 인풋 개수 만큼 배열을 늘림 
 
 	private Bluetooth bluetooth;
 
 	bool click = true;
 	public bool send = false;
+
+	public string GetData;
 
 	void Awake() {
 		this.bluetooth = Bluetooth.getInstance ();
@@ -20,7 +23,8 @@ public class IOManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		KeyInput ();
+		
+		//KeyInput ();
 	}
 		
 	public void KeyInput(){
@@ -78,7 +82,7 @@ public class IOManager : MonoBehaviour {
 
 			} // Ra#
 
-			HardwareInput ();
+			//HardwareInput ();
 	}
 
 	void ConvertGetData(){
@@ -86,15 +90,67 @@ public class IOManager : MonoBehaviour {
 
 	}
 
-	public void HardwareInput(){
+	public void HardwareInput2(string GetData)
+	{
+		Debug.Log ("GETDATA : " + GetData);
+
+		if (GetData == "A") {
+			Debug.Log ("C Clicked");
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+		} 
+		else if (GetData == "B") {
+			Debug.Log ("C# Clicked");
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C#";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 		
-		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "A") {
+		} 
+		else if (GetData == "C") {
+			Debug.Log ("D Clicked");
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+		}
+		else if (GetData == "D") {
+			Debug.Log ("D# Clicked");
+			PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D#";
+			Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+
+		} 
+		else if (GetData == "E") {
+			Debug.Log ("E Clicked");
+			PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4E";
+			Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+		}
+			
+	}
+	/*
+	public void HardwareInput(string GetData){
+		//if(BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData != null)
+		//Debug.Log ("Bluetooth GetData : " + BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData);
+		Debug.Log("GETDATA : " + GetData);
+
+		if (GetData == "A") {
+			Debug.Log ("C Clicked");
+			if (click) {
+
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
+				click = false;
+			} else {
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
+				click = true;
+			}
+
+		} 
+		if (GetData == "C") {
 
 			if (click) {
 
 				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch;
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D";
 				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
 
 				click = false;
 			} else {
@@ -102,13 +158,49 @@ public class IOManager : MonoBehaviour {
 				click = true;
 			}
 
-		} else if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "B") {
+		} 
+		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "E") {
 
 			if (click) {
 
 				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch;
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4E";
 				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
+
+				click = false;
+			} else {
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
+				click = true;
+			}
+		}
+
+
+		 if (GetData == "B"){
+			
+			if (click) {
+
+				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C#";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
+
+				click = false;
+			} else {
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
+				click = true;
+			}
+
+		} 
+
+		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "D") {
+
+			if (click) {
+
+				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
+				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D#";
+				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
+				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
 
 				click = false;
 			} else {
@@ -119,6 +211,7 @@ public class IOManager : MonoBehaviour {
 		}
 
 	}
+*/
 	//Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
 	public void KeyOutput(string data){
 		//send data to arduino 
@@ -129,14 +222,14 @@ public class IOManager : MonoBehaviour {
 
 		Debug.Log ("Result : " + result);
 
-		if (send == false) {
-			Debug.Log("Data : " + result);
-			if(Application.platform == RuntimePlatform.Android){
-				this.bluetooth.Send (result);
-			}
-
-			send = true;
+		//if (send == false) {
+		Debug.Log("Data : " + result);
+		if(Application.platform == RuntimePlatform.Android){
+			this.bluetooth.Send (result);
 		}
+
+		//	send = true;
+	//	}
 
 	
 	}

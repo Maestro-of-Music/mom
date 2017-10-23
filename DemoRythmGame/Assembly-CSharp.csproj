@@ -74,12 +74,10 @@
      <Compile Include="Assets\Scripts\SceneChange.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\XMLManager.cs" />
-     <None Include="Assets\Resources\school.xml" />
      <None Include="Assets\StreamingAssets\school.txt" />
      <None Include="Assets\school.txt" />
      <None Include="Assets\school.xml" />
      <None Include="Assets\StreamingAssets\school.xml" />
-     <None Include="Assets\Resources\school.txt" />
      <None Include="Assets\Resources\planeSong.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
  <Reference Include="UnityEngine.UI">

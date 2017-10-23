@@ -11,9 +11,7 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	[SerializeField]
 	private BluetoothModel bluetoothModel;
 
-	[SerializeField]
 	public string GetData;
-
 
 	private void Awake() {
 		this.bluetooth = Bluetooth.getInstance();
@@ -31,10 +29,10 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 	}
 
 	public void OnGetMessage(string _Message){
-		GetData = null;
-		GetData = _Message.Substring(_Message.Length-1, 1);
-		Debug.Log ("Pitch Click: " + GetData);
 
+		//this.GetData = null;
+		//Debug.Log ("GET MESSAGE :" + _Message);
+		//this.GetData = _Message.Substring(_Message.Length-1, 1);
 	}
 
 	public void OnFoundNoDevice() {
