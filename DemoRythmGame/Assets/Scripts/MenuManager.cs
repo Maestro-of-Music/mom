@@ -184,7 +184,7 @@ public class MenuManager : MonoBehaviour {
 			PianoManager.gameObject.GetComponent<PianoControl> ().Practice = true;
 			Reset_btn.gameObject.SetActive (true); //reset button Activated
 			TempoPanel.SetActive (true);
-			TempoPanel.gameObject.transform.localPosition = new Vector3 (305, -135, 0);
+			TempoPanel.gameObject.transform.localPosition = new Vector3 (305, 90, 0);
 			TempoPanel.gameObject.transform.localScale = new Vector3 (1.9f, 1.9f, 1.6f);
 
 		}

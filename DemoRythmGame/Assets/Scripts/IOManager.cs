@@ -121,9 +121,7 @@ public class IOManager : MonoBehaviour {
 			PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4E";
 			Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 		}
-
-
-
+			
 	}
 	/*
 	public void HardwareInput(string GetData){
