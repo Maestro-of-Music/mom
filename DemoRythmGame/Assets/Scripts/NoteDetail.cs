@@ -7,5 +7,6 @@ public class NoteDetail : MonoBehaviour {
 	
 	public string pitch;
 	public int duration;
-	public int sequence;
+	public int sequence; //measure
+    public int note_index; //counting note
 }

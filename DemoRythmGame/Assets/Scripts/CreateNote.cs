@@ -11,6 +11,7 @@ public class CreateNote : MonoBehaviour {
 	public GameObject NotePrefab;
 	public GameObject RestNotePrefab;
 	public GameObject MeasurePrefab;
+	public GameObject EndPrefab;
 
 	private LoadData loaddata;
 
@@ -19,26 +20,27 @@ public class CreateNote : MonoBehaviour {
 	public int measure;
 	public int beats;
 	public int beats_type;
+    private int notenum;
 
 	public NoteData [] notedatas;
+	public NoteData[] backupdatas;
+
 	public float noteHeight;
 	private int measure_count;
+	private float forward;
+	private float backward;
 
 
 	void Awake(){
 		StartCoroutine ("WaitForLoadData"); //wait for load data 
 		StartCoroutine ("ConnectLoadData"); //actually connect load data
 		noteHeight = 1.4f;
-		measure_count = 0;
+        measure_count = 0;
+        notenum = 1; // check total number of note
 	}
 
 	void Start(){
 		InstantiateNote ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
 	void LoadNoteInfo(){
@@ -55,6 +57,9 @@ public class CreateNote : MonoBehaviour {
 
 		notedatas = new NoteData[loaddata.notedatas.Length];
 		notedatas = loaddata.notedatas;
+
+		backupdatas = new NoteData[loaddata.backupdatas.Length];
+		backupdatas = loaddata.backupdatas;
 	}
 		
 	void InstantiateNote(){
@@ -65,6 +70,10 @@ public class CreateNote : MonoBehaviour {
 
 			string Pitch = SetNotePitch (notedatas [i]);
 			Debug.Log (Pitch);
+
+			if (notedatas [i].backward) {
+					
+			}
 
 			try{
 				NoteLocation = GameObject.Find (Pitch); //refer to each pitch's location data 
@@ -77,11 +86,50 @@ public class CreateNote : MonoBehaviour {
 				Pitch = "";
 			}
 			finally{
-				
 				//SetMeasureObject (NoteLocation, notedatas [i].measureIndex);
-				SetNoteObject(NoteLocation, notedatas[i].duration,Pitch,i);
+				SetNoteObject(NoteLocation, notedatas[i].duration,Pitch,notedatas[i].measureIndex);
+                notenum++;
+				forward = noteHeight;
 			}
 		}
+
+		noteHeight = 1.4f; // initiate noteheight 
+
+		//load notedata and instanstiate each music note 
+		for (int i = 0; i < backupdatas.Length; i++) 
+		{
+
+			string Pitch = SetNotePitch (backupdatas [i]);
+			Debug.Log (Pitch);
+
+			/*
+			if (notedatas [i].backward) {
+			}
+			*/
+
+			try{
+				NoteLocation = GameObject.Find (Pitch); //refer to each pitch's location data 
+			}
+
+			catch(NullReferenceException){
+				//instantiate rest note using duration note
+				Debug.Log("rest note ");
+				NoteLocation = null;
+				Pitch = "";
+			}
+			finally{
+				//SetMeasureObject (NoteLocation, notedatas [i].measureIndex);
+				SetNoteObject(NoteLocation, backupdatas[i].duration ,Pitch ,backupdatas[i].measureIndex);
+                measure_count = backupdatas[i].measureIndex;
+				notenum++;
+				backward = noteHeight;
+			}
+		}
+
+		noteHeight = (forward > backward) ? forward : backward;  
+
+		EndNoteObject (measure_count);
+
 	}
 		
 	void SetMeasureObject(GameObject noteObject, int index){
@@ -125,6 +173,14 @@ public class CreateNote : MonoBehaviour {
 		//instantiate measure index 
 		note = (GameObject)Instantiate(MeasurePrefab,new Vector3(noteObject.GetComponent<Transform>().transform.position.x+50, Height, noteObject.GetComponent<Transform>().transform.position.z ),Quaternion.identity);
 	}
+
+	void EndNoteObject(int Measure){
+		//final end note intantiate 
+		GameObject note;
+		note = (GameObject)Instantiate (EndPrefab, new Vector3 (0, noteHeight, 2.85f), Quaternion.identity);
+        note.GetComponent<NoteDetail>().sequence = Measure + 1; //setting Measure 
+
+	}
 		
 	//setting NoteObject
 	void SetNoteObject(GameObject noteObject , int duration, string pitch, int sequence ){
@@ -141,6 +197,7 @@ public class CreateNote : MonoBehaviour {
 			note.GetComponent<NoteDetail> ().duration = duration;
 			note.GetComponent<NoteDetail> ().pitch = pitch;
 			note.GetComponent<NoteDetail> ().sequence = sequence;
+            note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
 
 			switch (duration) {
 			case 1: //white

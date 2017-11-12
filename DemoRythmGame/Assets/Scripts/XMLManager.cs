@@ -10,6 +10,7 @@ public class XMLManager : MonoBehaviour {
 
     public NoteInfo noteinfo;
     public List<NoteData> arr;
+	public List<NoteData> backarr;
 
     public string _filename; 
 
@@ -62,10 +63,15 @@ public class XMLManager : MonoBehaviour {
     }
 
 	public void SetNodeJSON(){
-	
+
+
+		NoteDatas result = new NoteDatas ();
+		result.Forward = arr;
+		result.Backward = backarr;
+
 		NoteJson notejson = new NoteJson ();
 		notejson.NoteInfo.Add(noteinfo);
-		notejson.NoteData = arr;
+		notejson.noteDatas = result;
 
 		JsonData data = JsonMapper.ToJson (notejson);
 
@@ -91,12 +97,20 @@ public class XMLManager : MonoBehaviour {
 
 		XmlNodeList node = content.GetElementsByTagName("measure");
 
-		for (int i = 0; i < noteinfo.Measure; i++)
+		for (int i = 0; i < node.Count; i++)
         {
+			Debug.Log("Meausure num : " + i);
 
 			XmlElement Ele = (XmlElement)node.Item(i);
 
-            for (int j = 0; j < Ele.GetElementsByTagName("note").Count; j++)
+			string repeat = RepeatCheck (Ele);
+			bool backward = false;
+
+			if (repeat == "forward") { //repeat mode start
+				Debug.Log ("!!!");
+			}				
+
+			for (int j = 0; j < Ele.GetElementsByTagName("note").Count; j++)
             {
 				string step = "";
 				int octave = 0;
@@ -107,10 +121,20 @@ public class XMLManager : MonoBehaviour {
 				XmlElement pitch = (XmlElement)Ele.GetElementsByTagName ("note").Item(j);
 				alter = SetAlter (pitch); //check alter 
 
+				Debug.Log (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText));
+
+				if (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText) == 1) {
+					//forward 
+					backward = false;
+				} else if (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText) == 2) {
+					//backward
+					backward = true;
+				}
+
                 try
                 {
-                    step = Ele.GetElementsByTagName("step").Item(j).InnerText;
-                    octave = int.Parse(Ele.GetElementsByTagName("octave").Item(j).InnerText);
+					step = pitch.GetElementsByTagName("step").Item(0).InnerText;
+					octave = int.Parse(pitch.GetElementsByTagName("octave").Item(0).InnerText);
 					rest = false;
 
                 }catch(Exception){
@@ -119,7 +143,9 @@ public class XMLManager : MonoBehaviour {
                     rest = true;
                 }
 				finally{
-					duration = int.Parse(Ele.GetElementsByTagName("duration").Item(j).InnerText);
+					duration = 	int.Parse(pitch.GetElementsByTagName("duration").Item(0).InnerText);
+					Debug.Log (duration);
+
                     NoteData temp = new NoteData();
 					temp.step = step;
 					temp.octave = octave;
@@ -127,11 +153,52 @@ public class XMLManager : MonoBehaviour {
 					temp.measureIndex = (i+1) ;
 					temp.rest = rest;
 					temp.alter = alter;
-                    arr.Add(temp);
+					temp.repeat = repeat; //repeat mode 
+					temp.backward = backward; //forward or backward 
+
+					if (temp.backward == true) {
+						backarr.Add (temp);
+					} else {
+						arr.Add (temp);
+					}
                 }
             }
+
+			/*
+			if (repeat == "backward") {
+				Debug.Log ("!!!");
+			}	
+			*/
+
+			Debug.Log ("--------------------------");
         }
     }
+
+	public bool backwardChange(bool content){
+
+		if (content) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public string RepeatCheck(XmlElement content){
+
+		string repeat = "";
+		try{
+			repeat = content.GetElementsByTagName("repeat").Item(0).Attributes.GetNamedItem("direction").InnerText;
+		}catch(Exception){
+			Debug.Log ("no repeat");
+		}finally{
+			if (repeat == "forward")
+				Debug.Log ("Repeat start!");
+			else if(repeat == "backward") {
+				Debug.Log ("Repeat end");
+			}
+		}
+		return repeat;
+	}
 
 	bool SetAlter(XmlElement content){
 		bool alter = false;
@@ -206,11 +273,11 @@ public class XMLManager : MonoBehaviour {
 public class NoteJson
 {
 	public List<NoteInfo> NoteInfo;
-	public List<NoteData> NoteData;
+	public NoteDatas noteDatas;
 
 	public NoteJson(){
 		NoteInfo = new List<NoteInfo> ();
-		NoteData = new List<NoteData> ();
+		noteDatas = new NoteDatas ();
 	}
 }
 	

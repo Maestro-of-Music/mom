@@ -7,78 +7,108 @@ public class IOManager : MonoBehaviour {
 
 	public GameObject PianoManager;
 	public GameObject BluetoothController;
-//	public Text UIText; 
-	//여기서 인풋 개수 만큼 배열을 늘림 
+	public int Keyboard_Index;
 
-	private Bluetooth bluetooth;
+	//private Bluetooth bluetooth;
 
-	bool click = true;
 	public bool send = false;
 
 	public string GetData;
 
 	void Awake() {
-		this.bluetooth = Bluetooth.getInstance ();
+	//	this.bluetooth = Bluetooth.getInstance ();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		
-		//KeyInput ();
+		KeyInput (Keyboard_Index);
+
 	}
 		
-	public void KeyInput(){
+	public void KeyInput(int keyboard_index){
 		//get data from arduino 
 
+		/*
+		switch (keyboard_index) {
+		case 1: 
+			Debug.Log ("1 Octave!");
+			break;
+		case 2:
+			Debug.Log ("2 Octave!");
+			break;
+		case 3:
+			Debug.Log ("3 Octave!");
+			break;
+		case 4:
+			Debug.Log ("4 Octave!");
+			break;
+		case 5:
+			Debug.Log ("5 Octave!");
+			break;
+		}
+		*/
 			/* White Key Input */ 
 			if (Input.GetKeyDown (KeyCode.A)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4C";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index  + "C" + "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Do 
 			else if (Input.GetKeyDown (KeyCode.S)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4D";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "D"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Re
 			else if (Input.GetKeyDown (KeyCode.D)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4E";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index  + "E"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Me 
 			else if (Input.GetKeyDown (KeyCode.F)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4F";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "F"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Fa 
 			else if (Input.GetKeyDown (KeyCode.G)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4G";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch +=  keyboard_index + "G"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Sol 
 			else if (Input.GetKeyDown (KeyCode.H)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4A";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "A"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Ra
 			else if (Input.GetKeyDown (KeyCode.J)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4B";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch +=  keyboard_index + "B"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Si
 
 			/* Black Key Input */ 
 			else if (Input.GetKeyDown (KeyCode.Q)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4C#";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch +=  keyboard_index + "C#"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Do# 
 			else if (Input.GetKeyDown (KeyCode.W)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4D#";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "D#"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Re#
 			else if (Input.GetKeyDown (KeyCode.E)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4F#";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "F#"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Fa# 
 			else if (Input.GetKeyDown (KeyCode.R)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4G#";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "G#"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Sol# 
 			else if (Input.GetKeyDown (KeyCode.T)) {
-				PianoManager.gameObject.GetComponent<PianoControl>().pitch = "4A#";
+			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index + "A#"+ "/" ;
+			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
 			} // Ra#
 
@@ -225,7 +255,7 @@ public class IOManager : MonoBehaviour {
 		//if (send == false) {
 		Debug.Log("Data : " + result);
 		if(Application.platform == RuntimePlatform.Android){
-			this.bluetooth.Send (result);
+		//	this.bluetooth.Send (result);
 		}
 
 		//	send = true;

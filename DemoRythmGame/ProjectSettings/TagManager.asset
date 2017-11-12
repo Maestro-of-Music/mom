@@ -10,6 +10,7 @@ TagManager:
   - Rest
   - Clicked
   - NonClicked
+  - End
   layers:
   - Default
   - TransparentFX

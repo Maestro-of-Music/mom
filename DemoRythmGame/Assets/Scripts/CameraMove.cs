@@ -12,7 +12,7 @@ public class CameraMove : MonoBehaviour {
 
 	private void LateUpdate()
 	{
-		Vector3 desiredPosition = new Vector3 (Piano.GetComponent<Transform> ().transform.localPosition.x, Piano.GetComponent<Transform> ().transform.localPosition.y+3, Piano.GetComponent<Transform> ().transform.localPosition.z);
+		Vector3 desiredPosition = new Vector3 (Piano.GetComponent<Transform> ().transform.localPosition.x - 5, Piano.GetComponent<Transform> ().transform.localPosition.y + 8.4f, Piano.GetComponent<Transform> ().transform.localPosition.z);
 
 		if (smooth) {
 			transform.position = Vector3.Lerp (transform.position, desiredPosition, smoothSpeed);

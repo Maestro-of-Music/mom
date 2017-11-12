@@ -1,20 +1,28 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BluetoothScripts/Bluetooth/BluetoothModel.cs">
+﻿<Properties StartupConfiguration="{2976BEE5-0FE6-F1EA-70BB-5A8AE19E1909}|">
+  <MonoDevelop.Ide.ItemProperties.DemoRythmGame PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Observer.cs">
     <Files>
-      <File FileName="Assets/Scripts/XMLManager.cs" Line="14" Column="28" />
-      <File FileName="Assets/Scripts/BluetoothIOManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/IOManager.cs" Line="124" Column="4" />
-      <File FileName="Assets/Scripts/RepeatControl.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MenuManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/CameraMove.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/BluetoothScripts/Bluetooth/BluetoothModel.cs" Line="22" Column="42" />
-      <File FileName="Assets/Scripts/Observer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Metronume.cs" Line="43" Column="30" />
+      <File FileName="Assets/Scripts/SaveData.cs" Line="30" Column="3" />
+      <File FileName="Assets/Scripts/IOManager.cs" Line="59" Column="1" />
+      <File FileName="Assets/Scripts/CameraMove.cs" Line="22" Column="4" />
+      <File FileName="Assets/Scripts/LoadData.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/BluetoothScripts/Bluetooth/Bluetooth.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/JsonTest.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CreateNote.cs" Line="39" Column="23" />
+      <File FileName="Assets/Scripts/PianoControl.cs" Line="399" Column="78" />
+      <File FileName="Assets/Scripts/RepeatControl.cs" Line="34" Column="18" />
+      <File FileName="Assets/Scripts/PlayNote.cs" Line="19" Column="5" />
+      <File FileName="Assets/Scripts/MenuManager.cs" Line="117" Column="1" />
+      <File FileName="Assets/Scripts/NoteDetail.cs" Line="11" Column="26" />
+      <File FileName="Assets/Scripts/LogControl.cs" Line="21" Column="5" />
+      <File FileName="Assets/Scripts/LogManager.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Observer.cs" Line="32" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
 </Properties>

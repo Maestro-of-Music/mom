@@ -71,15 +71,19 @@
      <Compile Include="Assets\Scripts\PianoControl.cs" />
      <Compile Include="Assets\Scripts\PlayNote.cs" />
      <Compile Include="Assets\Scripts\RepeatControl.cs" />
+     <Compile Include="Assets\Scripts\SaveData.cs" />
      <Compile Include="Assets\Scripts\SceneChange.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\XMLManager.cs" />
      <None Include="Assets\StreamingAssets\school.txt" />
+     <None Include="Assets\Resources\forElise.xml" />
      <None Include="Assets\school.txt" />
      <None Include="Assets\school.xml" />
      <None Include="Assets\StreamingAssets\school.xml" />
+     <None Include="Assets\Resources\jingleBell.xml" />
      <None Include="Assets\Resources\planeSong.xml" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+     <None Include="Assets\Resources\Elise.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

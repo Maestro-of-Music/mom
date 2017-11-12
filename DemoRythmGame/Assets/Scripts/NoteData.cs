@@ -11,4 +11,13 @@ public class NoteData
 	public bool rest;
 	public int measureIndex;
 	public bool alter;
+	public bool backward; //check forward or backward
+	public string repeat;
+}
+
+[System.Serializable]
+public class NoteDatas
+{
+	public List<NoteData> Forward;
+	public List<NoteData> Backward;
 }
