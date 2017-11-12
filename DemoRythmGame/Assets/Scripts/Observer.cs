@@ -13,7 +13,7 @@ public class Observer : MonoBehaviour {
 	public GameObject KeyBoard;
 	public GameTime Current;
 	private string Key = "Key_";
-
+	public int Keyboard_count;
 
 	//public bool MetronumePlay;
 
@@ -32,7 +32,7 @@ public class Observer : MonoBehaviour {
 		}
 		*/
 	}
-	/*
+    /*
 	public void OnMetronume(){
 	
 		if (this.MetronumePlay == false) {
@@ -44,37 +44,24 @@ public class Observer : MonoBehaviour {
 	}
 	*/
 
-	void InitObserver(){
-		//MetronumePlay = false;
-		Current = GameManager.GetComponent<GameTime> ();
-	}
-
-	/*
-	void MoveObserver(){
-		int Move = 0;   
-
-		if (step != Current.currentStep) {
-			Move = 1; 
-		} else if (Current.currentStep == 0) {
-		    Move = 0;
-			Debug.Log ("Music End! ");
-		}
-
-		transform.position = new Vector3 (transform.position.x, transform.position.y + Move, transform.position.z);
-
-		step = Current.currentStep;
-	}
-	*/
+    void InitObserver()
+    {
+        //MetronumePlay = false;
+        Current = GameManager.GetComponent<GameTime>();
+    }
 
 	void OnPianoPlay(Collider col){
 		PianoManager.gameObject.GetComponent<PianoControl>().duration = col.gameObject.GetComponent<NoteDetail> ().duration;
 
 		if (col.gameObject.tag == "Rest") {
-			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "-1";
+			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
 		} else {
-			PianoManager.gameObject.GetComponent<PianoControl>().Target_pitch = col.gameObject.GetComponent<NoteDetail> ().pitch;
+			PianoManager.gameObject.GetComponent<PianoControl>().Target_pitch += col.gameObject.GetComponent<NoteDetail> ().pitch + "/";
 		}
-		PianoManager.gameObject.GetComponent<PianoControl> ().Sequence++;
+		PianoManager.gameObject.GetComponent<PianoControl> ().Sequence = col.gameObject.GetComponent<NoteDetail> ().sequence;
+        PianoManager.gameObject.GetComponent<PianoControl>().CurrentNote = col.gameObject.GetComponent<NoteDetail>().note_index;
+
+		//measure change check 
 		PianoManager.gameObject.GetComponent<PianoControl> ().move = false;
 
 	}
@@ -110,9 +97,6 @@ public class Observer : MonoBehaviour {
 			int octave = (int)(_datas[0]-'0');
 
 			string _pitch = new string (_datas, 1, 2);
-
-			Debug.Log (octave);
-			Debug.Log (_pitch);
 
 			switch (octave) {
 			case 3:
@@ -225,14 +209,22 @@ public class Observer : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 	
 		if (col.gameObject.tag == "Note") {
+			Debug.Log (col.gameObject.GetComponent<NoteDetail> ().pitch);
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
 			OnPianoPlay (col);
 			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);
-			 
 
 		} else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
 			OnPianoPlay (col);
+		} 
+
+		if (col.gameObject.tag == "End") {
+			Debug.Log ("End!");
+			if (col.gameObject.GetComponent<NoteDetail> ().pitch == "End") {
+				Debug.Log ("End!");
+			}
+			PianoManager.gameObject.GetComponent<PianoControl> ().EndCheck ();
 		}
 	}
 
@@ -240,6 +232,8 @@ public class Observer : MonoBehaviour {
 
 		if (col.gameObject.tag == "Note" || col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false ); //release
+			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
+
 		}
 	}
 
@@ -249,21 +243,17 @@ public class Observer : MonoBehaviour {
 		GameObject [] ClickedObjs = GameObject.FindGameObjectsWithTag ("Clicked");
 
 		for (int i = 0; i < ClickedObjs.Length; i++) {
-			//Debug.Log ("Clicked Objects : " + i); 
-			//Debug.Log("Pitch  : " + pitch);
 
 			if (ClickedObjs[i].gameObject.name.EndsWith("#")) {
 				ClickedObjs [i].gameObject.GetComponent<Renderer> ().material.color = Color.black;
 			} else {
 				ClickedObjs [i].gameObject.GetComponent<Renderer> ().material.color = Color.white;
 			}
-
-			//ClickedObjs [i].gameObject.tag = "NonClicked";
 		}
 
-
-
+		PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
 	}
+
 
 	void KeySequence(string pitch, bool Clicked){
 
@@ -279,6 +269,8 @@ public class Observer : MonoBehaviour {
 
 			if (pitch != "") {
 				ColoringKeyBoard (Clicked,pitch);
+				//string count
+
 			}
 		
 		}
@@ -301,17 +293,7 @@ public class Observer : MonoBehaviour {
 	IEnumerator SendLED(string pitch){
 
 		int led = OnSetLED (pitch);
-
 		Debug.Log ("led : " + led);
-
-		/*
-		string result = "";
-		if (led == 5) {
-			result = "1";
-		} else {
-			result = "0";
-		}
-		*/
 
 		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(led.ToString());
 

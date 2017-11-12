@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae631c644cf1485fa1f8d198dc94e80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Scene: 
 --- !u!114 &692685301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bufferSize: 256
   macAddresses: []
+  IOManager: {fileID: 0}
 --- !u!4 &960077751
 Transform:
   m_ObjectHideFlags: 0
@@ -734,7 +736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1682732941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -754,7 +756,8 @@ MonoBehaviour:
     Beat_type: 0
     length: 5
   arr: []
-  _filename: school
+  backarr: []
+  _filename: jingleBell
 --- !u!4 &1682732942
 Transform:
   m_ObjectHideFlags: 0

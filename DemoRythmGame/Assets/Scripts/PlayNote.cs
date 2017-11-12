@@ -16,7 +16,7 @@ public class PlayNote : MonoBehaviour {
 		audioOne.playOnAwake = false;
 	}
 
-	/*
+	/*	
 	void OnMouseDown(){
 		OnPlay ();
 	}
@@ -24,10 +24,11 @@ public class PlayNote : MonoBehaviour {
 
 	void OnPlay(){
 		OnRelease (PianoObject.gameObject.GetComponent<PianoControl> ().pitch);
-		//StartCoroutine("OnReleaseStart",PianoObject.gameObject.GetComponent<PianoControl> ().pitch);
+		int c4Key = (int)(semitone_offest - 72); 
 
-		audioOne.pitch = Mathf.Pow (2f, semitone_offest/12.0f);
-		audioOne.Play ();
+		audioOne.pitch = Mathf.Pow (2f, c4Key/12.0f);
+
+        audioOne.Play ();
 		PianoObject.gameObject.GetComponent<PianoControl> ().pitch = null;
 
 	}
@@ -40,17 +41,15 @@ public class PlayNote : MonoBehaviour {
 	void OnTriggerEnter (Collider col){
 
 		if (col.gameObject.tag == "Note") {
-			/*
-			if (PianoObject.gameObject.GetComponent<PianoControl> ().move) {
+
+           if (PianoObject.gameObject.GetComponent<PianoControl>().end == false) {
 				OnPlay (); 
-			} */
-			OnPlay ();
+			}
 		}
 			
 	}
 
 	IEnumerator OnReleaseStart(string pitch){
-
 		Observer.gameObject.GetComponent<Observer> ().OnRelease (pitch);
 
 		yield return null;

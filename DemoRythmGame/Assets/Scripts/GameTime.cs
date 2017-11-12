@@ -21,7 +21,12 @@ public class GameTime : MonoBehaviour {
 	public float interval;
 	public float Velocity;
 
+	IEnumerator Waiting(){
+		yield return new WaitForSeconds (3f);
+	}
+
 	void Start(){
+		StartCoroutine ("Waiting");	
 		SettingMetronume ();
 	}
 
@@ -41,7 +46,8 @@ public class GameTime : MonoBehaviour {
 		MetroData.BPM = JsonData.noteinfo.Tempo;
 		tempo_data.text = MetroData.BPM.ToString ();
 
-		EndMeasure = JsonData.notedatas [JsonData.notedatas.Length-1].measureIndex;
+		//EndMeasure = JsonData.notedatas [JsonData.notedatas.Length].measureIndex;
+		EndMeasure = JsonData.noteinfo.Measure; //check measure part 
 
 		StartCoroutine ("Init");
 	}
@@ -80,6 +86,7 @@ public class GameTime : MonoBehaviour {
 	}
 
 	public void CalVelocity(float interval){
+		Debug.Log (interval);
 		this.Velocity = (1 - interval) * 4;  //make velocity
 		PianoManager.gameObject.GetComponent<PianoControl> ().LoadVelocity ();
 
@@ -92,13 +99,15 @@ public class GameTime : MonoBehaviour {
 		yield return new WaitForSeconds (1);
 		//load json data until 3 seconds 
 
+		if (MetroData.Base == 2) {
+			MetroData.Base = 4;
+		}
+
 		var multiplier = MetroData.Base / 4f;
 		var tmpInterval = 60f / MetroData.BPM;
-//		Debug.Log (tmpInterval + " " + multiplier);
 		interval = tmpInterval / multiplier;
 
 		CalVelocity (interval);
-		//Debug.Log ("Velocity Setting!");
 
 		yield return null;
 	}
