@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/Test.unity
+- path: Assets/Scene/BluetoothDemo.unity
   isLoaded: 1
   isActive: 1

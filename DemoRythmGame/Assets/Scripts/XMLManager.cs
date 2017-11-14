@@ -75,8 +75,7 @@ public class XMLManager : MonoBehaviour {
 
 		JsonData data = JsonMapper.ToJson (notejson);
 
-		File.WriteAllText(Application.dataPath + "/Resources/ " +_filename + ".json",data.ToString());
-
+		File.WriteAllText(Application.dataPath + "/Resources/ " +_filename + ".txt",data.ToString());
 		Debug.Log ("File Created");
 	}
 

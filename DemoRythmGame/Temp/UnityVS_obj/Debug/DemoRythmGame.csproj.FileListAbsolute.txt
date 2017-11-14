@@ -51,7 +51,6 @@
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/UnityEngine.HoloLens.dll.mdb
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/UnityEngine.HoloLens.xml
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/Unity.UNetWeaver.dll.mdb
-/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/DemoRythmGame.csprojResolveAssemblyReference.cache
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/DemoRythmGame.csproj.CoreCompileInputs.cache
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/Assembly-CSharp.dll.dll
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/Assembly-CSharp.dll.pdb

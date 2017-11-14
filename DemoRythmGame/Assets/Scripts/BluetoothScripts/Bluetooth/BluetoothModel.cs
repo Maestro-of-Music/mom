@@ -11,6 +11,7 @@ public interface IBtObserver {
     void OnFoundNoDevice();
     void OnScanFinish();
     void OnFoundDevice();
+    void OnGalleryOpen();
 }
 
 public abstract class BtObservale : MonoBehaviour {
