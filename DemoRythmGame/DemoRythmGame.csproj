@@ -107,6 +107,9 @@
     <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
     <Compile Include="Assets\Scripts\BluetoothScripts\BluetoothController.cs" />
     <Compile Include="Assets\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\Bar.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\BarChart.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\PieChart.cs" />
     <Compile Include="Assets\Scripts\CreateNote.cs" />
     <Compile Include="Assets\Scripts\FileDirectoryControl.cs" />
     <Compile Include="Assets\Scripts\GalleryControl.cs" />

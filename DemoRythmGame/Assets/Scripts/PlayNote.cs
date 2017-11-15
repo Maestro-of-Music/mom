@@ -16,12 +16,6 @@ public class PlayNote : MonoBehaviour {
 		audioOne.playOnAwake = false;
 	}
 
-	/*	
-	void OnMouseDown(){
-		OnPlay ();
-	}
-	*/
-
 	void OnPlay(){
 		OnRelease (PianoObject.gameObject.GetComponent<PianoControl> ().pitch);
 		int c4Key = (int)(semitone_offest - 72); 
