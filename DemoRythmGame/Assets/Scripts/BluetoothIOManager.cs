@@ -45,4 +45,9 @@ public class BluetoothIOManager : MonoBehaviour,IBtObserver {
 
 	}
 
+    public void OnGalleryOpen(){
+        Debug.Log("Gallery Open!");
+        this.bluetooth.TakePhotoByCam();
+    }
+
 }

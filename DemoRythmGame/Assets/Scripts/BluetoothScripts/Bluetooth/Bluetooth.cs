@@ -78,5 +78,23 @@ public class Bluetooth {
 	public void showMessage(string mes) {
 		_activityObject.Call("showMessage",mes);
 	}
-    
+
+    System.Action<Texture2D> mOnTakePhoto = null;
+
+    public void TakePhotoByCam()
+    {
+        if (_activityObject != null)
+        {
+            _activityObject.Call("TakePhotoByGallery");
+        }
+    }
+
+    public void OnReceiveGallery(string path)
+    {
+        Debug.Log("OnReceiveGallery Opened!");
+        Debug.Log(path);
+        //mOnTakePhoto(GalleryControl.LoadTexture(path));
+        Debug.Log("Path : " +  path);
+    }
+
 }

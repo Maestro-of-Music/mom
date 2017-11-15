@@ -11,6 +11,8 @@ TagManager:
   - Clicked
   - NonClicked
   - End
+  - Note_1
+  - Note_2
   layers:
   - Default
   - TransparentFX

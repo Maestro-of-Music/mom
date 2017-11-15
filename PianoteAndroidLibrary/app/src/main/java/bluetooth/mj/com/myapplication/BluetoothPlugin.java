@@ -1,22 +1,34 @@
 package bluetooth.mj.com.myapplication;
 
+import android.Manifest;
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.RequiresPermission;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -25,13 +37,22 @@ import java.util.Set;
  */
 
 public class BluetoothPlugin extends UnityPlayerActivity {
+
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
+
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
+
+    private static final int PICK_FROM_CAMERA = 0;
+    private static final int PICK_FROM_ALBUM = 1;
+    private static final int CROP_FROM_CAMERA = 2;
+
+    private Uri mTakePhotoUri;
+
     private static final String TAG = "BluetoothPlugin";
     private static final String TARGET = "BluetoothModel";
     private boolean IsScan = false;
@@ -44,6 +65,45 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
     private ArrayList<String> singleAddress = new ArrayList();
 
+
+    public void TakePhotoByGallery(){
+        Log.e("TakePhotoByGallery","Gallery opened!");
+
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_FROM_ALBUM);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("resultCode:", String.valueOf(resultCode));
+
+        if(requestCode == PICK_FROM_ALBUM){
+            if(resultCode == Activity.RESULT_OK && null != data){
+                Uri selectedImage = data.getData();
+
+                String UrlPath = getRealPathFromURI(selectedImage);
+                Log.e("UrlPath",getRealPathFromURI(selectedImage));
+
+                UnityPlayer.UnitySendMessage("BluetoothController","OnReceiveGallery",UrlPath);
+
+                //Url Path를 유니티로 전달
+            }
+        }else{
+            Log.e("Receive",String.valueOf(resultCode));
+        }
+
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
 
     private final Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -279,6 +339,29 @@ public class BluetoothPlugin extends UnityPlayerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("BluetoothPlugin", "+++ ON CREATE +++");
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            checkPermissions();
+        }
+    }
+
+    private void checkPermissions() {
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    },
+                    1052);
+
+        }
     }
 
     public void onStart() {

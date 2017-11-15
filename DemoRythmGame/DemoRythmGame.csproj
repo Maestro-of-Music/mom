@@ -102,13 +102,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Piano_setPosition.cs" />
     <Compile Include="Assets\Scripts\BluetoothIOManager.cs" />
     <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\Bluetooth.cs" />
     <Compile Include="Assets\Scripts\BluetoothScripts\Bluetooth\BluetoothModel.cs" />
     <Compile Include="Assets\Scripts\BluetoothScripts\BluetoothController.cs" />
     <Compile Include="Assets\Scripts\CameraMove.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\Bar.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\BarChart.cs" />
+    <Compile Include="Assets\Scripts\Chart_Script\PieChart.cs" />
     <Compile Include="Assets\Scripts\CreateNote.cs" />
+    <Compile Include="Assets\Scripts\FileDirectoryControl.cs" />
+    <Compile Include="Assets\Scripts\GalleryControl.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\IOManager.cs" />
     <Compile Include="Assets\Scripts\JsonTest.cs" />
@@ -131,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Resources\ jingleBell.txt" />
     <None Include="Assets\Resources\Elise.xml" />
     <None Include="Assets\Resources\forElise.xml" />
     <None Include="Assets\Resources\jingleBell.xml" />
