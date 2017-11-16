@@ -1,28 +1,55 @@
 #include <Wire.h>
- 
+#include <SoftwareSerial.h>
 #define Slave1 1 // Slave address
- 
+#define Slave2 2
+#define Slave3 3
+
+int blueTx = 2;
+int blueRx = 3;
+
+SoftwareSerial mySerial(blueTx, blueRx);
 void setup() {
    Wire.begin(); // Init to i2c-master
    Serial.begin(9600); // Init to serial
-   pinMode(2,INPUT_PULLUP);
+   mySerial.begin(9600);
 }
  
 void loop() {
-   Wire.requestFrom(Slave1, 1); // Request 1byte data to slave1
-   if(Wire.available())
+
+/////////////////Android->Master->Slave///////////////////
+//
+  if(mySerial.available())
+  {
+    delay(1);
+    char data=mySerial.read();
+    int device=data/12+1;
+    Serial.print("data :");
+    Serial.print(data);
+    Serial.print(" device : ");
+    Serial.println(device);
+    Wire.beginTransmission(device);
+    Wire.write((data-1)%12+'A');
+    Wire.endTransmission();
+  }
+//
+/////////////////////////////////////////////////////////
+
+//////////////////Slave->Master Request//////////////////
+//
+ for(int i=1;i<=3;i++)
    {
-    char s1 = Wire.read(); // Read data
-    Serial.println(s1);
+       Wire.requestFrom(i, 1); // Request 1byte data to slave1
+       if(Wire.available())
+       {
+        char s = Wire.read(); // Read data
+        if(s>=1){
+        Serial.println(int((i-1)*12+s));
+        mySerial.write((i-1)*12+s);
+        }
+       }
+       else break;
    }
-   
-   if(!digitalRead(2)) // PIN2 -> INPUT_PULLUP
-   {
-     Serial.print("Send");
-     Wire.beginTransmission(Slave1); // Begin transmission
-     Wire.write(1); // Write data on buffer
-     Wire.endTransmission(); // Send buffer data and end transmission
-     delay(1);
-   }
-   
+//
+/////////////////////////////////////////////////////////
+ 
 }
