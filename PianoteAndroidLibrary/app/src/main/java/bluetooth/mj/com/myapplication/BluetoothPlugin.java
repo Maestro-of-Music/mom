@@ -19,6 +19,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -65,11 +66,13 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
     private ArrayList<String> singleAddress = new ArrayList();
 
-
-    public void TakePhotoByGallery(){
+    @RequiresPermission("android.permission.READ_EXTERNAL_STORAGE")
+    private void TakePhotoByGallery() {
+        OnCallMethod();
+    }
+    public void OnCallMethod(){
         Log.e("TakePhotoByGallery","Gallery opened!");
-
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_FROM_ALBUM);
@@ -97,6 +100,9 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
     }
 
+
+
+
     public String getRealPathFromURI(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         Cursor cursor = managedQuery(contentUri, proj, null, null, null);
@@ -119,7 +125,8 @@ public class BluetoothPlugin extends UnityPlayerActivity {
                 case 3:
                     byte[] writeBuf = (byte[])msg.obj;
                     String writeMessage = new String(writeBuf);
-                    UnityPlayer.UnitySendMessage("BluetoothModel", "OnSendMessage", writeMessage);
+                    UnityPlayer.UnitySendMessage("BluetoothModel", "OnSendMessage",writeMessage);
+
                     break;
                 case 4:
                     mConnectedDeviceName = msg.getData().getString("device_name");
@@ -339,30 +346,14 @@ public class BluetoothPlugin extends UnityPlayerActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("BluetoothPlugin", "+++ ON CREATE +++");
+        /*
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            checkPermissions();
-        }
+        Log.e("BluetoothPermission",String.valueOf(permissionCheck));
+        */
     }
 
-    private void checkPermissions() {
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                    new String[]{
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },
-                    1052);
-
-        }
-    }
 
     public void onStart() {
         super.onStart();
