@@ -16,7 +16,7 @@ public class IOManager : MonoBehaviour {
 	public string GetData;
 
 	void Awake() {
-	//	this.bluetooth = Bluetooth.getInstance ();
+		//this.bluetooth = Bluetooth.getInstance ();
 	}
 
 	// Update is called once per frame
@@ -153,7 +153,7 @@ public class IOManager : MonoBehaviour {
 		}
 			
 	}
-	/*
+    /*
 	public void HardwareInput(string GetData){
 		//if(BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData != null)
 		//Debug.Log ("Bluetooth GetData : " + BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData);
@@ -242,26 +242,24 @@ public class IOManager : MonoBehaviour {
 
 	}
 */
-	//Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
-	public void KeyOutput(string data){
-		//send data to arduino 
-		string start = "#";
+    //Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
+    public void KeyOutput(string data)
+    {
+        //send data to arduino 
+
+        string start = "#";
 		string end = "/";
 
 		string result = start + data + end; 
-
 		Debug.Log ("Result : " + result);
 
 		//if (send == false) {
 		Debug.Log("Data : " + result);
-		if(Application.platform == RuntimePlatform.Android){
-		//	this.bluetooth.Send (result);
-		}
 
-		//	send = true;
-	//	}
-
-	
-	}
-		
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            //this.bluetooth.Send(data);
+        }
+        send = true;
+    }		
 }

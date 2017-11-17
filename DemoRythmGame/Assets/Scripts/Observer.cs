@@ -87,7 +87,7 @@ public class Observer : MonoBehaviour {
 
 	int OnSetLED(string pitch){
 
-		Debug.Log (pitch);
+		//Debug.Log (pitch);
 
 		int result = 0;
 
@@ -209,7 +209,7 @@ public class Observer : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 	
 		if (col.gameObject.tag == "Note") {
-			Debug.Log (col.gameObject.GetComponent<NoteDetail> ().pitch);
+//			Debug.Log (col.gameObject.GetComponent<NoteDetail> ().pitch);
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
 			OnPianoPlay (col);
 			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);

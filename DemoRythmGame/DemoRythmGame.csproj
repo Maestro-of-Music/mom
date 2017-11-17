@@ -131,6 +131,8 @@
     <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SceneChange.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
+    <Compile Include="Assets\Scripts\TableList\Item.cs" />
+    <Compile Include="Assets\Scripts\TableList\ItemObject.cs" />
     <Compile Include="Assets\Scripts\XMLManager.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 5667fb372c2b292ccdec2a31aaac98fa UnityEngine.Timeline.dll:UnityEngine.Timeline.GroupTrack
 5667fb372c2b292ccdec2a31aaac98fa UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 c24a21b131bfa67be1162db2cba4b52b UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FileDirectoryControl
+5a2a64caf898196429af3d7a9d5cc0c1 Assembly-CSharp.dll:.FileDirectoryControl
 dede2818cea77ebbe686cfde2346bbdf Assembly-CSharp.dll:.MenuManager
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -117,7 +117,9 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 8e7bd1cbb57215a45f3cd63bc4ed61e6 Assembly-CSharp.dll:.Observer
 33575701ec05c1f964d0f751d00ba3dd Assembly-CSharp.dll:.GameTime
 063b08140919326ce669aa52987a86a8 Assembly-CSharp.dll:.PianoControl
+dfe14c9964b06ae754341953dc07960b Assembly-CSharp.dll:.ItemObject
 6293ae8fc9f1db55c58ca4a644b40160 Assembly-CSharp.dll:.BluetoothModel
+d9d5dbc0da8e370001d02280d6dd9a0c Assembly-CSharp.dll:.Item
 51754033d7b6cfcd77053ffac7439454 Assembly-CSharp.dll:.RepeatControl
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
@@ -137,6 +139,8 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 5f2ad81aa8994e8fbe25d1e57afe6773 UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 36fcdfdc94679fde12bddf91a63b6fd5 Assembly-CSharp.dll:.PlayNote
+7bd6d753af954ff2b018dfc0392798ac Assembly-CSharp.dll:.Bar
+76faa8d293380e17960013fc3d99e228 Assembly-CSharp.dll:.PieChart
 98fe88e87e7bbef48b706f351b9c38a5 Assembly-CSharp.dll:.LogControl
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
@@ -151,4 +155,5 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 1cd6328d888cb69f5018658d9167e2eb Assembly-CSharp.dll:.NoteDetail
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.JsonTest
 c69ab2dd80eeae3e08e991dcddd53362 Assembly-CSharp.dll:.Metronume
+04ac216ed915aa40aaa3e25b6702ef96 Assembly-CSharp.dll:.BarChart
 d890ede0ef579536faae2a725bdbf6d2 Assembly-CSharp.dll:.LogManager
