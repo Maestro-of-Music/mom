@@ -10,9 +10,15 @@ public class LogManager : MonoBehaviour {
 
     public GameObject LogObject;
     private FileControl filecontrol;
+    public GameObject GameManager;
+    public List<String> loadData;
 
     void Awake(){
         this.filecontrol = FileControl.getInstance();
+    }
+
+    void Start(){
+        Debug.Log("Title: " + GameManager.GetComponent<CreateNote>().title);
     }
 
     public void MakeLogObject(int count){
@@ -31,10 +37,10 @@ public class LogManager : MonoBehaviour {
 
         for (int i = 0; i < log.Length;i++){
             LogData temp = new LogData();
-            Debug.Log("result : " + log[i].GetComponent<LogControl>().result);
             temp.result = log[i].GetComponent<LogControl>().result;
             temp.dist = (int)(log[i].GetComponent<LogControl>().dist * 100);
-            Debug.Log("temp : " + temp.result);
+            temp.left = log[i].GetComponent<LogControl>().leftHand;
+            temp.right = log[i].GetComponent<LogControl>().rightHand;
             logtempFile[i] = temp;
         }
 
@@ -48,12 +54,10 @@ public class LogManager : MonoBehaviour {
     public void SaveLog(LogFile log, string music_name){
         Debug.Log("Save!");
 
-        //DirectoryInfo dataDir = new DirectoryInfo(Application.dataPath + "/Resources/");
-
         int a =  filecontrol.SearchDirectoryFile(music_name);
         Debug.Log(a);
 
-        string url = Application.dataPath + "/Resources/" + "(" +  music_name + ")" +"log" + a.ToString();
+        string url = Application.streamingAssetsPath + "/" + "(" +  music_name + ")" +"log" + a.ToString()+".txt";
 
         //Find data URL 
 
@@ -62,7 +66,8 @@ public class LogManager : MonoBehaviour {
             //rewrite
             JsonData data = JsonMapper.ToJson(log);
             a++;
-            url = Application.dataPath +"/Resources/" + "(" + music_name + ")" + "log" + a.ToString();
+
+            url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString()+".txt";
             File.WriteAllText(url,data.ToString());
         }
         else
@@ -71,28 +76,5 @@ public class LogManager : MonoBehaviour {
             JsonData data = JsonMapper.ToJson(log);
             File.WriteAllText(url,data.ToString());
         }
-
     }
-
-    public void LoadLog(string music_name){
-        Debug.Log("Log Load!");
-
-        string[] saveFile;
-
-        string strFilePath = Application.dataPath;
-        DirectoryInfo dataDir = new DirectoryInfo(strFilePath + "/Resources/");
-
-        try{
-            FileInfo[] fileinfo = dataDir.GetFiles();
-            for (int i = 0; i < fileinfo.Length;i++){
-                
-            }
-        }catch(Exception e){
-            Debug.Log(e);
-        }
-
-
-
-    }
-
 }

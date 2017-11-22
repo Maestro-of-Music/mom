@@ -18,11 +18,12 @@ public class Observer : MonoBehaviour {
 	//public bool MetronumePlay;
 
 	void Awake(){
-	}
+    }
 
 	// Use this for initialization
 	void Start () {
 		InitObserver ();
+
 	}
 
 	void Update(){

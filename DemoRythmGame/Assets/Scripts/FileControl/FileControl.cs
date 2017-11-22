@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using LitJson;
 
 
 public class FileControl : MonoBehaviour {
@@ -25,41 +26,66 @@ public class FileControl : MonoBehaviour {
     }
 
     public int SearchDirectoryFile(string music_name){
-        string strFilePath = Application.dataPath;
+        
+        string strFilePath = Application.streamingAssetsPath;
         int last_index = 0;
-        int count = 0;
+        //int count = 0;
 
-        DirectoryInfo dataDir = new DirectoryInfo(strFilePath + "/Resources/");
+        DirectoryInfo dataDir = new DirectoryInfo(strFilePath);
         try{
             FileInfo[] fileinfo = dataDir.GetFiles();
             for (int i = 0; i < fileinfo.Length; i++)
             {
-                if (fileinfo[i].Name.Contains(".txt") && fileinfo[i].Name.Contains(".meta") == false)
+                if (fileinfo[i].Name.Contains("log") && fileinfo[i].Name.Contains(".meta") == false)
                 {
-                    if (fileinfo[i].Name.Contains("log") && fileinfo[i].Name.Contains(music_name)){
-                        int first = fileinfo[i].Name.IndexOf(".txt");
-                        string name = fileinfo[i].Name.Substring(0, first);
-
-                        Debug.Log("Found!");
-                        last_index = int.Parse(name.Substring(name.Length - 1, name.Length));
-                        Debug.Log("last index :" + last_index);
-                    }else{
-                        count++;
+                    if (fileinfo[i].Name.Contains(music_name))
+                    {
+                        last_index++;
                     }
                 }
             }
 
-            if (count == fileinfo.Length -1){
-                Debug.Log("no file");
-                last_index = 0;
-            }
-
+     
         }catch(Exception e){
             Debug.Log(e);
         }
 
-
         return last_index;
+    }
+
+    public List<string> GetLogData(string music_name){
+        List<string> temp = new List<string>();
+
+        string path = Application.streamingAssetsPath;
+        Debug.Log(path);
+        DirectoryInfo dataDir = new DirectoryInfo(path);
+
+        int count = 0;
+
+        try
+        {
+            FileInfo[] fileinfo = dataDir.GetFiles();
+            for (int i = 0; i < fileinfo.Length; i++)
+            {
+                if (fileinfo[i].Name.Contains("log") && fileinfo[i].Name.Contains(".meta") == false)
+                {
+                    if (fileinfo[i].Name.Contains(music_name))
+                    {
+                        string url = fileinfo[i].FullName;
+                        string data = File.ReadAllText(url);
+
+                        temp.Add(data);
+                        count++;
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+
+        }  
+        return temp;
     }
 
 
