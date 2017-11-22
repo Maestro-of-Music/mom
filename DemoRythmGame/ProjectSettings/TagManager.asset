@@ -13,6 +13,7 @@ TagManager:
   - End
   - Note_1
   - Note_2
+  - Log
   layers:
   - Default
   - TransparentFX

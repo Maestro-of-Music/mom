@@ -1,6 +1,10 @@
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/Assembly-CSharp.dll.dll
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/Assembly-CSharp.dll.pdb
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/Boo.Lang.dll
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween.dll
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween43.dll
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween46.dll
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween50.dll
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/LitJson.dll
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/mscorlib.dll
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/nunit.framework.dll
@@ -50,6 +54,14 @@
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/UnityEngine.Analytics.xml
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/UnityEngine.HoloLens.dll.mdb
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/UnityEngine.HoloLens.xml
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween.dll.mdb
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween.xml
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween43.dll.mdb
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween43.xml
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween50.dll.mdb
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween50.xml
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween46.dll.mdb
+/Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/DOTween46.xml
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_bin/Debug/Unity.UNetWeaver.dll.mdb
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/DemoRythmGame.csprojResolveAssemblyReference.cache
 /Users/songmyeongjin/DemoRythmGame/Temp/UnityVS_obj/Debug/DemoRythmGame.csproj.CoreCompileInputs.cache

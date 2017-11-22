@@ -18,11 +18,12 @@ public class Observer : MonoBehaviour {
 	//public bool MetronumePlay;
 
 	void Awake(){
-	}
+    }
 
 	// Use this for initialization
 	void Start () {
 		InitObserver ();
+
 	}
 
 	void Update(){
@@ -87,7 +88,7 @@ public class Observer : MonoBehaviour {
 
 	int OnSetLED(string pitch){
 
-		Debug.Log (pitch);
+		//Debug.Log (pitch);
 
 		int result = 0;
 
@@ -209,7 +210,7 @@ public class Observer : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 	
 		if (col.gameObject.tag == "Note") {
-			Debug.Log (col.gameObject.GetComponent<NoteDetail> ().pitch);
+            Debug.Log("Note 1 !! Sended!");
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
 			OnPianoPlay (col);
 			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);
@@ -217,7 +218,13 @@ public class Observer : MonoBehaviour {
 		} else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
 			OnPianoPlay (col);
-		} 
+        } else if (col.gameObject.tag =="Note_1" ){
+            Debug.Log("Note 2 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch);
+        }else if (col.gameObject.tag =="Note_2"){
+            Debug.Log("Note 3 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch);
+        }
 
 		if (col.gameObject.tag == "End") {
 			Debug.Log ("End!");

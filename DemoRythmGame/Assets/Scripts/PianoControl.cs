@@ -162,7 +162,7 @@ public class PianoControl : MonoBehaviour {
 
                             //check point which calculate score
                             if (Practice)
-                                StartCoroutine("ScoreManager");
+                              StartCoroutine("ScoreManager",Target_noteCount);
                             else if (Play || Repeat)
                             {
                                 //checking note 
@@ -170,7 +170,7 @@ public class PianoControl : MonoBehaviour {
                                 {
                                     ScoreDisplay.text = "";
                                     Scorechange = true;
-                                    StartCoroutine("ScoreManager");
+                                    StartCoroutine("ScoreManager",Target_noteCount);
                                     Tempnote = CurrentNote;
                                 }
                             }
@@ -227,7 +227,6 @@ public class PianoControl : MonoBehaviour {
 				end = true;
                 //AudioListener.pause = true;
 				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
-
 			}
 		}
 	
@@ -389,14 +388,15 @@ public class PianoControl : MonoBehaviour {
 		LoadVelocity (); 
 	}
 
-	IEnumerator ScoreManager(){
+	IEnumerator ScoreManager(int count){
 
 		int temp = 0;
 
 		if (Scorechange) {
 			temp = this.duration;
 			gameObject.GetComponent<ScoreManager> ().score += temp * 100;
-            gameObject.GetComponent<LogManager>().MakeLogObject(); //make Log
+            Debug.Log("Count :" + count);
+            gameObject.GetComponent<LogManager>().MakeLogObject(count); //make Log
 			Scorechange = false;
 		}
 

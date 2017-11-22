@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 114827252510753264}
   m_Layer: 0
   m_Name: log
-  m_TagString: Rest
+  m_TagString: Log
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,3 +152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dist: 0
   result: 
+  count_Keyboard: 0
+  pitch: []
+  leftHand: 
+  rightHand: 
