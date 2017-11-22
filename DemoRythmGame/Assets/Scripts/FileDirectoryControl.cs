@@ -13,8 +13,7 @@ public class FileDirectoryControl : MonoBehaviour {
 
     void Start()
     {
-        OnFileLoad();        
-        //this.Binding();
+
     }
 
     public void OnFileLoad(){

@@ -126,6 +126,9 @@ public class MenuManager : MonoBehaviour {
 		Pause_btn.gameObject.SetActive (false);
 		Reset_btn.gameObject.SetActive (false);
 
+        //save user's data
+        PianoManager.GetComponent<LogManager>().CollectLogObject(int.Parse(PianoManager.GetComponent<PianoControl>().Score.text),GameManager.GetComponent<LoadData>().noteinfo.Title);
+
 		if (Mode == 2 || Mode == 3) {
 			Score.gameObject.SetActive (false);
 			PianoManager.gameObject.GetComponent<PianoControl> ().Repeat = false;

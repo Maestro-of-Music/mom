@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/Chart_Scene.unity
+- path: Assets/Scene/Test.unity
   isLoaded: 1
   isActive: 1

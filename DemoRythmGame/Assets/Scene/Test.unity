@@ -509,7 +509,7 @@ MonoBehaviour:
   LoadObject: {fileID: 84831398}
   NoteLocation: {fileID: 0}
   StartLocation: {fileID: 1973902715}
-  NotePrefab: {fileID: 1762430009920302, guid: 3762c93c47bd9421188ed6a2dbe7e1ac, type: 2}
+  NotePrefab: {fileID: 1700527326553322, guid: d2859507b084a4aae82e0815827b89df, type: 2}
   RestNotePrefab: {fileID: 1746429052036368, guid: 23a91559f19ec4a81bc8c086a2a2dade,
     type: 2}
   MeasurePrefab: {fileID: 1129359891228134, guid: 47d2ff8d3dd2749dd8dae22dc8c54583,

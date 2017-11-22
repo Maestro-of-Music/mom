@@ -227,7 +227,6 @@ public class PianoControl : MonoBehaviour {
 				end = true;
                 //AudioListener.pause = true;
 				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
-
 			}
 		}
 	

@@ -111,14 +111,16 @@
     <Compile Include="Assets\Scripts\Chart_Script\BarChart.cs" />
     <Compile Include="Assets\Scripts\Chart_Script\PieChart.cs" />
     <Compile Include="Assets\Scripts\CreateNote.cs" />
+    <Compile Include="Assets\Scripts\FileControl\FileControl.cs" />
     <Compile Include="Assets\Scripts\FileDirectoryControl.cs" />
     <Compile Include="Assets\Scripts\GalleryControl.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\IOManager.cs" />
     <Compile Include="Assets\Scripts\JsonTest.cs" />
     <Compile Include="Assets\Scripts\LoadData.cs" />
-    <Compile Include="Assets\Scripts\LogControl.cs" />
-    <Compile Include="Assets\Scripts\LogManager.cs" />
+    <Compile Include="Assets\Scripts\Log\LogControl.cs" />
+    <Compile Include="Assets\Scripts\Log\LogFile.cs" />
+    <Compile Include="Assets\Scripts\Log\LogManager.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Metronume.cs" />
     <Compile Include="Assets\Scripts\NoteData.cs" />
@@ -137,13 +139,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Resources\ CANON.txt" />
+    <None Include="Assets\Resources\ Chopin.txt" />
+    <None Include="Assets\Resources\ Chopin1.txt" />
+    <None Include="Assets\Resources\ canonP.txt" />
     <None Include="Assets\Resources\ jingleBell.txt" />
+    <None Include="Assets\Resources\CANON.xml" />
     <None Include="Assets\Resources\Elise.xml" />
+    <None Include="Assets\Resources\canonP.xml" />
     <None Include="Assets\Resources\forElise.xml" />
     <None Include="Assets\Resources\jingleBell.xml" />
     <None Include="Assets\Resources\planeSong.xml" />
-    <None Include="Assets\StreamingAssets\school.txt" />
-    <None Include="Assets\StreamingAssets\school.xml" />
     <None Include="Assets\school.txt" />
     <None Include="Assets\school.xml" />
   </ItemGroup>

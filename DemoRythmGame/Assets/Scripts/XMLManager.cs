@@ -145,6 +145,10 @@ public class XMLManager : MonoBehaviour {
 					duration = 	int.Parse(pitch.GetElementsByTagName("duration").Item(0).InnerText);
 					Debug.Log (duration);
 
+                    if(duration > 120){
+                        duration = duration / 120;
+                    }
+
                     NoteData temp = new NoteData();
 					temp.step = step;
 					temp.octave = octave;
@@ -255,18 +259,18 @@ public class XMLManager : MonoBehaviour {
 
 	public int SetTempo(XmlDocument content){
 		int tempo = 0;
-
-		tempo = int.Parse(content.GetElementsByTagName ("sound").Item(0).Attributes.GetNamedItem("tempo").InnerText);
-		Debug.Log (tempo);
+        try
+        {
+            tempo = int.Parse(content.GetElementsByTagName("sound").Item(0).Attributes.GetNamedItem("tempo").InnerText);
+        }catch(Exception)
+        {
+            Debug.Log("!!!!!!!!!!" + content.GetElementsByTagName("sound").Count);
+        }
+            Debug.Log (tempo);
 
 		return tempo;
 	}
-
-
-
 }
-
-
 
 
 public class NoteJson

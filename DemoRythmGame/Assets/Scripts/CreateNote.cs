@@ -199,6 +199,8 @@ public class CreateNote : MonoBehaviour {
 			note.GetComponent<NoteDetail> ().sequence = sequence;
             note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
 
+            NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;             }
+
 			switch (duration) {
 			case 1: //white
 				note.gameObject.GetComponentInChildren<Renderer> ().material.color = new Color32(255, 0, 0, 0);
