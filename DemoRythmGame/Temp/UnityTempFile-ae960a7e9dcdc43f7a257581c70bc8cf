@@ -156,6 +156,7 @@
 'Assets/Scripts/CameraMove.cs'
 'Assets/Scripts/Chart_Script/Bar.cs'
 'Assets/Scripts/Chart_Script/BarChart.cs'
+'Assets/Scripts/Chart_Script/ChartControl.cs'
 'Assets/Scripts/Chart_Script/PieChart.cs'
 'Assets/Scripts/CreateNote.cs'
 'Assets/Scripts/FileControl/FileControl.cs'

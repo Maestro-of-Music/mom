@@ -205,7 +205,6 @@
     <None Include="Assets\Resources\planeSong.xml" />
     <None Include="Assets\StreamingAssets\(Jingle Bells)log0.txt" />
     <None Include="Assets\StreamingAssets\(Jingle Bells)log1.txt" />
-    <None Include="Assets\StreamingAssets\(Jingle Bells)log2.txt" />
     <None Include="Assets\school.txt" />
     <None Include="Assets\school.xml" />
   </ItemGroup>

@@ -1582,7 +1582,7 @@ MonoBehaviour:
   toolTipLabel: {fileID: 1086228377547046}
   theTooltip: {fileID: 0}
   resizingChangesFontScaleInsteadOfFontSize: 0
-  _graphType: 0
+  _graphType: 5
   _orientationType: 0
   _axesType: 5
   _resizeEnabled: 0

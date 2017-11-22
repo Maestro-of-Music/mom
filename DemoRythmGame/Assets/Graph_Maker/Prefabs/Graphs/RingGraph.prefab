@@ -265,7 +265,7 @@ MonoBehaviour:
   _labelTextOffset: 10
   _labelLineColor: {r: 1, g: 1, b: 1, a: 1}
   _labelPointColor: {r: 1, g: 1, b: 1, a: 1}
-  _labelsFontSize: 12
+  _labelsFontSize: 20
   _labelsColor: {r: 1, g: 1, b: 1, a: 1}
   _labelsFontStyle: 0
   _labelsFont: {fileID: 0}
