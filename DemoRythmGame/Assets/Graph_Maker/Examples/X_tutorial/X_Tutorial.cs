@@ -10,8 +10,6 @@ public class X_Tutorial : MonoBehaviour {
 
     public WMG_Series series1;
 
-    //public List<Vector2> series1Data;
-
     public bool useData2;
 
     public List<string> series1Data2;

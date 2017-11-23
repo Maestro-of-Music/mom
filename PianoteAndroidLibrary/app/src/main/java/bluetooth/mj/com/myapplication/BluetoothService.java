@@ -386,8 +386,8 @@ public class BluetoothService {
 
                 String a = String.valueOf(buffer.length);
                 Log.e("Bluetooth Check 2 " , a);
-                mmOutStream.write(buffer);
 
+                mmOutStream.write(buffer);
 
                 mHandler.obtainMessage(BluetoothPlugin.MESSAGE_WRITE, -1, -1, buffer)
                         .sendToTarget();
