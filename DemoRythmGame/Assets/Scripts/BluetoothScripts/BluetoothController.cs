@@ -4,6 +4,8 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+using System.Text.RegularExpressions;
 
 public class BluetoothController : MonoBehaviour, IBtObserver {
 
@@ -162,6 +164,45 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
             Debug.Log("upload done");
         else
             Debug.Log("upload error" + upload.error);
+
+        if(upload.isDone)
+        {
+            Debug.Log("complete!");
+            WriteXML(upload);
+        }
+    }
+
+    void WriteXML(WWW XmlFile)
+    {
+        Debug.Log("in WriteXML");
+        string strFile = "test_audiveris";
+        string strFilePath = Application.persistentDataPath + "/" + strFile + ".xml";
+      //  string strFilePath = "Assets/" + strFile;
+
+        while(File.Exists(strFilePath))
+        {
+            Regex rg = new Regex(@".*\((?<Num>\d*)\)");
+            Match mt = rg.Match(strFilePath);
+
+            if (mt.Success)
+            {
+                string numberOfCopy = mt.Groups["Num"].Value;
+                int nextNumberOfCopy = int.Parse(numberOfCopy) + 1;
+                int posStart = strFilePath.LastIndexOf("(" + numberOfCopy + ")");
+                strFilePath = string.Format("{0}({1}){2}", strFilePath.Substring(0, posStart), nextNumberOfCopy, ".xml");
+            }
+            else
+            {
+                strFilePath = Application.persistentDataPath + "/" + strFile + "(2)" + ".xml";
+            }
+        }
+        Debug.Log("File writing");
+        File.WriteAllBytes(strFilePath, XmlFile.bytes);
+
+        XmlDocument Xmldoc = new XmlDocument();
+        Xmldoc.Load(strFilePath);
+        Debug.Log("filename: " + strFilePath);
+        Debug.Log("xmldoc : " + Xmldoc.InnerText);
     }
 
     IEnumerator ShowImage(string path){
