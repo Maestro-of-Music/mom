@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,19 +18,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresPermission;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -68,8 +65,31 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
     @RequiresPermission("android.permission.READ_EXTERNAL_STORAGE")
     private void TakePhotoByGallery() {
-        OnCallMethod();
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            }
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+
+            return;
+        } else {
+            OnCallMethod();
+        }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    OnCallMethod();
+                } else {
+
+                }
+                return;
+            }
+        }
+    }
+
     public void OnCallMethod(){
         Log.e("TakePhotoByGallery","Gallery opened!");
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -81,59 +101,140 @@ public class BluetoothPlugin extends UnityPlayerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("resultCode:", String.valueOf(resultCode));
 
         if(requestCode == PICK_FROM_ALBUM){
             if(resultCode == Activity.RESULT_OK && null != data){
                 Uri selectedImage = data.getData();
 
-                String UrlPath = getRealPathFromURI(selectedImage);
-                Log.e("UrlPath",getRealPathFromURI(selectedImage));
-
+                String UrlPath = getRealPathFromURI(this, selectedImage);
                 UnityPlayer.UnitySendMessage("BluetoothController","OnReceiveGallery",UrlPath);
 
                 //Url Path를 유니티로 전달
             }
         }else{
-            Log.e("Receive",String.valueOf(resultCode));
+            Log.e("TPBG//Receive",String.valueOf(resultCode));
         }
-
     }
 
+    public static String getRealPathFromURI(final Context context, final Uri uri) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, uri)) {
+            if (isExternalStorageDocument(uri)) {
+                Log.e("TakePhotoByGallery","ExternalstorageDocuments");
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+                String filePath = "";
 
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                } else {
+                    filePath = "/storage/" + type + "/" + split[1];
+                    return filePath;
+                }
 
+            } else if (isDownloadsDocument(uri)) {
+                Log.e("TakePhotoByGallery","Downloads Documents");
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
 
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+                return getDataColumn(context, contentUri, null, null);
+
+            } else if (isMediaDocument(uri)) {
+                Log.e("TakePhotoByGallery","Media Documents");
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {// MediaStore
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {// File
+            return uri.getPath();
+        }
+        return null;
+    }
+
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = { column };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
     private final Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+                    Log.e("TPBG//HandleMsg", "case:1");
                     UnityPlayer.UnitySendMessage("BluetoothModel", "OnStateChanged", String.valueOf(msg.arg1));
                     break;
                 case 2:
+                    Log.e("TPBG//HandleMsg", "case:2");
                     byte[] readBuf = (byte[])msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     UnityPlayer.UnitySendMessage("BluetoothModel", "OnReadMessage", readMessage);
                     break;
                 case 3:
+                    Log.e("TPBG//HandleMsg", "case:3");
                     byte[] writeBuf = (byte[])msg.obj;
                     String writeMessage = new String(writeBuf);
                     UnityPlayer.UnitySendMessage("BluetoothModel", "OnSendMessage",writeMessage);
-
                     break;
                 case 4:
+                    Log.e("TPBG//HandleMsg", "case:4");
                     mConnectedDeviceName = msg.getData().getString("device_name");
                     Toast.makeText(getApplicationContext(), "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                     break;
                 case 5:
+                    Log.e("TPBG//HandleMsg", "case:5");
                     Toast.makeText(getApplicationContext(), msg.getData().getString("toast"), Toast.LENGTH_SHORT).show();
+                    break;
             }
 
         }
@@ -172,14 +273,10 @@ public class BluetoothPlugin extends UnityPlayerActivity {
         SetupPlugin();
     }
 
-
-
-
     @RequiresPermission("android.permission.BLUETOOTH")
     public String SetupPlugin()
     {
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
 
         if (mBtAdapter == null) {
             return "Bluetooth is not available";
@@ -191,8 +288,6 @@ public class BluetoothPlugin extends UnityPlayerActivity {
 
         return "SUCCESS";
     }
-
-
 
     private void startService()
     {

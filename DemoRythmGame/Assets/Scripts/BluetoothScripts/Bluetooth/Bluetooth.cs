@@ -83,8 +83,10 @@ public class Bluetooth {
 
     public void TakePhotoByCam()
     {
+        Debug.Log("in pl");
         if (_activityObject != null)
         {
+            Debug.Log("in ac");
             _activityObject.Call("TakePhotoByGallery");
         }
     }
