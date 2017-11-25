@@ -6,7 +6,9 @@ using System.IO;
 using System.Collections.Generic;
 
 public class BluetoothController : MonoBehaviour, IBtObserver {
-    
+
+    private string serverUrl = "http://52.78.228.8/restapi/upload_file.php";
+
     private Bluetooth bluetooth;
     public RawImage m_image;
 
@@ -136,7 +138,30 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         {
             Debug.Log("File Exist......");
         }
-        StartCoroutine(ShowImage(path));
+        // StartCoroutine(ShowImage(path));
+        StartCoroutine(UploadFile(path));
+    }
+    IEnumerator UploadFile(string path)
+    {
+        WWW localFile = new WWW("file://" + path);
+        yield return localFile;
+        if (localFile.error == null)
+            Debug.Log("Loaded file successfully");
+        else
+        {
+            Debug.Log("Open file error: " + localFile.error);
+            yield break;
+        }
+
+        WWWForm postForm = new WWWForm();
+        postForm.AddBinaryData("fileData", localFile.bytes, "musicsheet.jpg", "Image/jpg" );
+
+        WWW upload = new WWW(serverUrl, postForm);
+        yield return upload;
+        if (upload.error == null)
+            Debug.Log("upload done");
+        else
+            Debug.Log("upload error" + upload.error);
     }
 
     IEnumerator ShowImage(string path){
@@ -153,6 +178,4 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         texture.LoadImage(tBytes);
         m_image.texture = texture;
     }
-
-
 }
