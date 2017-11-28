@@ -8,8 +8,8 @@ using System.Linq;
 public class PianoControl : MonoBehaviour {
 
 	public int Sequence; //measure change 
-
-	public GameObject Metronume;
+   
+    public GameObject Metronume;
 	public GameObject GameManager;
 	public Text Score;
 	public Text ScoreDisplay;
@@ -44,7 +44,8 @@ public class PianoControl : MonoBehaviour {
     private Vector3 _location;
 
 	void Awake(){
-		transform.position = new Vector3 (0, -0.3f, 0);
+
+		transform.position = new Vector3 (0, -4, 0);
 		speed = 0;
 		Repeat_Count = 0;
 		Sequence = 0; 
@@ -54,8 +55,8 @@ public class PianoControl : MonoBehaviour {
 	//restart
  	public void InitDevice(){
         //AudioListener.pause = false;
-		transform.position = new Vector3 (0, 0, 0); //TURN  
-  		InitPosition ();
+		transform.position = new Vector3 (0, -4, 0); //TURN  
+  		//InitPosition ();
 		pitch = "";
 
 		InitSetMode (Mode); 
@@ -77,7 +78,7 @@ public class PianoControl : MonoBehaviour {
 	}
 
 	public void InitPosition(){
-		transform.position = new Vector3 (0, 0, 0);
+		transform.position = new Vector3 (0, -4, 0);
 	}
 
 	public void LoadVelocity(){
@@ -122,7 +123,7 @@ public class PianoControl : MonoBehaviour {
         }catch(Exception){
             
         }
-        Debug.Log("Answer : " + answer[0]);
+//        Debug.Log("Answer : " + answer[0]);
 
 		yield return null;
 	}
@@ -155,8 +156,10 @@ public class PianoControl : MonoBehaviour {
                             }
                         }
 
-//                        if (count == answer.Length)
-//                        {
+//                      Debug.Log(Tempnote);
+
+                      //  if (count == answer.Length)
+                       // {
                             Debug.Log("Really Correct!");
                             _location = transform.position;
 
@@ -175,7 +178,7 @@ public class PianoControl : MonoBehaviour {
                                 }
                             }
                             move = true;
-  //                      }
+                       // }
                     }
                     else
                     {
@@ -183,9 +186,9 @@ public class PianoControl : MonoBehaviour {
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                print("no input");
+                print("no input" + e);
             }
             StartCoroutine("ResetPitch");
         }
@@ -194,7 +197,7 @@ public class PianoControl : MonoBehaviour {
 
 	IEnumerator ResetPitch(){
 		yield return new WaitForSeconds (0.3f);
-		Debug.Log ("Delete pitch data");
+//		Debug.Log ("Delete pitch data");
 		pitch = "";
 		StopCoroutine ("ResetPitch");
 	}
@@ -367,6 +370,7 @@ public class PianoControl : MonoBehaviour {
 	}
 
 	IEnumerator MovePiano(){
+        Debug.Log("location Y:!!!!!!!" + _location.y);
 
 		if (transform.position.y >= _location.y + duration) {
 			pitch = null;

@@ -87,7 +87,14 @@ public class GameTime : MonoBehaviour {
 
 	public void CalVelocity(float interval){
 		Debug.Log (interval);
-		this.Velocity = (1 - interval) * 4;  //make velocity
+        if (MetroData.BPM > 1000)
+        {
+            this.Velocity = 7;
+        }
+        else
+        {
+            this.Velocity = (1 - interval) * 4;  //make velocity
+        }
 		PianoManager.gameObject.GetComponent<PianoControl> ().LoadVelocity ();
 
 		Debug.Log ("Velocity : " +  Velocity);

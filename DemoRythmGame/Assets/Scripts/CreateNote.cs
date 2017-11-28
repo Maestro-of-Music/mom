@@ -31,13 +31,16 @@ public class CreateNote : MonoBehaviour {
 	private float backward;
 
 
+
+
 	void Awake(){
 		StartCoroutine ("WaitForLoadData"); //wait for load data 
 		StartCoroutine ("ConnectLoadData"); //actually connect load data
-		noteHeight = 1.4f;
+		noteHeight = 2.4f;
         measure_count = 0;
         notenum = 1; // check total number of note
 	}
+
 
 	void Start(){
 		InstantiateNote ();
@@ -63,17 +66,20 @@ public class CreateNote : MonoBehaviour {
 	}
 		
 	void InstantiateNote(){
+        int temp = 0;
+        int measure = 0;
 
 		//load notedata and instanstiate each music note 
 		for (int i = 0; i < notedatas.Length; i++) 
 		{
-
+            bool chord = false; //check chord
 			string Pitch = SetNotePitch (notedatas [i]);
-			Debug.Log (Pitch);
 
+            /*
 			if (notedatas [i].backward) {
 					
 			}
+            */
 
 			try{
 				NoteLocation = GameObject.Find (Pitch); //refer to each pitch's location data 
@@ -81,26 +87,46 @@ public class CreateNote : MonoBehaviour {
 
 			catch(NullReferenceException){
 				//instantiate rest note using duration note
-				Debug.Log("rest note ");
 				NoteLocation = null;
 				Pitch = "";
 			}
 			finally{
 				//SetMeasureObject (NoteLocation, notedatas [i].measureIndex);
-				SetNoteObject(NoteLocation, notedatas[i].duration,Pitch,notedatas[i].measureIndex);
+             
+
+                if (temp != notedatas[i].default_x)
+                {
+                    measure = notedatas[i].measureIndex;
+                    temp = notedatas[i].default_x;
+                    forward += notedatas[i].duration;
+
+                }
+                else if (measure != notedatas[i].measureIndex)
+                {
+                    Debug.Log("Measure change!");
+                    chord = false;
+                }
+                else
+                {
+                    Debug.Log("Same Location Music Note!!");
+                    chord = true;
+                }
+
+                SetNoteObject(NoteLocation, notedatas[i].duration, Pitch, notedatas[i].measureIndex, notedatas[i].default_x,chord);
                 notenum++;
-				forward = noteHeight;
 			}
 		}
 
-		noteHeight = 1.4f; // initiate noteheight 
+
+        temp = 0;
+        measure = 0;
+		noteHeight = 2.4f; // initiate noteheight 
 
 		//load notedata and instanstiate each music note 
 		for (int i = 0; i < backupdatas.Length; i++) 
 		{
-
+            bool chord = false; //check chord
 			string Pitch = SetNotePitch (backupdatas [i]);
-			Debug.Log (Pitch);
 
 			/*
 			if (notedatas [i].backward) {
@@ -113,21 +139,36 @@ public class CreateNote : MonoBehaviour {
 
 			catch(NullReferenceException){
 				//instantiate rest note using duration note
-				Debug.Log("rest note ");
+				//Debug.Log("rest note ");
 				NoteLocation = null;
 				Pitch = "";
 			}
 			finally{
 				//SetMeasureObject (NoteLocation, notedatas [i].measureIndex);
-				SetNoteObject(NoteLocation, backupdatas[i].duration ,Pitch ,backupdatas[i].measureIndex);
+
                 measure_count = backupdatas[i].measureIndex;
-				notenum++;
-				backward = noteHeight;
+
+                if (temp != backupdatas[i].default_x)
+                {
+                    measure = backupdatas[i].measureIndex;
+                    temp = backupdatas[i].default_x;
+                    backward += backupdatas[i].duration;
+                }else if(measure != backupdatas[i].measureIndex){
+                    Debug.Log("Measure change!");
+                    chord = false;
+                }
+                else{
+                    Debug.Log("Same Location Music Note!!");
+                    chord = true;
+                }
+
+                SetNoteObject(NoteLocation, backupdatas[i].duration, Pitch, backupdatas[i].measureIndex, backupdatas[i].default_x, chord);
+                notenum++;
 			}
 		}
 
-		noteHeight = (forward > backward) ? forward : backward;  
-
+		noteHeight = (forward > backward) ? forward : backward;
+        noteHeight += 4.8f;
 		EndNoteObject (measure_count);
 
 	}
@@ -157,7 +198,7 @@ public class CreateNote : MonoBehaviour {
 		else {
 			result = "rest";
 		} // case rest
-		Debug.Log (result);
+		//Debug.Log (result);
 		 
 
 		return result;
@@ -183,23 +224,25 @@ public class CreateNote : MonoBehaviour {
 	}
 		
 	//setting NoteObject
-	void SetNoteObject(GameObject noteObject , int duration, string pitch, int sequence ){
+	void SetNoteObject(GameObject noteObject , int duration, string pitch, int sequence, int default_x , bool chord){
 
 		GameObject note;
 		float Height = noteHeight;
 
 		if (noteObject != null) {
 
-			Debug.Log ("pitch : " + pitch);
+//			Debug.Log ("pitch : " + pitch);
 
 			note = (GameObject) Instantiate(NotePrefab, new Vector3 (noteObject.GetComponent<Transform>().transform.position.x, Height, noteObject.GetComponent<Transform>().transform.position.z),Quaternion.identity);
 			note.transform.localScale = new Vector3 (1, duration, 1);
 			note.GetComponent<NoteDetail> ().duration = duration;
 			note.GetComponent<NoteDetail> ().pitch = pitch;
 			note.GetComponent<NoteDetail> ().sequence = sequence;
+            note.GetComponent<NoteDetail>().default_x = default_x;
             note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
 
-            NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;             }
+            NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;
+                index.note_index = notenum;             }
 
 			switch (duration) {
 			case 1: //white
@@ -248,9 +291,10 @@ public class CreateNote : MonoBehaviour {
 			note.GetComponent<NoteDetail> ().sequence = sequence;
 			//setting rest object 
 		}
-
-		noteHeight += (float)duration;
-
+        if (!chord)
+        {
+            noteHeight += (float)duration;
+        }
 	} 
 
 	IEnumerator WaitForLoadData(){

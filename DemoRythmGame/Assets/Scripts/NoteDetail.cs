@@ -4,7 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class NoteDetail : MonoBehaviour {
-	
+
+    public int default_x;
 	public string pitch;
 	public int duration;
 	public int sequence; //measure

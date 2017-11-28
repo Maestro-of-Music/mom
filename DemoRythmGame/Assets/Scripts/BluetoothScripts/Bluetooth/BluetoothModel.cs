@@ -28,6 +28,8 @@ public class BluetoothModel : BtObservale {
     public List<string> macAddresses = null;
     //private Queue<string> messageQueue = null;
     private StringBuilder rawMessage = null;
+    private Byte[] ByteMessage = null;
+
 	public GameObject IOManager;
 
     void Awake() {
@@ -42,7 +44,7 @@ public class BluetoothModel : BtObservale {
     }
 
     private void CheckMessageFormat() {
-		/*
+        /*
         int startPos = -1;
         int endPos = -1;
         for(int i = 0; i < rawMessage.Length; ++i) {
@@ -61,19 +63,19 @@ public class BluetoothModel : BtObservale {
         */
 
 		string tempMassege = rawMessage.ToString ();
+       
+        Debug.Log(tempMassege);
 
 		for (int i = 0; i < rawMessage.Length; i++) {
 			rawMessage.Remove (0, rawMessage.Length);
 		}
 		Debug.Log ("Delete !");
 
+        /*
 		Debug.Log ("rawMessage :" + tempMassege + " " + IOManager.GetComponent<IOManager> ().GetData);
 		IOManager.GetComponent<IOManager> ().HardwareInput2(tempMassege);
 		Debug.Log ("SEND!");
-
-		//BluetoothIOManager.GetComponent<BluetoothIOManager> ().GetData = tempMassege;
-		//Debug.Log ("GetData :" + BluetoothIOManager.GetComponent<BluetoothIOManager> ().GetData);
-
+        */
 
     }
 
@@ -114,8 +116,9 @@ public class BluetoothModel : BtObservale {
 
 	void OnReadMessage(string _Message) {
         this.rawMessage.Append(_Message);
-		//string temp = this.rawMessage.ToString (); //change to string 
 		this.CheckMessageFormat();
+
+
 		/*
 		if (_Message.Contains ("#")) {
 			_Message = _Message.Substring (0, 2);
@@ -126,6 +129,9 @@ public class BluetoothModel : BtObservale {
 		}
 		*/	
 		//Debug.Log("On Read Message : " + _Message);
+
+
+
     }
 
     void OnFoundNoDevice(string _s) {

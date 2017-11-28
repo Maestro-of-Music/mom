@@ -140,13 +140,22 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         {
             Debug.Log("File Exist......");
         }
-        // StartCoroutine(ShowImage(path));
+        //StartCoroutine(ShowImage(path));
         StartCoroutine(UploadFile(path));
     }
     IEnumerator UploadFile(string path)
     {
-        WWW localFile = new WWW("file://" + path);
+        Debug.Log("Path : " + path);
+
+        WWW localFile = new WWW("file://" + path); //"file://"
         yield return localFile;
+        /*
+        for (int i = 0; i < localFile.bytes.Length; i++)
+        {
+            Debug.Log("LocalFile bytes : " + localFile.bytes[i]);
+        }
+        */
+        /*
         if (localFile.error == null)
             Debug.Log("Loaded file successfully");
         else
@@ -154,6 +163,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
             Debug.Log("Open file error: " + localFile.error);
             yield break;
         }
+        */
 
         WWWForm postForm = new WWWForm();
         postForm.AddBinaryData("fileData", localFile.bytes, "musicsheet.jpg", "Image/jpg" );

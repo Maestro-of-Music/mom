@@ -9,11 +9,13 @@ public class PlayNote : MonoBehaviour {
 	public float semitone_offest = 0;
 	public GameObject PianoObject;
 	public GameObject Observer;
+    public GameObject FireEffect;
 
 	// Use this for initialization
 	void Start () {
 		audioOne = GetComponent<AudioSource>();
 		audioOne.playOnAwake = false;
+//        FireEffect = this.gameObject.transform.GetChild(0).gameObject;
 	}
 
 	void OnPlay(){

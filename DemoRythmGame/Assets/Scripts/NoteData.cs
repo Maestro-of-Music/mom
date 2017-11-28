@@ -10,6 +10,7 @@ public class NoteData
 	public int duration;
 	public bool rest;
 	public int measureIndex;
+    public int default_x; //check two notes
 	public bool alter;
 	public bool backward; //check forward or backward
 	public string repeat;
