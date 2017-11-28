@@ -4,9 +4,13 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+using System.Text.RegularExpressions;
 
 public class BluetoothController : MonoBehaviour, IBtObserver {
-    
+
+    private string serverUrl = "http://52.78.228.8/restapi/upload_file.php";
+
     private Bluetooth bluetooth;
     public RawImage m_image;
 
@@ -136,7 +140,79 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         {
             Debug.Log("File Exist......");
         }
-        StartCoroutine(ShowImage(path));
+        //StartCoroutine(ShowImage(path));
+        StartCoroutine(UploadFile(path));
+    }
+    IEnumerator UploadFile(string path)
+    {
+        Debug.Log("Path : " + path);
+
+        WWW localFile = new WWW("file://" + path); //"file://"
+        yield return localFile;
+        /*
+        for (int i = 0; i < localFile.bytes.Length; i++)
+        {
+            Debug.Log("LocalFile bytes : " + localFile.bytes[i]);
+        }
+        */
+        /*
+        if (localFile.error == null)
+            Debug.Log("Loaded file successfully");
+        else
+        {
+            Debug.Log("Open file error: " + localFile.error);
+            yield break;
+        }
+        */
+
+        WWWForm postForm = new WWWForm();
+        postForm.AddBinaryData("fileData", localFile.bytes, "musicsheet.jpg", "Image/jpg" );
+
+        WWW upload = new WWW(serverUrl, postForm);
+        yield return upload;
+        if (upload.error == null)
+            Debug.Log("upload done");
+        else
+            Debug.Log("upload error" + upload.error);
+
+        if(upload.isDone)
+        {
+            Debug.Log("complete!");
+            WriteXML(upload);
+        }
+    }
+
+    void WriteXML(WWW XmlFile)
+    {
+        Debug.Log("in WriteXML");
+        string strFile = "test_audiveris";
+        string strFilePath = Application.persistentDataPath + "/" + strFile + ".xml";
+      //  string strFilePath = "Assets/" + strFile;
+
+        while(File.Exists(strFilePath))
+        {
+            Regex rg = new Regex(@".*\((?<Num>\d*)\)");
+            Match mt = rg.Match(strFilePath);
+
+            if (mt.Success)
+            {
+                string numberOfCopy = mt.Groups["Num"].Value;
+                int nextNumberOfCopy = int.Parse(numberOfCopy) + 1;
+                int posStart = strFilePath.LastIndexOf("(" + numberOfCopy + ")");
+                strFilePath = string.Format("{0}({1}){2}", strFilePath.Substring(0, posStart), nextNumberOfCopy, ".xml");
+            }
+            else
+            {
+                strFilePath = Application.persistentDataPath + "/" + strFile + "(2)" + ".xml";
+            }
+        }
+        Debug.Log("File writing");
+        File.WriteAllBytes(strFilePath, XmlFile.bytes);
+
+        XmlDocument Xmldoc = new XmlDocument();
+        Xmldoc.Load(strFilePath);
+        Debug.Log("filename: " + strFilePath);
+        Debug.Log("xmldoc : " + Xmldoc.InnerText);
     }
 
     IEnumerator ShowImage(string path){
@@ -153,6 +229,4 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         texture.LoadImage(tBytes);
         m_image.texture = texture;
     }
-
-
 }

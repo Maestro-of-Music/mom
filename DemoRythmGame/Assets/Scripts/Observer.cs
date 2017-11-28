@@ -6,6 +6,8 @@ using System;
 public class Observer : MonoBehaviour {
 
 
+
+
 	public GameObject PianoManager;
 	//public GameObject Metronume;
 	public GameObject IOManagerCtrl;
@@ -15,9 +17,13 @@ public class Observer : MonoBehaviour {
 	private string Key = "Key_";
 	public int Keyboard_count;
 
+
 	//public bool MetronumePlay;
 
 	void Awake(){
+        /*
+        int a = 64;
+        Debug.Log("Char :" + (char)a);*/
     }
 
 	// Use this for initialization
@@ -27,23 +33,8 @@ public class Observer : MonoBehaviour {
 	}
 
 	void Update(){
-		/*
-		if (MetronumePlay) {
-			MoveObserver (); 
-		}
-		*/
+		
 	}
-    /*
-	public void OnMetronume(){
-	
-		if (this.MetronumePlay == false) {
-			Metronume.gameObject.GetComponent<Metronume> ().StartMetronome (); //piano player move
-			this.MetronumePlay = true; 
-		} else {
-			this.MetronumePlay = false;
-		}
-	}
-	*/
 
     void InitObserver()
     {
@@ -55,7 +46,9 @@ public class Observer : MonoBehaviour {
 		PianoManager.gameObject.GetComponent<PianoControl>().duration = col.gameObject.GetComponent<NoteDetail> ().duration;
 
 		if (col.gameObject.tag == "Rest") {
-			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
+            PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
+			//PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "/";
+           // PianoManager.gameObject.GetComponent<PianoControl> ().move = true;
 		} else {
 			PianoManager.gameObject.GetComponent<PianoControl>().Target_pitch += col.gameObject.GetComponent<NoteDetail> ().pitch + "/";
 		}
@@ -77,11 +70,14 @@ public class Observer : MonoBehaviour {
 	}
 
 
-	void OnLEDChange(string pitch){
+	void OnLEDChange(string pitch, int status){
 
 		if (pitch != "") {
-			//Send data 	
-			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
+            //Send data 	
+            pitch += "," + status.ToString();
+  //          Debug.Log("OnLEDChange : " + pitch);
+
+//			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
 			StartCoroutine ("SendLED", pitch);
 		}
 	}
@@ -99,52 +95,7 @@ public class Observer : MonoBehaviour {
 
 			string _pitch = new string (_datas, 1, 2);
 
-			switch (octave) {
-			case 3:
-				Debug.Log ("3 Octave");
-				break;
-			case 4:
-				Debug.Log ("4 Octave");
-
-				if (_pitch == "C") {
-					result = 1;
-				}
-				else if(_pitch == "C#"){
-					result = 2;
-				}
-				else if (_pitch == "D") {
-					result = 3;
-				}
-				else if(_pitch == "D#"){
-					result = 4;
-				}
-				else if (_pitch == "E") {
-					result = 5;
-
-				} else if (_pitch == "F") {
-					result = 6;
-				} else if(_pitch == "F#"){
-					result = 7;
-				} else if (_pitch == "G") {
-					result = 8;
-
-				} else if(_pitch == "G#"){
-					result = 9;
-				} else if (_pitch == "A") {
-					result = 10;
-				} else if(_pitch == "A#"){
-					result = 11;
-				}  else if (_pitch == "B") {
-					result = 12;
-				}
-
-				break;
-			case 5:
-				Debug.Log ("4 Octave");
-				break;
-			}
-
-			return result;
+            result = ResultCheck(_pitch, octave);
 
 		} else {
 			//normal
@@ -154,76 +105,279 @@ public class Observer : MonoBehaviour {
 
 			string _pitch = pitch.Substring(1).ToString();			
 
-
-			Debug.Log ("Octave : " + octave);
-			Debug.Log ("Pitch : " + _pitch);
-
-			switch (octave) {
-			case 3:
-				Debug.Log ("3 Octave");
-				break;
-			case 4:
-				Debug.Log ("4 Octave");
-					
-				if (_pitch == "C") {
-					result = 1;
-				}else if(_pitch == "C#"){
-					result = 2;
-				}
-				else if (_pitch == "D") {
-					result = 3;
-				}
-				else if(_pitch == "D#"){
-					result = 4;
-				}
-				else if (_pitch == "E") {
-					result = 5;
-
-				} else if (_pitch == "F") {
-					result = 6;
-				} else if(_pitch == "F#"){
-					result = 7;
-				} else if (_pitch == "G") {
-					result = 8;
-
-				} else if(_pitch == "G#"){
-					result = 9;
-				} else if (_pitch == "A") {
-					result = 10;
-				} else if(_pitch == "A#"){
-					result = 11;
-				}  else if (_pitch == "B") {
-					result = 12;
-				}
-
-				break;
-			case 5:
-				Debug.Log ("4 Octave");
-				break;
-			}
-
-			return result;
+            result = ResultCheck(_pitch, octave);
 		}
+
+        Debug.Log("Result : " + result);
+
+        return result;
 	}
+
+    int ResultCheck(string _pitch, int octave){
+        int result = 0;
+
+        switch (octave)
+        {
+            case 2:
+                Debug.Log("2 Octave");
+
+                if (_pitch == "C")
+                {
+                    result = 1;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 2;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 3;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 4;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 5;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 6;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 7;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 8;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 9;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 10;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 11;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 12;
+                }
+
+                break;
+            case 3:
+                Debug.Log("3 Octave");
+
+                if (_pitch == "C")
+                {
+                    result = 13;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 14;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 15;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 16;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 17;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 18;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 19;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 20;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 21;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 22;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 23;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 24;
+                }
+                break;
+            case 4:
+                Debug.Log("4 Octave");
+
+                if (_pitch == "C")
+                {
+                    result = 25;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 26;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 27;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 28;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 29;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 30;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 31;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 32;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 33;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 34;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 35;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 36;
+                }
+
+                break;
+            case 5:
+                Debug.Log("5 Octave");
+
+                if (_pitch == "C")
+                {
+                    result = 37;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 38;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 39;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 40;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 41;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 42;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 43;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 44;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 45;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 46;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 47;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 48;
+                }
+                break;
+        }
+
+        return result;
+    }
 
 
 	void OnTriggerEnter(Collider col){
 	
-		if (col.gameObject.tag == "Note") {
-            Debug.Log("Note 1 !! Sended!");
-			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
-			OnPianoPlay (col);
-			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch);
+		if (col.gameObject.tag == "Note_0") {
+            Debug.Log("Note  !! Sended! and Effect On!");
 
-		} else if (col.gameObject.tag == "Rest") {
+            if (col.gameObject.GetComponent<NoteDetail>().duration < 3)
+            {
+                col.gameObject.GetComponent<OnEffect>().OnCollision();
+            }
+            /*
+            KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
+			OnPianoPlay (col);
+			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch, 1);
+            */
+        }
+        else if (col.gameObject.tag == "Note"){
+            KeySequence(col.gameObject.GetComponent<NoteDetail>().pitch, true); //pressed
+            OnPianoPlay(col);
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 1);
+        } 
+        else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
 			OnPianoPlay (col);
         } else if (col.gameObject.tag =="Note_1" ){
-            Debug.Log("Note 2 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
-            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch);
+            Debug.Log("Note 1 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch,1);
+
+            if (col.gameObject.GetComponent<NoteDetail>().duration > 3)
+            {
+                col.gameObject.GetComponent<OnEffect>().OnCollision();
+            }
+
         }else if (col.gameObject.tag =="Note_2"){
-            Debug.Log("Note 3 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
-            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch);
+            Debug.Log("Note 2 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch,1);
+
+        }else if(col.gameObject.tag =="Note_3"){
+            Debug.Log("Note 3 !! Send Release ");
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 0);
+
+            if (col.gameObject.GetComponent<NoteDetail>().duration > 3)
+            {
+                col.gameObject.GetComponent<OnEffect>().OffCollision();
+            }
         }
 
 		if (col.gameObject.tag == "End") {
@@ -235,13 +389,33 @@ public class Observer : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit(Collider col){
+
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.tag == "Note_0")
+        {
+            KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
+            //OnPianoPlay (col);
+            //OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch, 1);
+        }
+    }
+
+
+    void OnTriggerExit(Collider col){
 
 		if (col.gameObject.tag == "Note" || col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false ); //release
 			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
 
+            if(col.gameObject.GetComponent<NoteDetail>().pitch.Contains("#")){
+                Destroy(col.gameObject);
+            }
 		}
+
+        else if (col.gameObject.tag == "Note_0")
+        {
+            KeySequence(col.gameObject.GetComponent<NoteDetail>().pitch, false); //pressed
+        }
 	}
 
 	public void OnRelease(string pitch){
@@ -267,20 +441,27 @@ public class Observer : MonoBehaviour {
 		try //selected objects
 		{
 			KeyBoard = GameObject.Find (Key + pitch);
+           // Debug.Log("Find : " + KeyBoard.gameObject.name);
 			OnTagChange(KeyBoard);
+
+            if (pitch != "")
+            {
+                ColoringKeyBoard(Clicked, pitch);
+                //string count
+            }
+
 		}
 		catch(Exception){ //non selected 
 			OnRelease(pitch);
-		}
+		}/*
 		finally{
 
 			if (pitch != "") {
 				ColoringKeyBoard (Clicked,pitch);
 				//string count
-
 			}
 		
-		}
+		}*/
 	}
 
 	void ColoringKeyBoard(bool Clicked,string pitch){
@@ -299,10 +480,24 @@ public class Observer : MonoBehaviour {
 
 	IEnumerator SendLED(string pitch){
 
-		int led = OnSetLED (pitch);
-		Debug.Log ("led : " + led);
+        string [] _pitch = pitch.Split(',');
 
-		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(led.ToString());
+		int led = OnSetLED (_pitch[0]);
+
+        string result = "";
+
+        if(_pitch[1] == "1"){
+            //LED On!
+            result = "!" + led.ToString();
+
+        }else{
+            //LED Off!
+            result = "@" + led.ToString();
+        }
+
+        Debug.Log("SendLED : " + result);
+
+		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(result);
 
 		yield return null;
 

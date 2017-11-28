@@ -18,7 +18,7 @@ public class LogManager : MonoBehaviour {
     }
 
     void Start(){
-        Debug.Log("Title: " + GameManager.GetComponent<CreateNote>().title);
+//        Debug.Log("Title: " + GameManager.GetComponent<CreateNote>().title);
     }
 
     public void MakeLogObject(int count){

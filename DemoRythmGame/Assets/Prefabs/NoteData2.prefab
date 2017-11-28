@@ -137,3 +137,4 @@ MonoBehaviour:
   pitch: 
   duration: 0
   sequence: 0
+  note_index: 0

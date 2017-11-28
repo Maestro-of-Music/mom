@@ -17,7 +17,6 @@ public class XMLManager : MonoBehaviour {
      void Awake()
     {
         StartCoroutine("Xml_load", _filename);
-
 		SetNodeJSON ();
     }
 
@@ -149,10 +148,14 @@ public class XMLManager : MonoBehaviour {
                         duration = duration / 120;
                     }
 
+                    int default_x = int.Parse(pitch.Attributes.GetNamedItem("default-x").InnerText);
+                    //Debug.Log(default_x + " Default - x");
+
                     NoteData temp = new NoteData();
 					temp.step = step;
 					temp.octave = octave;
 					temp.duration = duration;
+                    temp.default_x = default_x;
 					temp.measureIndex = (i+1) ;
 					temp.rest = rest;
 					temp.alter = alter;

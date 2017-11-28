@@ -13,15 +13,17 @@ public class LogControl : MonoBehaviour {
     public string rightHand;
 
     IEnumerator ChangeBox (){
-        
+        /*
         if (count_Keyboard > 1)
         {
+            
             gameObject.GetComponent<BoxCollider>().size = new Vector3(50, 0.4f, 1);
         }
         else
         {
             gameObject.GetComponent<BoxCollider>().size = new Vector3(9, 0.4f, 1);
-        }
+        }*/
+        gameObject.GetComponent<BoxCollider>().size = new Vector3(90, 0.4f, 1);
 
         yield return null;
 

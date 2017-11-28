@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChange : MonoBehaviour {
+public class SceneChange{
 
-	public string Scene;
+    public string Music_title; //selected Music title
+
+
+    private static SceneChange _instance = null;
+
+    public static SceneChange getInstance()
+    {
+        if(_instance == null){
+            _instance = new SceneChange();
+        }
+        return _instance;
+    }
 
 	void Awake(){
-		Scene = "Test";
-	}
+        _instance = this;
+    }
 
-	public void NextScene(){
+	public void NextScene(string scene, string music_title){
 		Debug.Log ("Move Next Scene");
-		SceneManager.LoadScene (Scene);
+        this.Music_title = music_title;
+        SceneManager.LoadScene (scene);
 	}
 }

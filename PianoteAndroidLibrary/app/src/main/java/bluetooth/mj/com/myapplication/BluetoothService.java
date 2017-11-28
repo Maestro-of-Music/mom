@@ -363,7 +363,8 @@ public class BluetoothService {
         public void run() {
             Log.i("BluetoothService", "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
-            int bytes;
+            byte a;
+            int bytes = 0;
 
             while (true) {
                 try {

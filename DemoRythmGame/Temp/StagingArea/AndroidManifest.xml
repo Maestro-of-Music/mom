@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.Myungjin.Litdjson" android:versionName="1.0" android:versionCode="1" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.Pianote.Project" android:versionName="1.0" android:versionCode="2" android:installLocation="preferExternal">
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -17,14 +17,13 @@
         <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
       </intent-filter>
     </activity>
-    <meta-data android:name="unity.build-id" android:value="767ea89b-c2f5-4f9e-bc7c-c5acbb7ed607" />
+    <meta-data android:name="unity.build-id" android:value="0c43f0d2-1083-4d2c-a96e-8588aef2b986" />
     <meta-data android:name="unity.splash-mode" android:value="0" />
     <meta-data android:name="unity.splash-enable" android:value="True" />
   </application>
   <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
   <uses-feature android:glEsVersion="0x00020000" />
   <uses-feature android:name="android.hardware.vulkan" android:required="false" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
   <uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
   <uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false" />

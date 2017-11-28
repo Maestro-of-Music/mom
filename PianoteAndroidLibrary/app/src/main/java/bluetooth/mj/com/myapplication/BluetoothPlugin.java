@@ -118,14 +118,15 @@ public class BluetoothPlugin extends UnityPlayerActivity {
                     UnityPlayer.UnitySendMessage("BluetoothModel", "OnStateChanged", String.valueOf(msg.arg1));
                     break;
                 case 2:
-                    //
                     byte[] readBuf = (byte[])msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    UnityPlayer.UnitySendMessage("BluetoothModel", "OnReadMessage", readMessage);
+                    String reading = new String(readBuf);
+                    UnityPlayer.UnitySendMessage("BluetoothModel", "OnReadMessage", reading);
                     break;
                 case 3:
                     byte[] writeBuf = (byte[])msg.obj;
                     String writeMessage = new String(writeBuf);
+
                     UnityPlayer.UnitySendMessage("BluetoothModel", "OnSendMessage",writeMessage);
 
                     break;

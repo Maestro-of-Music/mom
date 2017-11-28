@@ -140,6 +140,8 @@ public class ChartControl : MonoBehaviour {
 
         Debug.Log("LeftHand : " + left + " " + "RightHand : " + right + " Both : " + both);
 
+        string result = "";
+
         string Bothanswer = (bothSum / both).ToString("0.00%");
         Debug.Log("BothSum : " + (Bothanswer));
 
@@ -149,10 +151,39 @@ public class ChartControl : MonoBehaviour {
         string Rightanswer = (rightSum / right).ToString("0.00%");
         Debug.Log("RightSum : " + (Rightanswer));
 
-        if (Leftanswer == "NaN"){
-            Debug.Log("There is no Left Hand ");
+
+        if (Leftanswer != "NaN"){
+            //Debug.Log("There is no Left Hand ");
+            result += "leftHand Accurancy is " + (Leftanswer) + "\n";
+        }else if(Rightanswer != "NaN"){
+            result += "rightHand Accurancy is " + (Rightanswer) + "\n";
+        }else if (Bothanswer != "NaN"){
+            result += "bothHand Accurancy is " + (Bothanswer) + "\n";
         }
-      
+
+        string temp ="";
+        if ((leftSum / left) < (rightSum / right)){
+
+            if ((rightSum / right) < (bothSum / both)){
+                temp = "Right Hand";
+            }else{
+                temp = "Both Hand";
+            }
+
+        }else{
+            
+            if ((leftSum / left) < (bothSum / both))
+            {
+                temp = "Left Hand";
+            }
+            else
+            {
+                temp = "Both Hand";
+            }
+        }
+        result = "More Play " + temp;
+
+        Answer.text = result;
     }
 
     IEnumerator LoadJsonBuilder(string log){

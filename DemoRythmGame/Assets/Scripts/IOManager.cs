@@ -29,25 +29,6 @@ public class IOManager : MonoBehaviour {
 	public void KeyInput(int keyboard_index){
 		//get data from arduino 
 
-		/*
-		switch (keyboard_index) {
-		case 1: 
-			Debug.Log ("1 Octave!");
-			break;
-		case 2:
-			Debug.Log ("2 Octave!");
-			break;
-		case 3:
-			Debug.Log ("3 Octave!");
-			break;
-		case 4:
-			Debug.Log ("4 Octave!");
-			break;
-		case 5:
-			Debug.Log ("5 Octave!");
-			break;
-		}
-		*/
 			/* White Key Input */ 
 			if (Input.GetKeyDown (KeyCode.A)) {
 			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index  + "C" + "/" ;
@@ -115,10 +96,6 @@ public class IOManager : MonoBehaviour {
 			//HardwareInput ();
 	}
 
-	void ConvertGetData(){
-		//parsing part 
-
-	}
 
 	public void HardwareInput2(string GetData)
 	{
@@ -153,113 +130,22 @@ public class IOManager : MonoBehaviour {
 		}
 			
 	}
-    /*
-	public void HardwareInput(string GetData){
-		//if(BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData != null)
-		//Debug.Log ("Bluetooth GetData : " + BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData);
-		Debug.Log("GETDATA : " + GetData);
-
-		if (GetData == "A") {
-			Debug.Log ("C Clicked");
-			if (click) {
-
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C";
-				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
-				click = false;
-			} else {
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
-				click = true;
-			}
-
-		} 
-		if (GetData == "C") {
-
-			if (click) {
-
-				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D";
-				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
-
-				click = false;
-			} else {
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
-				click = true;
-			}
-
-		} 
-		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "E") {
-
-			if (click) {
-
-				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4E";
-				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
-
-				click = false;
-			} else {
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
-				click = true;
-			}
-		}
 
 
-		 if (GetData == "B"){
-			
-			if (click) {
 
-				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C#";
-				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
-
-				click = false;
-			} else {
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
-				click = true;
-			}
-
-		} 
-
-		if (BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData == "D") {
-
-			if (click) {
-
-				//UIText.text = BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData;
-				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4D#";
-				Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = null;
-
-				click = false;
-			} else {
-				BluetoothController.gameObject.GetComponent<BluetoothIOManager> ().GetData = "";
-				click = true;
-			}
-
-		}
-
-	}
-*/
     //Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 
     public void KeyOutput(string data)
     {
         //send data to arduino 
 
-        string start = "#";
-		string end = "/";
-
-		string result = start + data + end; 
-		Debug.Log ("Result : " + result);
+		Debug.Log ("Result : " + data);
 
 		//if (send == false) {
-		Debug.Log("Data : " + result);
 
         if (Application.platform == RuntimePlatform.Android)
         {
-            //this.bluetooth.Send(data);
+         //   this.bluetooth.Send(data);
         }
-        send = true;
+        //send = true;
     }		
 }

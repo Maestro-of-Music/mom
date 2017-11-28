@@ -17,7 +17,6 @@ c178d2ceb799a9371608dd60ce9c8734 Assembly-CSharp.dll:.WMG_Bezier_Band
 4b6a5d4aba3b2ce1153a8a99286e5f4f Assembly-CSharp.dll:.WMG_Link
 5a2a64caf898196429af3d7a9d5cc0c1 Assembly-CSharp.dll:.FileDirectoryControl
 52e228e2a6cd1739c9efa6a2d5da6f1f Assembly-CSharp.dll:.WMG_Raycatcher
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FileControl
 dede2818cea77ebbe686cfde2346bbdf Assembly-CSharp.dll:.MenuManager
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
@@ -120,6 +119,7 @@ b2d0dacecfa9a8870c3b346106113a3f Assembly-CSharp.dll:.WMG_X_WorldSpace
 b6bc20e00656007d6665b49d31fb2a67 Assembly-CSharp.dll:.WMG_X_Dynamic
 6cb17aa028321d6f64f84b5ae8db7f0c Assembly-CSharp.dll:.WMG_Radar_Graph
 33192becac7fc30a494fc1efc17190a9 Assembly-CSharp.dll:.WMG_X_Data_Provider
+05507d25bc5c4461ae2a9e2ddd9aa0f2 Assembly-CSharp.dll:.OnEffect
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
 463516d5b5fe8e67a0a24c48f2095b04 UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInputModule
@@ -131,7 +131,6 @@ d6c3454102b5e5db7161d90bb53828ca Assembly-CSharp.dll:.WMG_X_Interactive_Pie
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.SaveData
 9917a7b8cc9013b6dc2376c61b8dfb8a Assembly-CSharp.dll:.IOManager
 d052342b104d8ca1cc0820d2073e70f6 Assembly-CSharp.dll:.WMG_X_Tutorial_1
-661d33336607a0bd9dd3964acc8c1c07 Assembly-CSharp.dll:.SceneChange
 8e7bd1cbb57215a45f3cd63bc4ed61e6 Assembly-CSharp.dll:.Observer
 34d6836461fec452518402ebdb99c51a Assembly-CSharp.dll:.WMG_X_Simple_Pie
 b8f057a5d96b66234b3230a0d800dcf6 Assembly-CSharp.dll:.WMG_Image_Custom_Mat
@@ -169,7 +168,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 b46861d3740249e2427679092f60f844 Assembly-CSharp.dll:.WMG_X_Plot_Overtime
 c3a64d620763e45e7f608a8d7fb8d7f8 Assembly-CSharp.dll:.X_Tutorial
-36fcdfdc94679fde12bddf91a63b6fd5 Assembly-CSharp.dll:.PlayNote
+3f20b993cb27042a3c9a8b3ba6471a34 Assembly-CSharp.dll:.PlayNote
 6d04419865a4ddcecfdee5da339112e0 Assembly-CSharp.dll:.WMG_Hierarchical_Tree
 0df013d0eb10fc968d0dddb15722ed9e Assembly-CSharp.dll:.WMG_Graph_Auto_Anim
 7bd6d753af954ff2b018dfc0392798ac Assembly-CSharp.dll:.Bar
@@ -187,16 +186,15 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 8410175990cf1adddab435a891f3ae5c Assembly-CSharp.dll:.BluetoothIOManager
 0df013d0eb10fc968d0dddb15722ed9e Assembly-CSharp.dll:.WMG_Graph_Tooltip
 6a57a0e5cd73d04e56d1b58de377048e Assembly-CSharp.dll:.WMG_Axis_Graph
-30e581930389c8116ec2eb7df3c7acdc Assembly-CSharp.dll:.LoadData
+db3a6ff467432f324ac9d06ff4bb82d2 Assembly-CSharp.dll:.LoadData
 735d8e32c0e3d3a635f60b256648957e Assembly-CSharp.dll:.WMG_Pie_Graph_Slice
 89db8822e2bdad1f93ae2b3ea747841e Assembly-CSharp.dll:.WMG_Node
 f3a067e2b7b3e70d7cfc256f182a6e27 Assembly-CSharp.dll:.CameraMove
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.WMG_GUI_Functions
-121a30f2ed4417716e546355fe83bec6 Assembly-CSharp.dll:.XMLManager
+4bee26d7898af091b54b769409945af8 Assembly-CSharp.dll:.XMLManager
 5ef1bb7433ee2b19335142206c7f65e6 Assembly-CSharp.dll:.WMG_X_Equation_Plotter
-3b789699c8a5d2a316ee7c6c75b428bc Assembly-CSharp.dll:.CreateNote
-1cd6328d888cb69f5018658d9167e2eb Assembly-CSharp.dll:.NoteDetail
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.JsonTest
+98e0b13510e02bdb3460f7fc2fa96fbc Assembly-CSharp.dll:.CreateNote
+80398e2c4cc0f3740679f891d1a22187 Assembly-CSharp.dll:.NoteDetail
 c69ab2dd80eeae3e08e991dcddd53362 Assembly-CSharp.dll:.Metronume
 5b9b33e9355b855ad8c862bb17efec07 Assembly-CSharp.dll:.WMG_Raycaster
 04ac216ed915aa40aaa3e25b6702ef96 Assembly-CSharp.dll:.BarChart

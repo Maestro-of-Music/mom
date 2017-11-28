@@ -6,7 +6,7 @@ using System;
 using LitJson;
 
 
-public class FileControl : MonoBehaviour {
+public class FileControl{
 
     private static FileControl _instance = null;
 

@@ -12,11 +12,25 @@ public class LoadData : MonoBehaviour {
 	public NoteData [] backupdatas;
 
 	public int End_Measure; //check measure in note info 
+    private SceneChange scenechange;
+    public string filename;
 
 	// Use this for initialization
 	void Awake () {
-		StartCoroutine ("LoadJSON");
-	}
+        this.scenechange = SceneChange.getInstance();
+        /*
+        JSON_load(this.scenechange.Music_title); //saved music title sending
+        */
+
+        StartCoroutine("LoadJSON");
+    }
+
+
+    void JSON_load(string filename){
+        Debug.Log(filename);
+        this.jsonData = (TextAsset)Resources.Load(filename);
+       // yield return null;
+    }
 		
 	IEnumerator LoadJSON (){
 		JsonData getData = JsonMapper.ToObject (jsonData.text);
@@ -28,7 +42,8 @@ public class LoadData : MonoBehaviour {
 
 		Debug.Log ("Load Data!");
 
-		yield return null;
+        yield return null;
+        //yield return new WaitForSeconds(2f);
 	}
 
 	void LoadNoteIofo(JsonData JsonObj){
@@ -76,6 +91,7 @@ public class LoadData : MonoBehaviour {
 			temp.measureIndex = int.Parse(jsonObj ["noteDatas"]["Forward"] [i] ["measureIndex"].ToString ());
 			temp.alter = bool.Parse(jsonObj ["noteDatas"]["Forward"] [i] ["alter"].ToString ());
 			temp.repeat = jsonObj ["noteDatas"]["Forward"] [i] ["repeat"].ToString ();
+            temp.default_x = int.Parse(jsonObj["noteDatas"]["Forward"][i]["default_x"].ToString());
 
 			notedatas [i] = temp;
 
@@ -87,7 +103,7 @@ public class LoadData : MonoBehaviour {
 		backupdatas = new NoteData[jsonObj ["noteDatas"] ["Backward"].Count];
 		Debug.Log (backupdatas.Length);
 
-		for (int i = 0; i < notedatas.Length; i++) {
+        for (int i = 0; i < backupdatas.Length; i++) {
 			NoteData temp = new NoteData ();
 			temp.step = jsonObj ["noteDatas"]["Backward"] [i] ["step"].ToString ();
 			temp.octave = int.Parse(jsonObj ["noteDatas"]["Backward"] [i] ["octave"].ToString ());
@@ -96,6 +112,9 @@ public class LoadData : MonoBehaviour {
 			temp.measureIndex = int.Parse(jsonObj ["noteDatas"]["Backward"] [i] ["measureIndex"].ToString ());
 			temp.alter = bool.Parse(jsonObj ["noteDatas"]["Backward"] [i] ["alter"].ToString ());
 			temp.repeat = jsonObj ["noteDatas"]["Backward"] [i] ["repeat"].ToString ();
+            temp.default_x = int.Parse(jsonObj["noteDatas"]["Backward"][i]["default_x"].ToString());
+            temp.backward = bool.Parse(jsonObj["noteDatas"]["Backward"][i]["backward"].ToString());
+
 
 			backupdatas [i] = temp;
 

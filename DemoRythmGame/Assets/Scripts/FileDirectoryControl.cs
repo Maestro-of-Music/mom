@@ -13,7 +13,7 @@ public class FileDirectoryControl : MonoBehaviour {
 
     void Start()
     {
-
+        OnFileLoad();
     }
 
     public void OnFileLoad(){
