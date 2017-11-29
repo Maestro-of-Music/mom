@@ -7,7 +7,6 @@ public class SceneChange{
 
     public string Music_title; //selected Music title
 
-
     private static SceneChange _instance = null;
 
     public static SceneChange getInstance()

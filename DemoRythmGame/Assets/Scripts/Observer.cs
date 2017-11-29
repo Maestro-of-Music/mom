@@ -47,8 +47,7 @@ public class Observer : MonoBehaviour {
 
 		if (col.gameObject.tag == "Rest") {
             PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
-			//PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "/";
-           // PianoManager.gameObject.GetComponent<PianoControl> ().move = true;
+            PianoManager.gameObject.GetComponent<PianoControl> ().move = true;
 		} else {
 			PianoManager.gameObject.GetComponent<PianoControl>().Target_pitch += col.gameObject.GetComponent<NoteDetail> ().pitch + "/";
 		}
@@ -108,7 +107,7 @@ public class Observer : MonoBehaviour {
             result = ResultCheck(_pitch, octave);
 		}
 
-        Debug.Log("Result : " + result);
+//        Debug.Log("Result : " + result);
 
         return result;
 	}
@@ -172,7 +171,7 @@ public class Observer : MonoBehaviour {
 
                 break;
             case 3:
-                Debug.Log("3 Octave");
+//                Debug.Log("3 Octave");
 
                 if (_pitch == "C")
                 {
@@ -357,8 +356,10 @@ public class Observer : MonoBehaviour {
         else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
 			OnPianoPlay (col);
+            Debug.Log("Rest!!");
+
         } else if (col.gameObject.tag =="Note_1" ){
-            Debug.Log("Note 1 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+//            Debug.Log("Note 1 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
             OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch,1);
 
             if (col.gameObject.GetComponent<NoteDetail>().duration > 3)
@@ -394,6 +395,7 @@ public class Observer : MonoBehaviour {
     {
         if (col.gameObject.tag == "Note_0")
         {
+//            Debug.Log("!!!!! Note_0 stayed");
             KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
             //OnPianoPlay (col);
             //OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch, 1);
@@ -495,7 +497,7 @@ public class Observer : MonoBehaviour {
             result = "@" + led.ToString();
         }
 
-        Debug.Log("SendLED : " + result);
+//        Debug.Log("SendLED : " + result);
 
 		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(result);
 

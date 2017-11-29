@@ -138,7 +138,7 @@ public class IOManager : MonoBehaviour {
     {
         //send data to arduino 
 
-		Debug.Log ("Result : " + data);
+//		Debug.Log ("Result : " + data);
 
 		//if (send == false) {
 

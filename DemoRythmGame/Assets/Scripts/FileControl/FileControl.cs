@@ -26,8 +26,18 @@ public class FileControl{
     }
 
     public int SearchDirectoryFile(string music_name){
-        
-        string strFilePath = Application.streamingAssetsPath;
+
+        string strFilePath = "";
+
+        if(Application.platform == RuntimePlatform.Android){
+            Debug.Log("Android! Search Directory File");
+            strFilePath = "jar:file://" + Application.dataPath + "!/assets";
+        }else{
+            Debug.Log("PC! Search Directory File");
+            strFilePath = Application.streamingAssetsPath;
+        }
+
+
         int last_index = 0;
         //int count = 0;
 
@@ -56,10 +66,20 @@ public class FileControl{
     public List<string> GetLogData(string music_name){
         List<string> temp = new List<string>();
 
-        string path = Application.streamingAssetsPath;
-        Debug.Log(path);
-        DirectoryInfo dataDir = new DirectoryInfo(path);
+        string strFilePath = "";
 
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            Debug.Log("Android! Search Directory File");
+            strFilePath = "jar:file://" + Application.dataPath + "!/assets";
+        }
+        else
+        {
+            Debug.Log("PC! Search Directory File");
+            strFilePath = Application.streamingAssetsPath;
+        }
+
+        DirectoryInfo dataDir = new DirectoryInfo(strFilePath);
         int count = 0;
 
         try

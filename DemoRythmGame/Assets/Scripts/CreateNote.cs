@@ -29,9 +29,8 @@ public class CreateNote : MonoBehaviour {
 	private int measure_count;
 	private float forward;
 	private float backward;
-
-
-
+	private float restnoteX; //to set rest note 's location;
+	private float restnoteZ; 
 
 	void Awake(){
 		StartCoroutine ("WaitForLoadData"); //wait for load data 
@@ -232,6 +231,8 @@ public class CreateNote : MonoBehaviour {
 		if (noteObject != null) {
 
 //			Debug.Log ("pitch : " + pitch);
+			//restnoteX = noteObject.GetComponent<Transform>().transform.position.x;
+			//restnoteZ = noteObject.GetComponent<Transform>().transform.position.z;
 
 			note = (GameObject) Instantiate(NotePrefab, new Vector3 (noteObject.GetComponent<Transform>().transform.position.x, Height, noteObject.GetComponent<Transform>().transform.position.z),Quaternion.identity);
 			note.transform.localScale = new Vector3 (1, duration, 1);
@@ -241,8 +242,10 @@ public class CreateNote : MonoBehaviour {
             note.GetComponent<NoteDetail>().default_x = default_x;
             note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
 
-            NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;
+            NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){
+                index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;
                 index.note_index = notenum;             }
+
 
 			switch (duration) {
 			case 1: //white
@@ -286,10 +289,14 @@ public class CreateNote : MonoBehaviour {
 
 		} 
 		else if(noteObject == null){ 
-			note = (GameObject) Instantiate(RestNotePrefab, new Vector3 (-3.8f, Height, 3),Quaternion.identity);
+            /*
+            note = (GameObject) Instantiate(RestNotePrefab, new Vector3 (restnoteX, Height, restnoteZ),Quaternion.identity);
 			note.GetComponent<NoteDetail> ().duration = duration;
 			note.GetComponent<NoteDetail> ().sequence = sequence;
+            note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
+			//note.GetComponent<NoteDetail>().pitch = "/";
 			//setting rest object 
+            */
 		}
         if (!chord)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 using LitJson;
 
 public class LoadData : MonoBehaviour {
@@ -17,10 +18,12 @@ public class LoadData : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+
         this.scenechange = SceneChange.getInstance();
-        /*
-        JSON_load(this.scenechange.Music_title); //saved music title sending
-        */
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            JSON_load(this.scenechange.Music_title); //saved music title sending
+        }
 
         StartCoroutine("LoadJSON");
     }
@@ -28,7 +31,19 @@ public class LoadData : MonoBehaviour {
 
     void JSON_load(string filename){
         Debug.Log(filename);
-        this.jsonData = (TextAsset)Resources.Load(filename);
+
+        if(Application.platform == RuntimePlatform.Android){
+            /*
+            string path = "jar:file://" + Application.dataPath + "!/assets" + "/" + filename + ".txt";
+            */
+            //string path = Application.persistentDataPath + filename + ".txt";
+            // Byte[] bytes = File.ReadAllBytes(path); 
+            //this.jsonData = (TextAsset)Resources.Load(path);
+            this.jsonData = (TextAsset)Resources.Load(filename);
+            Debug.Log("Load JSON Data");
+        }else{
+            this.jsonData = (TextAsset)Resources.Load(filename);
+        }
        // yield return null;
     }
 		

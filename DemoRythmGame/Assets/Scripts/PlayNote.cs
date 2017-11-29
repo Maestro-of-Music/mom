@@ -45,6 +45,7 @@ public class PlayNote : MonoBehaviour {
 			
 	}
 
+
 	IEnumerator OnReleaseStart(string pitch){
 		Observer.gameObject.GetComponent<Observer> ().OnRelease (pitch);
 

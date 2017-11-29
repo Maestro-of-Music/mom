@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using LitJson;
-
+using UnityEngine.UI;
 
 public class LogManager : MonoBehaviour {
 
@@ -12,18 +12,80 @@ public class LogManager : MonoBehaviour {
     private FileControl filecontrol;
     public GameObject GameManager;
     public List<String> loadData;
+    public int logcount = 0;
+
+    public GameObject perfect;
+    public GameObject good;
+    public GameObject cool;
+    public GameObject miss;
+
+    public GameObject temp;
+
+    private bool opacitycheck = false;
+    private Image SelectedImage;
+    private float opacity;
+
 
     void Awake(){
         this.filecontrol = FileControl.getInstance();
     }
 
-    void Start(){
-//        Debug.Log("Title: " + GameManager.GetComponent<CreateNote>().title);
+    private void Update()
+    {
+        if(opacitycheck){
+            BeTransparent();
+        }
+    }
+
+    void ImageInit()
+    {
+        temp.SetActive(true);
+        opacity = 1.0f;
+        SelectedImage = temp.GetComponent<Image>();
+        var tempColor = SelectedImage.color;
+        tempColor.a = 1f;
+        SelectedImage.color = tempColor;
+
+        if (opacitycheck == false)
+        {
+            opacitycheck = true;
+        }
+    }
+
+    void BeTransparent()
+    {
+        if (SelectedImage.color.a > 0)
+        {
+            var temp = SelectedImage.color;
+            temp.a = opacity - 0.05f;
+            //good
+            opacity = temp.a;
+            SelectedImage.color = temp;
+        }
+        else
+        {
+            opacitycheck = false;
+            temp.SetActive(false);
+        }
+    }
+
+    public void MakeScoreTitle(string result){
+        if(result == "Perfect"){
+            temp = perfect;
+        }else if (result == "Good"){
+            temp = good;
+        }else if (result == "Cool"){
+            temp = cool;
+        }else if(result == "Miss"){ //miss
+            temp = miss;
+        }
+        ImageInit(); //Image Init
     }
 
     public void MakeLogObject(int count){
         GameObject note = (GameObject)Instantiate(LogObject, new Vector3(0, gameObject.GetComponent<Transform>().position.y + 1.6f, 2.85f), Quaternion.identity);
-        note.GetComponent<LogControl>().count_Keyboard = count;        
+        note.GetComponent<LogControl>().count_Keyboard = count;    
+
     }
 	
     //setting calculation of log data

@@ -209,7 +209,7 @@ public class MenuManager : MonoBehaviour {
 
 	public void GoHome(){
 		Debug.Log ("Go Home Menu");
-		SceneManager.LoadScene ("Test");
+		SceneManager.LoadScene ("TableListScene");//check!
 	}
 
 	public void OnTimer(){

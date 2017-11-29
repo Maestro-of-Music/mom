@@ -21,6 +21,7 @@ public class PianoControl : MonoBehaviour {
     public string [] temp_answer;
     public string [] answer; 
 
+
 	public int duration; 
 	public float speed; 
 
@@ -215,6 +216,7 @@ public class PianoControl : MonoBehaviour {
 		if (Play == true || Practice == true) {
 			speed = 0.0f;
 			move = false;
+            gameObject.GetComponent<LogManager>().temp.SetActive(false); 
 			GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
 		}
 		else if (Repeat) {
@@ -257,7 +259,7 @@ public class PianoControl : MonoBehaviour {
 		if (pitch != "") {
 			//divider needed 
 			PitchCheck (); //check
-		} 
+        }
 	}
 
 	void NodeRest(){
@@ -370,15 +372,20 @@ public class PianoControl : MonoBehaviour {
 	}
 
 	IEnumerator MovePiano(){
-        Debug.Log("location Y:!!!!!!!" + _location.y);
+//        Debug.Log("location Y:!!!!!!!" + _location.y);
+ //       Debug.Log("Usual : " + _location.y + duration);
+        float a = (float)(_location.y + duration);
+   //     Debug.Log("UnUsual : " + a);
 
-		if (transform.position.y >= _location.y + duration) {
+		if (transform.position.y > a) {
+            
+            yield return new WaitForSeconds(0.1f);
 			pitch = null;
 			move = false;
 		} else {
 			transform.Translate (Vector3.up * Time.deltaTime * speed);
 		}
-        yield return null;
+        //yield return null;
 
 	}
 
@@ -400,7 +407,9 @@ public class PianoControl : MonoBehaviour {
 			temp = this.duration;
 			gameObject.GetComponent<ScoreManager> ().score += temp * 100;
             Debug.Log("Count :" + count);
+            gameObject.GetComponent<LogManager>().logcount++;
             gameObject.GetComponent<LogManager>().MakeLogObject(count); //make Log
+
 			Scorechange = false;
 		}
 

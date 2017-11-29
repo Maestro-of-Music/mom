@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LogControl : MonoBehaviour {
 
+   
     private bool check = false;
     public float dist;
     public string result;
@@ -28,6 +30,7 @@ public class LogControl : MonoBehaviour {
         yield return null;
 
     }
+
 
     void OnTriggerStay(Collider other)
     {
@@ -73,6 +76,8 @@ public class LogControl : MonoBehaviour {
         }else {
             result = "Miss";
         }
+
+        GameObject.Find("PianoManager").SendMessage("MakeScoreTitle", result); //send MakeScoreTitle
 
     }
 
