@@ -118,8 +118,12 @@ public class LogManager : MonoBehaviour {
 
         int a =  filecontrol.SearchDirectoryFile(music_name);
         Debug.Log(a);
-
-        string url = Application.streamingAssetsPath + "/" + "(" +  music_name + ")" +"log" + a.ToString()+".txt";
+        string url = "";
+        if(Application.platform == RuntimePlatform.Android){
+            
+        }else{
+            url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
+        }
 
         //Find data URL 
 

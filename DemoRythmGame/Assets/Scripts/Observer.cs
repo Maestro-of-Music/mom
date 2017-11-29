@@ -408,10 +408,11 @@ public class Observer : MonoBehaviour {
 		if (col.gameObject.tag == "Note" || col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false ); //release
 			PianoManager.gameObject.GetComponent<PianoControl> ().Target_pitch = "";
-
+          //  Destroy(col.gameObject);
+            /*
             if(col.gameObject.GetComponent<NoteDetail>().pitch.Contains("#")){
                 Destroy(col.gameObject);
-            }
+            }*/
 		}
 
         else if (col.gameObject.tag == "Note_0")

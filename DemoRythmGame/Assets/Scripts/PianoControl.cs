@@ -216,7 +216,6 @@ public class PianoControl : MonoBehaviour {
 		if (Play == true || Practice == true) {
 			speed = 0.0f;
 			move = false;
-            gameObject.GetComponent<LogManager>().temp.SetActive(false); 
 			GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
 		}
 		else if (Repeat) {

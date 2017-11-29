@@ -29,6 +29,7 @@ public class MenuManager : MonoBehaviour {
 	public GameObject ScorePanel;
 	public GameObject TimerPanel;
 	public GameObject RepeatPanel;
+    public GameObject ScoreTitlePanel;
 
 
 
@@ -119,6 +120,7 @@ public class MenuManager : MonoBehaviour {
 		Music_Title.gameObject.SetActive (false);
 		Score.text = "Total Score : " + PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
 
+        ScoreTitlePanel.SetActive(false);
 		Restart_btn.gameObject.SetActive (true); //reload scene
 		Play_btn.gameObject.SetActive (false);
 		Practice_btn.gameObject.SetActive (false);
