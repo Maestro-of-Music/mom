@@ -168,7 +168,6 @@ public class MenuManager : MonoBehaviour {
         }else {
             Debug.Log("Player result : " + " C ");
             display_ScoreTitle = "C";
-
         }
 
         //show perfect and miss

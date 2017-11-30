@@ -25,12 +25,6 @@ public class LogManager : MonoBehaviour {
     public GameObject temp;
     public Image HealthBar;
 
-    /*
-    private bool opacitycheck = false;
-    private Image SelectedImage;
-    private float opacity;
-    */
-
     void Awake(){
         this.filecontrol = FileControl.getInstance();
         Perfect_Count = 0;

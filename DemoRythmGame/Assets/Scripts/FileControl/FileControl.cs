@@ -118,11 +118,10 @@ public class FileControl
         return temp;
     }
 
-    public void SaveHistory(History data)
-    {
-        Debug.Log("Save music history");
+    public List<History> LoadHistory(){
+        //load history and display to table view
+        List<History> historyList = new List<History>();
         string path = "";
-        List<History> temp = new List<History>();
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -130,16 +129,61 @@ public class FileControl
         }
         else
         {
-            path = Application.streamingAssetsPath + "/";
+            path = Application.dataPath + "/";
+        }
+
+        try
+        {
+            if (File.Exists(path + "history.txt")){
+
+                string LoadHistory = File.ReadAllText(path + "history.txt");
+                JsonData load = JsonMapper.ToObject(LoadHistory);
+
+                for (int i = 0; i < load["historyList"].Count; i++)
+                {
+                    History temp = new History();
+                    temp.result_Alpha = load["historyList"][i]["result_Alpha"].ToString();
+                    temp.score = int.Parse(load["historyList"][i]["score"].ToString());
+                    temp.title = load["historyList"][i]["title"].ToString();
+                    historyList.Add(temp);
+                }
+
+
+
+            }
+
+        }catch(Exception e){
+            Debug.Log(e);
+        }
+
+        return historyList;
+    }
+
+    public void SaveHistory(History data)
+    {
+        Debug.Log("Save music history");
+        string path = "";
+        HistoryList arr = new HistoryList();
+        List<History> historyList = new List<History>();
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/";
+        }
+        else
+        {
+            path = Application.dataPath + "/";
         }
         try
         {
+
             if (File.Exists(path + "history.txt") == false)
             {
                 //save first history file
-                temp.Add(data);
+                historyList.Add(data);
+                arr.historyList = historyList;
+                JsonData save = JsonMapper.ToJson(arr);
 
-                JsonData save = JsonMapper.ToJson(temp);
                 File.WriteAllText(path + "history.txt", save.ToString());
                 Debug.Log("Save File Created!");
 
@@ -147,8 +191,21 @@ public class FileControl
             else
             {
                 //save second history file
-                JsonData save = JsonMapper.ToJson(File.ReadAllText(path + "history.txt"));
-                save.Add(data);
+                string LoadHistory = File.ReadAllText(path + "history.txt");
+                JsonData load = JsonMapper.ToObject(LoadHistory);
+
+                for (int i = 0; i < load["historyList"].Count;i++){
+                    History temp = new History();
+                    temp.result_Alpha = load["historyList"][i]["result_Alpha"].ToString();
+                    temp.score = int.Parse(load["historyList"][i]["score"].ToString());
+                    temp.title = load["historyList"][i]["title"].ToString();
+                    historyList.Add(temp);
+                }
+
+                historyList.Add(data);
+                arr.historyList = historyList;
+                JsonData save = JsonMapper.ToJson(arr);
+
                 File.WriteAllText(path + "history.txt", save.ToString());
                 Debug.Log("Resaved File Created!");
             }

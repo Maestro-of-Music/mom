@@ -8,12 +8,20 @@ using UnityEngine.UI;
 public class FileDirectoryControl : MonoBehaviour {
 
     public GameObject ItemObject;
+    public GameObject HistoryObject;
     public Transform Content;
     public List<Item> ItemList;
+    private FileControl filecontrol;
+
+    private void Awake()
+    {
+        this.filecontrol = FileControl.getInstance();
+    }
 
     void Start()
     {
-        OnFileLoad();
+        //OnFileLoad();
+        OnHistoryLoad();
     }
 
     public void OnFileLoad(){
@@ -91,12 +99,28 @@ public class FileDirectoryControl : MonoBehaviour {
                 Debug.Log(e);
             } 
         }
-
-    
-
     }
 
-    void Binding(string file){
+    public void OnHistoryLoad()
+    {
+        List<History> temp = this.filecontrol.LoadHistory();
+        for (int i = 0; i < temp.Count;i++){
+            HistoryBinding(temp[i]);
+        }
+    }
+
+
+    public void HistoryBinding(History temp){
+        
+        GameObject btnItemTemp = Instantiate(this.ItemObject) as GameObject;
+        btnItemTemp.GetComponent<ItemObject>().Title.text = temp.title;
+        btnItemTemp.GetComponent<ItemObject>().Detail.text = temp.score.ToString();
+        btnItemTemp.GetComponent<ItemObject>().Btn.name = temp.result_Alpha;
+
+        btnItemTemp.transform.SetParent(this.Content);
+    }
+
+    public void Binding(string file){
     
         GameObject btnItemTemp = Instantiate(this.ItemObject) as GameObject;
         btnItemTemp.GetComponent<ItemObject>().Title.text = file;

@@ -27,6 +27,7 @@ public class CameraMove : MonoBehaviour {
 		else{
 			transform.position = desiredPosition;
 		}
-			
 	}
+
+ 
 }
