@@ -336,25 +336,18 @@ public class Observer : MonoBehaviour {
 	void OnTriggerEnter(Collider col){
 	
 		if (col.gameObject.tag == "Note_0") {
-            Debug.Log("Note  !! Sended! and Effect On!");
-            /*
-            if (col.gameObject.GetComponent<NoteDetail>().duration < 3)
-            {
-                col.gameObject.GetComponent<OnEffect>().OnCollision();
-            }
-            */
-            /*
-            KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, true); //pressed
-			OnPianoPlay (col);
-			OnLEDChange (col.gameObject.GetComponent<NoteDetail> ().pitch, 1);
-            */
+         //   Debug.Log("Note  !! Sended! and Effect On!");
+         
+            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 1);
+
         }
         else if (col.gameObject.tag == "Note"){
+            
             col.gameObject.GetComponent<OnEffect>().OnCollision(); 
             //OnCollision setting
             KeySequence(col.gameObject.GetComponent<NoteDetail>().pitch, true); //pressed
             OnPianoPlay(col);
-            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 1);
+
         } 
         else if (col.gameObject.tag == "Rest") {
 			KeySequence (col.gameObject.GetComponent<NoteDetail> ().pitch, false); //released
@@ -372,19 +365,12 @@ public class Observer : MonoBehaviour {
             */
 
         }else if (col.gameObject.tag =="Note_2"){
-            Debug.Log("Note 2 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
+           // Debug.Log("Note 2 !! Sended! : " + col.gameObject.GetComponent<NoteDetail>().pitch);
             OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch,1);
 
         }else if(col.gameObject.tag =="Note_3"){
-            Debug.Log("Note 3 !! Send Release ");
+            //  Debug.Log("Note 3 !! Send Release ");
             OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 0);
-
-            /*
-            if (col.gameObject.GetComponent<NoteDetail>().duration > 3)
-            {
-                col.gameObject.GetComponent<OnEffect>().OffCollision();
-            }
-            */
         }
 
 		if (col.gameObject.tag == "End") {

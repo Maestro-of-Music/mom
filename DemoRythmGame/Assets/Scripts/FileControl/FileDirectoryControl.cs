@@ -38,14 +38,35 @@ public class FileDirectoryControl : MonoBehaviour {
                 for (int i = 0; i < array.Length;i++){
                     TextAsset arr = (TextAsset)array[i];
                     Debug.Log(arr.name);
-                    //int first = arr.name.IndexOf(".txt");
-                    //Debug.Log(first);
                     string name = arr.name;
-                    //Debug.Log("Name : " + name);
                     Binding(name);
                 }
             }
-            Debug.Log("Load!");
+
+            Debug.Log("Resource Files Load!");
+
+            Debug.Log("Now Load in Persistent Data path");
+
+            strFilePath = Application.persistentDataPath + "/" ;  
+
+            DirectoryInfo dataDir = new DirectoryInfo(strFilePath);
+
+             try{
+                 FileInfo[] fileinfo = dataDir.GetFiles();
+             for (int i = 0; i < fileinfo.Length; i++)
+             {
+                    if (fileinfo[i].Name.Contains(".txt") && fileinfo[i].Name.Contains(".meta") == false){
+                         int first = fileinfo[i].Name.IndexOf(".txt");
+                         Debug.Log(first);
+                         string name = fileinfo[i].Name.Substring(0,first);
+                         Debug.Log("Name : " + name);
+                         Binding(name);
+                    }
+                }
+            }
+            catch(Exception e){
+                Debug.Log(e);
+            } 
 
         }
         else

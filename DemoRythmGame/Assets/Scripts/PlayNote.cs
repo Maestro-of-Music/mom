@@ -42,8 +42,15 @@ public class PlayNote : MonoBehaviour {
 				OnPlay (); 
 			}
 		}
-			
 	}
+
+    void OnMouseDown()
+    {
+        if (PianoObject.gameObject.GetComponent<PianoControl>().end == false)
+        {
+            OnPlay();
+        }
+    }
 
 
 	IEnumerator OnReleaseStart(string pitch){

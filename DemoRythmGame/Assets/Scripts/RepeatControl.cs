@@ -85,8 +85,6 @@ public class RepeatControl : MonoBehaviour {
 		}
 	}
 
-
-
 	public void Reset_Sequence(){
 		gameObject.GetComponent<ScoreManager> ().score = 0;
 		gameObject.GetComponent<PianoControl> ().InitPosition ();
@@ -95,7 +93,6 @@ public class RepeatControl : MonoBehaviour {
 		gameObject.GetComponent<PianoControl> ().StartCoroutine ("SearchSequence", arr);
 
 	}
-
 
     IEnumerator checkSequencePosition(int [] arr){
         SearchStartPosition(arr[0], arr[1]);

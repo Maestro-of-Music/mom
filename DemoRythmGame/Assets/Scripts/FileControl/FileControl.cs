@@ -31,15 +31,16 @@ public class FileControl{
 
         if(Application.platform == RuntimePlatform.Android){
             Debug.Log("Android! Search Directory File");
+            /*
             strFilePath = "jar:file://" + Application.dataPath + "!/assets";
+            */
+            strFilePath = Application.persistentDataPath +"/";
         }else{
             Debug.Log("PC! Search Directory File");
             strFilePath = Application.streamingAssetsPath;
         }
 
-
         int last_index = 0;
-        //int count = 0;
 
         DirectoryInfo dataDir = new DirectoryInfo(strFilePath);
         try{
@@ -71,7 +72,7 @@ public class FileControl{
         if (Application.platform == RuntimePlatform.Android)
         {
             Debug.Log("Android! Search Directory File");
-            strFilePath = "jar:file://" + Application.dataPath + "!/assets";
+            strFilePath = Application.persistentDataPath + "/";
         }
         else
         {

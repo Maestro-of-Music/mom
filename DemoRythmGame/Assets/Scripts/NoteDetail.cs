@@ -21,7 +21,8 @@ public class NoteDetail : MonoBehaviour {
     {
         if (gameObject.tag == "Note")
         {
-            GameObject note = (GameObject)Instantiate(NoteCheck, gameObject.transform.position, Quaternion.identity);
+            float result = checkLength(duration); 
+            GameObject note = (GameObject)Instantiate(NoteCheck, new Vector3(gameObject.transform.position.x ,gameObject.transform.position.y + result , gameObject.transform.position.z ), Quaternion.identity);
             NoteDetail[] temp = note.GetComponentsInChildren<NoteDetail>();
 
             foreach (NoteDetail index in temp)
@@ -32,5 +33,27 @@ public class NoteDetail : MonoBehaviour {
                 index.note_index = note_index;
             }
         }
+    }
+
+    float checkLength(int d){
+        float result = 0;
+        switch(d){
+            case 1:
+                result = 0.1f;
+                break;
+            case 2:
+                result = 0.15f; 
+                break;
+            case 3:
+                result = 0.2f;
+                break;
+            case 4:
+                result = 0.25f;
+                break;
+            default:
+                result = 0.0f;
+                break;
+        }
+        return result;
     }
 }
