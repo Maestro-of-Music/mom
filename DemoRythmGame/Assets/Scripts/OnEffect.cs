@@ -20,9 +20,11 @@ public class OnEffect : MonoBehaviour {
         Effect.SetActive(true);
     }
 
+    /*
     public void OffCollision(){
         Effect.SetActive(false);
     }
+    */
 
     IEnumerator stopEffet(){
         yield return new WaitForSeconds(1f);

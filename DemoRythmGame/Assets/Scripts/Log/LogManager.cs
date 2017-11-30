@@ -14,59 +14,27 @@ public class LogManager : MonoBehaviour {
     public List<String> loadData;
     public int logcount = 0;
 
+    public int Perfect_Count;
+    public int Good_Count;
+    public int Cool_Count;
+
     public GameObject perfect;
     public GameObject good;
     public GameObject cool;
     public GameObject miss;
 
     public GameObject temp;
-
+    /*
     private bool opacitycheck = false;
     private Image SelectedImage;
     private float opacity;
-
+    */
 
     void Awake(){
         this.filecontrol = FileControl.getInstance();
-    }
-
-    private void Update()
-    {
-        if(opacitycheck){
-            BeTransparent();
-        }
-    }
-
-    void ImageInit()
-    {
-        temp.SetActive(true);
-        opacity = 1.0f;
-        SelectedImage = temp.GetComponent<Image>();
-        var tempColor = SelectedImage.color;
-        tempColor.a = 1f;
-        SelectedImage.color = tempColor;
-
-        if (opacitycheck == false)
-        {
-            opacitycheck = true;
-        }
-    }
-
-    void BeTransparent()
-    {
-        if (SelectedImage.color.a > 0)
-        {
-            var temp = SelectedImage.color;
-            temp.a = opacity - 0.05f;
-            //good
-            opacity = temp.a;
-            SelectedImage.color = temp;
-        }
-        else
-        {
-            opacitycheck = false;
-            temp.SetActive(false);
-        }
+        Perfect_Count = 0;
+        Good_Count = 0;
+        Cool_Count = 0; 
     }
 
     public void MakeScoreTitle(string result){
@@ -79,7 +47,11 @@ public class LogManager : MonoBehaviour {
         }else if(result == "Miss"){ //miss
             temp = miss;
         }
-        ImageInit(); //Image Init
+
+        temp.SetActive(true);
+        temp.GetComponent<ScoreTitleControl>().ImageInit();
+
+
     }
 
     public void MakeLogObject(int count){
@@ -119,28 +91,32 @@ public class LogManager : MonoBehaviour {
         int a =  filecontrol.SearchDirectoryFile(music_name);
         Debug.Log(a);
         string url = "";
-        if(Application.platform == RuntimePlatform.Android){
-            
-        }else{
-            url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
-        }
-
-        //Find data URL 
-
-        if (File.Exists(url) == true)
+        if (Application.platform == RuntimePlatform.Android)
         {
-            //rewrite
-            JsonData data = JsonMapper.ToJson(log);
-            a++;
+            //persistence 
 
-            url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString()+".txt";
-            File.WriteAllText(url,data.ToString());
         }
         else
         {
-            log.index = 1;
-            JsonData data = JsonMapper.ToJson(log);
-            File.WriteAllText(url,data.ToString());
+            url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
+
+            //Find data URL 
+
+            if (File.Exists(url) == true)
+            {
+                //rewrite
+                JsonData data = JsonMapper.ToJson(log);
+                a++;
+
+                url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
+                File.WriteAllText(url, data.ToString());
+            }
+            else
+            {
+                log.index = 1;
+                JsonData data = JsonMapper.ToJson(log);
+                File.WriteAllText(url, data.ToString());
+            }
         }
     }
 }

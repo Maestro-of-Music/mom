@@ -10,15 +10,27 @@ public class NoteDetail : MonoBehaviour {
 	public int duration;
 	public int sequence; //measure
     public int note_index; //counting note
+    public GameObject NoteCheck;
 
-    /*
     private void Start()
     {
-        if(duration > 1 && gameObject.tag == "Note_0"){
-            Vector3 temp = gameObject.transform.localPosition;
-            gameObject.transform.localPosition = new Vector3(temp.x, temp.y - 0.2f, temp.z);
+        CreatePreChecker();
+    }
+
+    void CreatePreChecker()
+    {
+        if (gameObject.tag == "Note")
+        {
+            GameObject note = (GameObject)Instantiate(NoteCheck, gameObject.transform.position, Quaternion.identity);
+            NoteDetail[] temp = note.GetComponentsInChildren<NoteDetail>();
+
+            foreach (NoteDetail index in temp)
+            {
+                index.duration = duration;
+                index.pitch = pitch;
+                index.sequence = sequence;
+                index.note_index = note_index;
+            }
         }
     }
-    */ 
-
 }
