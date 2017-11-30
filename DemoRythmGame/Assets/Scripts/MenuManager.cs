@@ -31,13 +31,15 @@ public class MenuManager : MonoBehaviour {
 	public GameObject RepeatPanel;
     public GameObject ScoreTitlePanel;
 
-
+    private FileControl filecontrol;
+    public string display_ScoreTitle;
 
 	public float TimeSize;
 	public bool TurnTimer;
 
 	// Use this for initialization
 	void Awake(){
+        this.filecontrol = FileControl.getInstance();
 		GameMenu ();
 	}
 
@@ -120,6 +122,7 @@ public class MenuManager : MonoBehaviour {
 		Music_Title.gameObject.SetActive (false);
 		Score.text = "Total Score : " + PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
 
+
         ScoreTitlePanel.SetActive(false);
 		Restart_btn.gameObject.SetActive (true); //reload scene
 		Play_btn.gameObject.SetActive (false);
@@ -130,6 +133,8 @@ public class MenuManager : MonoBehaviour {
 
         //save user's data
         PianoManager.GetComponent<LogManager>().CollectLogObject(int.Parse(PianoManager.GetComponent<PianoControl>().Score.text),GameManager.GetComponent<LoadData>().noteinfo.Title);
+        CalculateScore(); // at first calculate score
+
 
 		if (Mode == 2 || Mode == 3) {
 			Score.gameObject.SetActive (false);
@@ -138,8 +143,47 @@ public class MenuManager : MonoBehaviour {
 		}else{
 			Score.gameObject.SetActive (true);
 		}
-
 	}
+
+    void CalculateScore(){
+
+        //cal Total_result;
+        Debug.Log(PianoManager.gameObject.GetComponent<ScoreManager>().score);
+        Debug.Log(gameObject.GetComponent<CreateNote>().Total_Score);
+
+        double propotion = ((double)PianoManager.gameObject.GetComponent<ScoreManager>().score / (double)gameObject.GetComponent<CreateNote>().Total_Score) * 100.0;
+        Debug.Log("propotion : " + propotion);
+
+        if (propotion >= 0.5f){
+            display_ScoreTitle = "S";
+            Debug.Log("Player result : " + " S ");
+        }else if (propotion >= 0.3f && propotion < 0.5f){
+            Debug.Log("Player result : " + " A ");
+            display_ScoreTitle = "A";
+
+        }else if (propotion >= 0.1f && propotion < 0.3f){
+            Debug.Log("Player result : " + " B ");
+            display_ScoreTitle = "B";
+
+        }else {
+            Debug.Log("Player result : " + " C ");
+            display_ScoreTitle = "C";
+
+        }
+
+        //show perfect and miss
+        Debug.Log("Perfect Result : " + PianoManager.GetComponent<LogManager>().Perfect_Count);
+        Debug.Log("Miss Result : " + PianoManager.GetComponent<LogManager>().Miss_Count);
+
+        History temp = new History();
+        temp.result_Alpha = display_ScoreTitle;
+        temp.score = PianoManager.gameObject.GetComponent<ScoreManager>().score;
+        temp.title = gameObject.GetComponent<CreateNote>().title;
+
+        //save history
+        this.filecontrol.SaveHistory(temp); //save adaption after
+
+    }
 
 	public void ModePause(){
 
@@ -174,7 +218,9 @@ public class MenuManager : MonoBehaviour {
 		if (Mode == 1) {
 			Debug.Log ("Play Start");
 			StartCoroutine ("StartInitMode");
-
+            TempoPanel.SetActive(true);
+            TempoPanel.gameObject.transform.localPosition = new Vector3(305, 90, 0);
+            TempoPanel.gameObject.transform.localScale = new Vector3(1.9f, 1.9f, 1.6f);
 
 			PianoManager.gameObject.GetComponent<PianoControl> ().Play = true;
 			Reset_btn.gameObject.SetActive (true);

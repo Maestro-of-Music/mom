@@ -44,13 +44,20 @@ public class GameTime : MonoBehaviour {
 		MetroData.Base = JsonData.noteinfo.Beat_type;
 		MetroData.Step = JsonData.noteinfo.Beats;
 		MetroData.BPM = JsonData.noteinfo.Tempo;
-		tempo_data.text = MetroData.BPM.ToString ();
 
-		//EndMeasure = JsonData.notedatas [JsonData.notedatas.Length].measureIndex;
 		EndMeasure = JsonData.noteinfo.Measure; //check measure part 
 
 		StartCoroutine ("Init");
+        StopCoroutine("WaitforTime");
 	}
+
+    public void Setting_Tempo_data(){
+        tempo_data.text = PianoManager.GetComponent<PianoControl>().speed.ToString();
+    }
+
+    IEnumerator WaitforTime(){
+        yield return new WaitForSeconds(2.0f);
+    }
 		
 	void LoadingMetronume(){
 		//loading Metronume data real-time 
@@ -69,18 +76,19 @@ public class GameTime : MonoBehaviour {
 
  	public void Tempo_Up(int num){
 
-		MetroData.BPM += num;
-		tempo_data.text = MetroData.BPM.ToString ();
+        PianoManager.GetComponent<PianoControl>().speed += num;
+        tempo_data.text = PianoManager.GetComponent<PianoControl>().speed.ToString ();
 
-		StartCoroutine ("Init");
+		//StartCoroutine ("Init");
 	}
 
 	public void Tempo_Down(int num){
 		
-		MetroData.BPM -= num;
-		tempo_data.text = MetroData.BPM.ToString ();
+        PianoManager.GetComponent<PianoControl>().speed -= num;
+        tempo_data.text = PianoManager.GetComponent<PianoControl>().speed.ToString();
 
-		StartCoroutine ("Init");
+
+		//StartCoroutine ("Init");
 
 
 	}

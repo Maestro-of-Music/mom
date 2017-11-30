@@ -15,8 +15,7 @@ public class LogManager : MonoBehaviour {
     public int logcount = 0;
 
     public int Perfect_Count;
-    public int Good_Count;
-    public int Cool_Count;
+    public int Miss_Count;
 
     public GameObject perfect;
     public GameObject good;
@@ -24,6 +23,8 @@ public class LogManager : MonoBehaviour {
     public GameObject miss;
 
     public GameObject temp;
+    public Image HealthBar;
+
     /*
     private bool opacitycheck = false;
     private Image SelectedImage;
@@ -33,8 +34,7 @@ public class LogManager : MonoBehaviour {
     void Awake(){
         this.filecontrol = FileControl.getInstance();
         Perfect_Count = 0;
-        Good_Count = 0;
-        Cool_Count = 0; 
+        Miss_Count = 0;
     }
 
     public void MakeScoreTitle(string result){
@@ -47,11 +47,55 @@ public class LogManager : MonoBehaviour {
         }else if(result == "Miss"){ //miss
             temp = miss;
         }
+        PlayerLifeControl(result);
 
+        //call 
         temp.SetActive(true);
         temp.GetComponent<ScoreTitleControl>().ImageInit();
+    }
 
+    public void PlayerLifeControl(string result){
 
+        if(result == "Perfect"){
+            if (gameObject.GetComponent<PianoControl>().Player_Life <= 100){
+                gameObject.GetComponent<PianoControl>().Player_Life += 5;
+            }
+
+        }else if(result == "Good"){
+
+            if (gameObject.GetComponent<PianoControl>().Player_Life < 100)
+            {
+                gameObject.GetComponent<PianoControl>().Player_Life += 2;
+            }
+
+        }else if(result == "Cool"){
+
+            if (gameObject.GetComponent<PianoControl>().Player_Life < 100)
+            {
+                gameObject.GetComponent<PianoControl>().Player_Life += 0;
+            }
+        }else if(result == "Miss"){
+            if (gameObject.GetComponent<PianoControl>().Player_Life > 0)
+            {
+                gameObject.GetComponent<PianoControl>().Player_Life -= 30;
+
+            }else{
+                Debug.Log("Game End!");
+                GameManager.GetComponent<MenuManager>().GameEnd();
+            }
+        }
+
+        if(gameObject.GetComponent<PianoControl>().Player_Life > 100){
+            gameObject.GetComponent<PianoControl>().Player_Life = 100;   
+        }
+
+        Debug.Log(gameObject.GetComponent<PianoControl>().Player_Life);
+        UpdateLife(gameObject.GetComponent<PianoControl>().Player_Life);
+    }
+
+    void UpdateLife(int life){
+        float temp = ((float)life * 0.01f);
+        HealthBar.transform.localScale = new Vector3(temp, HealthBar.transform.localScale.y, HealthBar.transform.localScale.z);
     }
 
     public void MakeLogObject(int count){
@@ -63,6 +107,7 @@ public class LogManager : MonoBehaviour {
     //setting calculation of log data
 
     public void CollectLogObject(int score, string music_name){
+
         GameObject[] log = GameObject.FindGameObjectsWithTag("Log");
 
         LogData[] logtempFile = new LogData[log.Length];
@@ -76,6 +121,12 @@ public class LogManager : MonoBehaviour {
             temp.left = log[i].GetComponent<LogControl>().leftHand;
             temp.right = log[i].GetComponent<LogControl>().rightHand;
             logtempFile[i] = temp;
+
+            if(temp.result == "perfect" || temp.result == "Perfect"){
+                Perfect_Count++;
+            }else if(temp.result == "miss" || temp.result == "Miss"){
+                Miss_Count++;
+            }
         }
 
         LogFile a = new LogFile();

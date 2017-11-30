@@ -18,7 +18,7 @@ public class CameraMove : MonoBehaviour {
 
 	private void LateUpdate()
 	{
-		Vector3 desiredPosition = new Vector3 (Piano.GetComponent<Transform>().transform.localPosition.x - 2.5f, Piano.GetComponent<Transform>().transform.localPosition.y + 5, Piano.GetComponent<Transform> ().transform.localPosition.z - 8);
+		Vector3 desiredPosition = new Vector3 (Piano.GetComponent<Transform>().transform.localPosition.x - 1.4f, Piano.GetComponent<Transform>().transform.localPosition.y + 5, Piano.GetComponent<Transform> ().transform.localPosition.z - 8);
         float t = (Time.time - startTime) / duration;
 
 		if (smooth) {

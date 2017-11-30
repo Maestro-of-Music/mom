@@ -40,6 +40,8 @@ public class PianoControl : MonoBehaviour {
 
 	public int Target_noteCount = 0;
 	public int Player_noteCount = 0;
+    public int Player_Life = 100;
+
 
 	//seperate two kind of mode and partial repeat move (using sequence) 
     private Vector3 _location;
@@ -84,6 +86,7 @@ public class PianoControl : MonoBehaviour {
 
 	public void LoadVelocity(){
 		speed = GameManager.gameObject.GetComponent<GameTime> ().Velocity;
+        GameManager.GetComponent<GameTime>().Setting_Tempo_data();
 	}
 
 

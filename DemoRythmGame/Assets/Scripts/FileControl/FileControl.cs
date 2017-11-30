@@ -6,7 +6,8 @@ using System;
 using LitJson;
 
 
-public class FileControl{
+public class FileControl
+{
 
     private static FileControl _instance = null;
 
@@ -25,17 +26,21 @@ public class FileControl{
         _instance = this;
     }
 
-    public int SearchDirectoryFile(string music_name){
+    public int SearchDirectoryFile(string music_name)
+    {
 
         string strFilePath = "";
 
-        if(Application.platform == RuntimePlatform.Android){
+        if (Application.platform == RuntimePlatform.Android)
+        {
             Debug.Log("Android! Search Directory File");
             /*
             strFilePath = "jar:file://" + Application.dataPath + "!/assets";
             */
-            strFilePath = Application.persistentDataPath +"/";
-        }else{
+            strFilePath = Application.persistentDataPath + "/";
+        }
+        else
+        {
             Debug.Log("PC! Search Directory File");
             strFilePath = Application.streamingAssetsPath;
         }
@@ -43,7 +48,8 @@ public class FileControl{
         int last_index = 0;
 
         DirectoryInfo dataDir = new DirectoryInfo(strFilePath);
-        try{
+        try
+        {
             FileInfo[] fileinfo = dataDir.GetFiles();
             for (int i = 0; i < fileinfo.Length; i++)
             {
@@ -56,15 +62,18 @@ public class FileControl{
                 }
             }
 
-     
-        }catch(Exception e){
+
+        }
+        catch (Exception e)
+        {
             Debug.Log(e);
         }
 
         return last_index;
     }
 
-    public List<string> GetLogData(string music_name){
+    public List<string> GetLogData(string music_name)
+    {
         List<string> temp = new List<string>();
 
         string strFilePath = "";
@@ -105,9 +114,46 @@ public class FileControl{
         {
             Debug.Log(e);
 
-        }  
+        }
         return temp;
     }
 
+    public void SaveHistory(History data)
+    {
+        Debug.Log("Save music history");
+        string path = "";
+        List<History> temp = new List<History>();
 
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            path = Application.persistentDataPath + "/";
+        }
+        else
+        {
+            path = Application.streamingAssetsPath + "/";
+        }
+        try
+        {
+            if (File.Exists(path + "history.txt") == false)
+            {
+                //save first history file
+                temp.Add(data);
+
+                JsonData save = JsonMapper.ToJson(temp);
+                File.WriteAllText(path + "history.txt", save.ToString());
+                Debug.Log("Save File Created!");
+
+            }
+            else
+            {
+                //save second history file
+                JsonData save = JsonMapper.ToJson(File.ReadAllText(path + "history.txt"));
+                save.Add(data);
+                File.WriteAllText(path + "history.txt", save.ToString());
+                Debug.Log("Resaved File Created!");
+            }
+        }catch(Exception e){
+            Debug.Log(e.ToString());
+        }
+    }
 }

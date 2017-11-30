@@ -185,7 +185,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
     void WriteXML(WWW XmlFile)
     {
         Debug.Log("in WriteXML");
-        string strFile = "test_audiveris";
+        string strFile = "test_audiveris"; // test_audiveris(1).xml
         string strFilePath = Application.persistentDataPath + "/" + strFile + ".xml";
       //  string strFilePath = "Assets/" + strFile;
 

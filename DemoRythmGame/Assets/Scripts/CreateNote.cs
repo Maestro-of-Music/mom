@@ -21,6 +21,7 @@ public class CreateNote : MonoBehaviour {
 	public int beats;
 	public int beats_type;
     private int notenum;
+    public int Total_Score;
 
 	public NoteData [] notedatas;
 	public NoteData[] backupdatas;
@@ -37,6 +38,7 @@ public class CreateNote : MonoBehaviour {
 		StartCoroutine ("ConnectLoadData"); //actually connect load data
 		noteHeight = 2.4f;
         measure_count = 0;
+        Total_Score = 0;
         notenum = 1; // check total number of note
 	}
 
@@ -241,6 +243,8 @@ public class CreateNote : MonoBehaviour {
 			note.GetComponent<NoteDetail> ().sequence = sequence;
             note.GetComponent<NoteDetail>().default_x = default_x;
             note.GetComponent<NoteDetail>().note_index = notenum; //setting note index
+
+            Total_Score += duration * 100;
 
             NoteDetail [] temp = note.GetComponentsInChildren<NoteDetail>();              foreach(NoteDetail index in temp){
                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;
