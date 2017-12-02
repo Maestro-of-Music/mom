@@ -71,12 +71,12 @@ public class WMG_X_Pie_Ring_Graph : WMG_GUI_Functions {
             graph.labels.Add(result[0]);
         }
 
-        changeSpriteSize(graph.gameObject, 600, 500); //resize
+        //changeSpriteSize(graph.gameObject, 600, 500); //resize
 
         graph.WMG_Ring_Click += MyCoolRingClickFunction;
         graph.WMG_Ring_MouseEnter += MyCoolRingHoverFunction;
 
-        ringGO.GetComponent<RectTransform>().localPosition = new Vector3(-230, -20 ,0);
+        //ringGO.GetComponent<RectTransform>().localPosition = new Vector3(-230, 0 ,0);
 
     }
 

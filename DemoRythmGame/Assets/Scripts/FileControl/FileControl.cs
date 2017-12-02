@@ -82,6 +82,25 @@ public class FileControl
         {
             Debug.Log("Android! Search Directory File");
             strFilePath = Application.persistentDataPath + "/";
+
+            //load previous data
+
+            object[] array = Resources.LoadAll("logs", typeof(TextAsset));
+
+            if (array != null)
+            {
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    TextAsset arr = (TextAsset)array[i];
+
+                    if(arr.name.Contains(music_name)){
+                        temp.Add(arr.text);
+                    }   
+                }
+            }
+
+
         }
         else
         {

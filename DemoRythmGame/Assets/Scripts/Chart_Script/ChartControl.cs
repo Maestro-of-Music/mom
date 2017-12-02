@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using LitJson;
+using UnityEngine.SceneManagement;
 using System;
 
 public class ChartControl : MonoBehaviour {
 
     private FileControl filecontrol;
+    private SceneChange scenechange;
 
     private List<string> loaddata;
 
@@ -17,16 +19,38 @@ public class ChartControl : MonoBehaviour {
     public List<string> User_result;
 
     public GameObject Canvas;
-    public Text Answer; 
+    public Text Answer;
+
+    public Text Music_title;
+    public Button Back;
 
     private void Awake()
     {
         this.filecontrol = FileControl.getInstance();
+        this.scenechange = SceneChange.getInstance();
+        this.music_name = this.scenechange.Music_title;
+        
     }
 
     // Use this for initialization
     void Start () {
-        StartCoroutine("LoadGetLogData",music_name);
+
+        this.Back.onClick.AddListener(()=>{
+            if (this.scenechange.mode == 1)
+            {
+                SceneManager.LoadScene("PlayModeList");
+            }else if(this.scenechange.mode == 2){
+                SceneManager.LoadScene("PracticeModeList");
+            }else{
+                SceneManager.LoadScene("PlayModeList");
+            }
+        });
+
+        if(this.music_name == null){
+            this.music_name = "Jingle Bells";
+        }
+        StartCoroutine("LoadGetLogData");
+
         loadLogData();
     }
 
@@ -55,6 +79,8 @@ public class ChartControl : MonoBehaviour {
     } 
 
     void LoadLogChart(){
+
+        Debug.Log("Load Log! ");
 
         for (int i = file.Count-1; i < file.Count; i++)
         {
@@ -88,6 +114,9 @@ public class ChartControl : MonoBehaviour {
             User_result.Add("Good" + "," + Good.ToString());
             User_result.Add("Cool" + "," + Cool.ToString());
             User_result.Add("Miss" + "," + Miss.ToString());
+
+            Debug.Log(Perfect.ToString());
+            Debug.Log(Good.ToString());
 
         }
 
@@ -211,8 +240,10 @@ public class ChartControl : MonoBehaviour {
         yield return null;
     }
 
-    IEnumerator LoadGetLogData(string music_name){
-        loaddata = this.filecontrol.GetLogData(music_name); //send music data before scene
+    IEnumerator LoadGetLogData(){
+
+        Music_title.text = this.music_name;
+        loaddata = this.filecontrol.GetLogData(this.music_name); //send music data before scene
         yield return new WaitForSeconds(3);
     }
 

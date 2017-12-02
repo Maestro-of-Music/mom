@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using LitJson;
 using UnityEngine.UI;
 
 public class FileDirectoryControl : MonoBehaviour {
@@ -19,6 +20,11 @@ public class FileDirectoryControl : MonoBehaviour {
 
     public string selected = "#ffe3de";
     public string unselected = "#b57e75";
+
+    public Sprite Title_S;
+    public Sprite Title_A;
+    public Sprite Title_B;
+    public Sprite Title_C;
 
 
     /* Play Mode
@@ -129,14 +135,45 @@ public class FileDirectoryControl : MonoBehaviour {
         for (int i = 0; i < temp.Count;i++){
             HistoryBinding(temp[i]);
         }
+
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            TextAsset a = Resources.Load<TextAsset>("history");
+            JsonData getdata = JsonMapper.ToObject(a.text);
+
+            for (int i = 0; i < getdata["historyList"].Count; i++)
+            {
+                History temp_history = new History();
+                temp_history.mode = int.Parse(getdata["historyList"][i]["mode"].ToString());
+                temp_history.result_Alpha = getdata["historyList"][i]["result_Alpha"].ToString();
+                temp_history.score = int.Parse(getdata["historyList"][i]["score"].ToString());
+                temp_history.title = getdata["historyList"][i]["title"].ToString();
+
+                HistoryBinding(temp_history);
+            }
+        }
+
     }
 
     public void HistoryBinding(History temp){
         
-        GameObject btnItemTemp = Instantiate(this.ItemObject) as GameObject;
+        GameObject btnItemTemp = Instantiate(this.HistoryObject) as GameObject;
         btnItemTemp.GetComponent<ItemObject>().Title.text = temp.title;
         btnItemTemp.GetComponent<ItemObject>().Detail.text = temp.score.ToString();
         btnItemTemp.GetComponent<ItemObject>().Btn.name = temp.result_Alpha;
+
+        if(temp.result_Alpha == "S"){
+            btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_S;
+        }else if(temp.result_Alpha == "A"){
+            btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_A;
+
+        }else if(temp.result_Alpha == "B"){
+            btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_B;
+
+        }else if(temp.result_Alpha == "C"){
+            btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_C;
+
+        }
 
         btnItemTemp.transform.SetParent(this.Content);
         btnItemTemp.transform.localScale = new Vector3(1, 1, 1);
@@ -148,6 +185,7 @@ public class FileDirectoryControl : MonoBehaviour {
         btnItemTemp.GetComponent<ItemObject>().Title.text = file;
         btnItemTemp.GetComponent<ItemObject>().Detail.text = "";
         btnItemTemp.GetComponent<ItemObject>().Btn.name = file;
+
 
         if (file.Contains("a"))
         {
