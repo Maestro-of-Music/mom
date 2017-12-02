@@ -31,7 +31,7 @@ public class RepeatControl : MonoBehaviour {
 	void Start(){
 		Last_position = new Vector3(0, 0, 0);
 
-		ScorePanel.SetActive (false);
+		//ScorePanel.SetActive (false);
 		Repeat_start = false;
 
 		this._Repeat.onClick.AddListener (() => {
@@ -77,7 +77,7 @@ public class RepeatControl : MonoBehaviour {
 
 			//move piano where start_index started;
 
-			ScorePanel.SetActive(true);
+			//ScorePanel.SetActive(true);
 
 			Repeat_start = true;
 		} else {

@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneChange{
 
     public string Music_title; //selected Music title
+    public int mode;
 
     private static SceneChange _instance = null;
 
@@ -26,4 +27,9 @@ public class SceneChange{
         this.Music_title = music_title;
         SceneManager.LoadScene (scene);
 	}
+
+    public void NextScene(string scene){
+        Debug.Log("Move Next Scene");
+        SceneManager.LoadScene(scene);
+    }
 }

@@ -6,13 +6,16 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
 
 public class BluetoothController : MonoBehaviour, IBtObserver {
 
     private string serverUrl = "http://52.78.228.8/restapi/upload_file.php";
 
     private Bluetooth bluetooth;
+    private SceneChange scenechange;
     public RawImage m_image;
+    public string sceneName;
 
 	public int number;
 
@@ -38,6 +41,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 
     private void Awake() {
         this.bluetooth = Bluetooth.getInstance();
+        this.scenechange = SceneChange.getInstance();
     }
 
     private void Start() {
@@ -92,6 +96,11 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 		Debug.Log (this.bluetoothModel.macAddresses); //find pianote device 
 		//and go next page press A or B click piano keyboard
 		//Catch MacAddress 
+    }
+
+    public void nextPage(){
+        Debug.Log(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OnGalleryOpen(){

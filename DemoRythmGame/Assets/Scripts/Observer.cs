@@ -74,7 +74,6 @@ public class Observer : MonoBehaviour {
 		if (pitch != "") {
             //Send data 	
             pitch += "," + status.ToString();
-  //          Debug.Log("OnLEDChange : " + pitch);
 
 //			Debug.Log ("LED_SEND started! Pitch : "  + pitch);
 			StartCoroutine ("SendLED", pitch);
@@ -82,8 +81,6 @@ public class Observer : MonoBehaviour {
 	}
 
 	int OnSetLED(string pitch){
-
-		//Debug.Log (pitch);
 
 		int result = 0;
 
@@ -112,7 +109,7 @@ public class Observer : MonoBehaviour {
         return result;
 	}
 
-    int ResultCheck(string _pitch, int octave){
+    public int ResultCheck(string _pitch, int octave){
         int result = 0;
 
         switch (octave)
@@ -122,209 +119,310 @@ public class Observer : MonoBehaviour {
 
                 if (_pitch == "C")
                 {
-                    result = 1;
+                    result = 33;
                 }
                 else if (_pitch == "C#")
                 {
-                    result = 2;
+                    result = 34;
                 }
                 else if (_pitch == "D")
                 {
-                    result = 3;
+                    result = 35;
                 }
                 else if (_pitch == "D#")
                 {
-                    result = 4;
+                    result = 36;
                 }
                 else if (_pitch == "E")
                 {
-                    result = 5;
+                    result = 37;
                 }
                 else if (_pitch == "F")
                 {
-                    result = 6;
+                    result = 38;
                 }
                 else if (_pitch == "F#")
                 {
-                    result = 7;
+                    result = 39;
                 }
                 else if (_pitch == "G")
                 {
-                    result = 8;
+                    result = 40;
                 }
                 else if (_pitch == "G#")
                 {
-                    result = 9;
+                    result = 41;
                 }
                 else if (_pitch == "A")
                 {
-                    result = 10;
+                    result = 42;
                 }
                 else if (_pitch == "A#")
                 {
-                    result = 11;
+                    result = 43;
                 }
                 else if (_pitch == "B")
                 {
-                    result = 12;
+                    result = 44;
                 }
 
                 break;
             case 3:
 //                Debug.Log("3 Octave");
-
+                /*
                 if (_pitch == "C")
                 {
-                    result = 13;
+                    result = 45;
                 }
                 else if (_pitch == "C#")
                 {
-                    result = 14;
+                    result = 46;
                 }
                 else if (_pitch == "D")
                 {
-                    result = 15;
+                    result = 47;
                 }
                 else if (_pitch == "D#")
                 {
-                    result = 16;
+                    result = 48;
                 }
                 else if (_pitch == "E")
                 {
-                    result = 17;
+                    result = 49;
                 }
                 else if (_pitch == "F")
                 {
-                    result = 18;
+                    result = 50;
                 }
                 else if (_pitch == "F#")
                 {
-                    result = 19;
+                    result = 51;
                 }
                 else if (_pitch == "G")
                 {
-                    result = 20;
+                    result = 52;
                 }
                 else if (_pitch == "G#")
                 {
-                    result = 21;
+                    result = 53;
                 }
                 else if (_pitch == "A")
                 {
-                    result = 22;
+                    result = 54;
                 }
                 else if (_pitch == "A#")
                 {
-                    result = 23;
+                    result = 55;
                 }
                 else if (_pitch == "B")
                 {
-                    result = 24;
+                    result = 56;
+                }*/
+
+                if (_pitch == "C")
+                {
+                    result = 33;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 34;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 35;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 36;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 37;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 38;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 39;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 40;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 41;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 42;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 43;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 44;
                 }
                 break;
             case 4:
                 Debug.Log("4 Octave");
 
+                /*
                 if (_pitch == "C")
                 {
-                    result = 25;
+                    result = 57;
                 }
                 else if (_pitch == "C#")
                 {
-                    result = 26;
+                    result = 58;
                 }
                 else if (_pitch == "D")
                 {
-                    result = 27;
+                    result = 59;
                 }
                 else if (_pitch == "D#")
                 {
-                    result = 28;
+                    result = 60;
                 }
                 else if (_pitch == "E")
                 {
-                    result = 29;
+                    result = 61;
                 }
                 else if (_pitch == "F")
                 {
-                    result = 30;
+                    result = 62;
                 }
                 else if (_pitch == "F#")
                 {
-                    result = 31;
+                    result = 63;
                 }
                 else if (_pitch == "G")
                 {
-                    result = 32;
+                    result = 64;
                 }
                 else if (_pitch == "G#")
                 {
-                    result = 33;
+                    result = 65;
                 }
                 else if (_pitch == "A")
                 {
-                    result = 34;
+                    result = 66;
                 }
                 else if (_pitch == "A#")
                 {
-                    result = 35;
+                    result = 67;
                 }
                 else if (_pitch == "B")
                 {
-                    result = 36;
-                }
+                    result = 68;
+                }*/
 
-                break;
-            case 5:
-                Debug.Log("5 Octave");
 
                 if (_pitch == "C")
-                {
-                    result = 37;
-                }
-                else if (_pitch == "C#")
-                {
-                    result = 38;
-                }
-                else if (_pitch == "D")
-                {
-                    result = 39;
-                }
-                else if (_pitch == "D#")
-                {
-                    result = 40;
-                }
-                else if (_pitch == "E")
-                {
-                    result = 41;
-                }
-                else if (_pitch == "F")
-                {
-                    result = 42;
-                }
-                else if (_pitch == "F#")
-                {
-                    result = 43;
-                }
-                else if (_pitch == "G")
-                {
-                    result = 44;
-                }
-                else if (_pitch == "G#")
                 {
                     result = 45;
                 }
-                else if (_pitch == "A")
+                else if (_pitch == "C#")
                 {
                     result = 46;
                 }
-                else if (_pitch == "A#")
+                else if (_pitch == "D")
                 {
                     result = 47;
                 }
-                else if (_pitch == "B")
+                else if (_pitch == "D#")
                 {
                     result = 48;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 49;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 50;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 51;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 52;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 53;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 54;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 55;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 56;
+                }
+
+
+                break;
+            case 5:
+//                Debug.Log("5 Octave");
+
+                if (_pitch == "C")
+                {
+                    result = 69;
+                }
+                else if (_pitch == "C#")
+                {
+                    result = 70;
+                }
+                else if (_pitch == "D")
+                {
+                    result = 71;
+                }
+                else if (_pitch == "D#")
+                {
+                    result = 72;
+                }
+                else if (_pitch == "E")
+                {
+                    result = 73;
+                }
+                else if (_pitch == "F")
+                {
+                    result = 74;
+                }
+                else if (_pitch == "F#")
+                {
+                    result = 75;
+                }
+                else if (_pitch == "G")
+                {
+                    result = 76;
+                }
+                else if (_pitch == "G#")
+                {
+                    result = 77;
+                }
+                else if (_pitch == "A")
+                {
+                    result = 78;
+                }
+                else if (_pitch == "A#")
+                {
+                    result = 79;
+                }
+                else if (_pitch == "B")
+                {
+                    result = 80;
                 }
                 break;
         }
@@ -370,7 +468,7 @@ public class Observer : MonoBehaviour {
 
         }else if(col.gameObject.tag =="Note_3"){
             //  Debug.Log("Note 3 !! Send Release ");
-            OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 0);
+          //  OnLEDChange(col.gameObject.GetComponent<NoteDetail>().pitch, 0);
         }
 
 		if (col.gameObject.tag == "End") {
@@ -480,7 +578,7 @@ public class Observer : MonoBehaviour {
 		int led = OnSetLED (_pitch[0]);
 
         string result = "";
-
+        /*
         if(_pitch[1] == "1"){
             //LED On!
             result = "!" + led.ToString();
@@ -489,9 +587,10 @@ public class Observer : MonoBehaviour {
             //LED Off!
             result = "@" + led.ToString();
         }
+        */
 
-//        Debug.Log("SendLED : " + result);
-
+        result = ((char)led).ToString();
+        Debug.Log("Send LED : " + result);
 		IOManagerCtrl.gameObject.GetComponent<IOManager>().KeyOutput(result);
 
 		yield return null;

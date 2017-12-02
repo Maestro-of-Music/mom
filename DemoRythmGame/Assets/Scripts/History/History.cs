@@ -8,6 +8,7 @@ public class History{
     public string result_Alpha;
     public int score;
     public string title;
+    public int mode;
 
 }
 

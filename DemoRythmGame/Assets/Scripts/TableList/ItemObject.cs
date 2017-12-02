@@ -10,17 +10,37 @@ public class ItemObject : MonoBehaviour {
     public Image Icon;
     public Text Title;
     public Text Detail;
+    public string Scene;
+
+    public Sprite Before;
+    public Sprite After;
+
+    public bool fill = false; 
 
     private SceneChange scenechange;
 
     private void Awake()
     {
         this.scenechange = SceneChange.getInstance();
+
     }
 
-    public void ItemClick_Result(Button button)
+
+    public void ItemClick_Result()
     {
-        Debug.Log(button.name);
-        this.scenechange.NextScene("Test",button.name);
+        Debug.Log("Clicked : " + Btn.name);
+        this.scenechange.NextScene(Scene ,Btn.name);
+    }
+
+    public void StarFilling(){
+        if (fill){
+            Debug.Log("Clicked!");
+            Icon.sprite = Before;
+            fill = false;
+        }else {
+            Debug.Log("Clicked!");
+            Icon.sprite = After;
+            fill = true;
+        }
     }
 }

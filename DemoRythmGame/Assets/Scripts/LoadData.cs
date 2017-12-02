@@ -14,7 +14,7 @@ public class LoadData : MonoBehaviour {
 
 	public int End_Measure; //check measure in note info 
     private SceneChange scenechange;
-    public string filename;
+    public string filename = "jingleBell";
 
 	// Use this for initialization
 	void Awake () {
@@ -23,7 +23,10 @@ public class LoadData : MonoBehaviour {
         if (Application.platform == RuntimePlatform.Android)
         {
             JSON_load(this.scenechange.Music_title); //saved music title sending
+        }else{
+          //  JSON_load(this.scenechange.Music_title); //saved music title sending
         }
+        filename = "jingleBell";
 
         StartCoroutine("LoadJSON");
     }
@@ -39,6 +42,7 @@ public class LoadData : MonoBehaviour {
             //string path = Application.persistentDataPath + filename + ".txt";
             // Byte[] bytes = File.ReadAllBytes(path); 
             //this.jsonData = (TextAsset)Resources.Load(path);
+            Debug.Log(filename);
             this.jsonData = (TextAsset)Resources.Load(filename);
             Debug.Log("Load JSON Data");
         }else{

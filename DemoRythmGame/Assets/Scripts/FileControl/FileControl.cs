@@ -118,10 +118,11 @@ public class FileControl
         return temp;
     }
 
-    public List<History> LoadHistory(){
+    public List<History> LoadHistory(int mode){
         //load history and display to table view
         List<History> historyList = new List<History>();
         string path = "";
+        Debug.Log("!!");
 
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -141,13 +142,17 @@ public class FileControl
 
                 for (int i = 0; i < load["historyList"].Count; i++)
                 {
-                    History temp = new History();
-                    temp.result_Alpha = load["historyList"][i]["result_Alpha"].ToString();
-                    temp.score = int.Parse(load["historyList"][i]["score"].ToString());
-                    temp.title = load["historyList"][i]["title"].ToString();
-                    historyList.Add(temp);
-                }
+                    if (int.Parse(load["historyList"][i]["mode"].ToString()) == mode)
+                    {
+                        History temp = new History();
+                        temp.result_Alpha = load["historyList"][i]["result_Alpha"].ToString();
+                        temp.score = int.Parse(load["historyList"][i]["score"].ToString());
+                        temp.title = load["historyList"][i]["title"].ToString();
+                        temp.mode = int.Parse(load["historyList"][i]["mode"].ToString());
 
+                        historyList.Add(temp);
+                    }
+                }
 
 
             }
@@ -199,6 +204,7 @@ public class FileControl
                     temp.result_Alpha = load["historyList"][i]["result_Alpha"].ToString();
                     temp.score = int.Parse(load["historyList"][i]["score"].ToString());
                     temp.title = load["historyList"][i]["title"].ToString();
+                    temp.mode = int.Parse(load["historyList"][i]["mode"].ToString()); //game mode save 
                     historyList.Add(temp);
                 }
 

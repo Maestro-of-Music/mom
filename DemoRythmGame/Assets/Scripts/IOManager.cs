@@ -9,21 +9,28 @@ public class IOManager : MonoBehaviour {
 	public GameObject BluetoothController;
 	public int Keyboard_Index;
 
-	//private Bluetooth bluetooth;
+	private Bluetooth bluetooth;
 
 	public bool send = false;
 
 	public string GetData;
 
 	void Awake() {
-		//this.bluetooth = Bluetooth.getInstance ();
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            this.bluetooth = Bluetooth.getInstance ();
+        }
 	}
 
 	// Update is called once per frame
 	void Update () {
-		
-		KeyInput (Keyboard_Index);
-
+        if (Application.platform == RuntimePlatform.Android)
+        {
+        }
+        else
+        {
+            KeyInput(Keyboard_Index);
+        }
 	}
 		
 	public void KeyInput(int keyboard_index){
@@ -138,13 +145,12 @@ public class IOManager : MonoBehaviour {
     {
         //send data to arduino 
 
-//		Debug.Log ("Result : " + data);
-
+		Debug.Log ("Result : " + data);
 		//if (send == false) {
 
         if (Application.platform == RuntimePlatform.Android)
         {
-         //   this.bluetooth.Send(data);
+            this.bluetooth.Send(data);
         }
         //send = true;
     }		

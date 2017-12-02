@@ -12,7 +12,7 @@ public class PianoControl : MonoBehaviour {
     public GameObject Metronume;
 	public GameObject GameManager;
 	public Text Score;
-	public Text ScoreDisplay;
+	//public Text ScoreDisplay;
 
 	public int Mode;
 	public string pitch; 
@@ -175,7 +175,7 @@ public class PianoControl : MonoBehaviour {
                                 //checking note 
                                 if (Tempnote != CurrentNote)
                                 {
-                                    ScoreDisplay.text = "";
+                                    //ScoreDisplay.text = "";
                                     Scorechange = true;
                                     StartCoroutine("ScoreManager",Target_noteCount);
                                     Tempnote = CurrentNote;
@@ -415,7 +415,7 @@ public class PianoControl : MonoBehaviour {
 			Scorechange = false;
 		}
 
-		ScoreDisplay.text ="+ : " + temp * 100;
+		//ScoreDisplay.text ="+ : " + temp * 100;
 		Score.text = gameObject.GetComponent<ScoreManager> ().GetScore ().ToString (); //upload score
 
 		yield return new WaitForSeconds(1);

@@ -12,16 +12,37 @@ public class FileDirectoryControl : MonoBehaviour {
     public Transform Content;
     public List<Item> ItemList;
     private FileControl filecontrol;
+    private SceneChange scenechange;
 
+    public int PlayMode;
+    public bool History; //History or PlayPractice 
+
+    public string selected = "#ffe3de";
+    public string unselected = "#b57e75";
+
+
+    /* Play Mode
+     * 1 - Play
+     * 2 - Practice
+     * 3 - History
+    */
     private void Awake()
     {
         this.filecontrol = FileControl.getInstance();
+        this.scenechange = SceneChange.getInstance();
     }
 
     void Start()
     {
-        //OnFileLoad();
-        OnHistoryLoad();
+        if(History){
+            OnHistoryLoad();
+        }else{
+            OnFileLoad();
+        }
+    }
+
+    public void OnBack(){
+        this.scenechange.NextScene("Main");
     }
 
     public void OnFileLoad(){
@@ -88,9 +109,9 @@ public class FileDirectoryControl : MonoBehaviour {
              {
                     if (fileinfo[i].Name.Contains(".txt") && fileinfo[i].Name.Contains(".meta") == false){
                          int first = fileinfo[i].Name.IndexOf(".txt");
-                         Debug.Log(first);
+//                         Debug.Log(first);
                          string name = fileinfo[i].Name.Substring(0,first);
-                         Debug.Log("Name : " + name);
+                        // Debug.Log("Name : " + name);
                          Binding(name);
                     }
                 }
@@ -101,14 +122,14 @@ public class FileDirectoryControl : MonoBehaviour {
         }
     }
 
-    public void OnHistoryLoad()
+
+    public void OnHistoryLoad() //PlayMode
     {
-        List<History> temp = this.filecontrol.LoadHistory();
+        List<History> temp = this.filecontrol.LoadHistory(PlayMode);
         for (int i = 0; i < temp.Count;i++){
             HistoryBinding(temp[i]);
         }
     }
-
 
     public void HistoryBinding(History temp){
         
@@ -118,6 +139,7 @@ public class FileDirectoryControl : MonoBehaviour {
         btnItemTemp.GetComponent<ItemObject>().Btn.name = temp.result_Alpha;
 
         btnItemTemp.transform.SetParent(this.Content);
+        btnItemTemp.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void Binding(string file){
@@ -127,7 +149,12 @@ public class FileDirectoryControl : MonoBehaviour {
         btnItemTemp.GetComponent<ItemObject>().Detail.text = "";
         btnItemTemp.GetComponent<ItemObject>().Btn.name = file;
 
+        if (file.Contains("a"))
+        {
+            btnItemTemp.GetComponent<ItemObject>().Icon.sprite = btnItemTemp.GetComponent<ItemObject>().After;
+        }
         btnItemTemp.transform.SetParent(this.Content);
+        btnItemTemp.transform.localScale = new Vector3(1, 1, 1);
     }
 
 }

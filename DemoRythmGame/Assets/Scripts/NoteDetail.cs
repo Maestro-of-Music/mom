@@ -22,7 +22,7 @@ public class NoteDetail : MonoBehaviour {
         if (gameObject.tag == "Note")
         {
             float result = checkLength(duration); 
-            GameObject note = (GameObject)Instantiate(NoteCheck, new Vector3(gameObject.transform.position.x ,gameObject.transform.position.y + result , gameObject.transform.position.z ), Quaternion.identity);
+            GameObject note = (GameObject)Instantiate(NoteCheck, new Vector3(gameObject.transform.position.x ,gameObject.transform.position.y + result, gameObject.transform.position.z ), Quaternion.identity);
             NoteDetail[] temp = note.GetComponentsInChildren<NoteDetail>();
 
             foreach (NoteDetail index in temp)
