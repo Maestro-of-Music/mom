@@ -7,7 +7,6 @@ public class SceneChange{
 
     public string Music_title; //selected Music title
     public int mode;
-
     /*
      * receive from playmode and show in the end play
      * send seperate datas scene by scene

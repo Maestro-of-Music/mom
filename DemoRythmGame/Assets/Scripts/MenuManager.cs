@@ -59,14 +59,15 @@ public class MenuManager : MonoBehaviour {
         Debug.Log(this.scenechange.Music_title);
         if (Application.platform == RuntimePlatform.Android)
         {
-            Mode = this.scenechange.mode;
+            //Mode = this.scenechange.mode;
+            Debug.Log("Selected Mode! : " + this.scenechange.mode);
         }
 
         if(Mode == 3){
             Debug.Log("End Mode!");
             GameEnd();
         }else{
-            GameStart(Mode);        
+            GameStart(this.scenechange.mode);        
         }
     }
 
@@ -87,13 +88,19 @@ public class MenuManager : MonoBehaviour {
 
         this.back_Btn.onClick.AddListener (()=>{
             Debug.Log("Go to the PlayModeList");
-            SceneManager.LoadScene("PlayModeList");
+            if (this.scenechange.mode == 1)
+            {
+                SceneManager.LoadScene("5play");
+            }
+            else if(this.scenechange.mode == 2){
+                SceneManager.LoadScene("8practice");    
+            }
 		});
 
         this.More.onClick.AddListener(() =>
         {
             Debug.Log("Go to the chart");
-            SceneManager.LoadScene("Chart_Scene");
+            SceneManager.LoadScene("12chart");
         });
 
         this.Share.onClick.AddListener(()=>{
@@ -103,9 +110,7 @@ public class MenuManager : MonoBehaviour {
 
         this.Replay.onClick.AddListener(()=>{
             Debug.Log("Go to the replay");
-
-            //SceneManager.LoadScene("PlayMode");
-
+            SceneManager.LoadScene("PlayMode");
         });
 
         this.Check.onClick.AddListener(()=>{
@@ -113,9 +118,9 @@ public class MenuManager : MonoBehaviour {
 
             if(scenechange.mode == 1){
                 //play mode
-                SceneManager.LoadScene("PlayModeList");
+                SceneManager.LoadScene("5play");
             }else if(scenechange.mode == 2){
-                SceneManager.LoadScene("PracticeModeList");
+                SceneManager.LoadScene("8practice");
             }
         });
 	}
@@ -150,7 +155,7 @@ public class MenuManager : MonoBehaviour {
             PianoManager.gameObject.GetComponent<PianoControl>().Repeat = false;
         }
 
-        SceneManager.LoadScene("8");
+        SceneManager.LoadScene("7result");
     }
 
 	public void GameEnd(){
@@ -270,7 +275,7 @@ public class MenuManager : MonoBehaviour {
 	public void ModeStart(){
 
 
-		if (Mode == 1) {
+        if (this.scenechange.mode == 1) {
 			Debug.Log ("Play Start");
 			StartCoroutine ("StartInitMode");
 
@@ -278,7 +283,7 @@ public class MenuManager : MonoBehaviour {
             back_Btn.gameObject.SetActive (true);
 			Pause_btn.gameObject.SetActive (true);
 
-		} else if (Mode == 2) {
+        } else if (this.scenechange.mode == 2) {
 			Debug.Log ("Practice Start");
 			StartCoroutine ("StartInitMode");
 

@@ -28,7 +28,6 @@ public class BluetoothModel : BtObservale {
     public List<string> macAddresses = null;
     //private Queue<string> messageQueue = null;
     private StringBuilder rawMessage = null;
-    private Byte[] ByteMessage = null;
 
 	public GameObject IOManager;
 
@@ -71,11 +70,9 @@ public class BluetoothModel : BtObservale {
 		}
 		Debug.Log ("Delete !");
 
-        /*
 		Debug.Log ("rawMessage :" + tempMassege + " " + IOManager.GetComponent<IOManager> ().GetData);
 		IOManager.GetComponent<IOManager> ().HardwareInput2(tempMassege);
-		Debug.Log ("SEND!");
-        */
+
 
     }
 
@@ -117,20 +114,6 @@ public class BluetoothModel : BtObservale {
 	void OnReadMessage(string _Message) {
         this.rawMessage.Append(_Message);
 		this.CheckMessageFormat();
-
-
-		/*
-		if (_Message.Contains ("#")) {
-			_Message = _Message.Substring (0, 2);
-			Debug.Log ("Alter #");
-		} else {
-			_Message = _Message.Substring (0, 1);
-			Debug.Log ("Normal ");
-		}
-		*/	
-		//Debug.Log("On Read Message : " + _Message);
-
-
 
     }
 

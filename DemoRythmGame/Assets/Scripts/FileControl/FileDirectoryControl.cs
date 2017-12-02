@@ -13,6 +13,7 @@ public class FileDirectoryControl : MonoBehaviour {
     public GameObject HistoryObject;
     public Transform Content;
     public List<Item> ItemList;
+
     private FileControl filecontrol;
     private SceneChange scenechange;
 
@@ -52,6 +53,7 @@ public class FileDirectoryControl : MonoBehaviour {
             OnHistoryLoad();
         }else{
             OnFileLoad();
+            Debug.Log("ModeSelect! : " +this.scenechange.mode);
         }
     }
 

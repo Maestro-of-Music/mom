@@ -36,14 +36,8 @@ public class ChartControl : MonoBehaviour {
     void Start () {
 
         this.Back.onClick.AddListener(()=>{
-            if (this.scenechange.mode == 1)
-            {
-                SceneManager.LoadScene("PlayModeList");
-            }else if(this.scenechange.mode == 2){
-                SceneManager.LoadScene("PracticeModeList");
-            }else{
-                SceneManager.LoadScene("PlayModeList");
-            }
+            SceneManager.LoadScene("0Main");
+
         });
 
         if(this.music_name == null){
@@ -81,6 +75,7 @@ public class ChartControl : MonoBehaviour {
     void LoadLogChart(){
 
         Debug.Log("Load Log! ");
+        Debug.Log("File : " + file.Count);
 
         for (int i = file.Count-1; i < file.Count; i++)
         {
@@ -109,6 +104,8 @@ public class ChartControl : MonoBehaviour {
                     Miss++;
                 }
             }
+
+
 
             User_result.Add("Perfect" + "," + Perfect.ToString());
             User_result.Add("Good" + "," + Good.ToString());
@@ -243,6 +240,7 @@ public class ChartControl : MonoBehaviour {
     IEnumerator LoadGetLogData(){
 
         Music_title.text = this.music_name;
+        Debug.Log("Music Name : " + this.music_name);
         loaddata = this.filecontrol.GetLogData(this.music_name); //send music data before scene
         yield return new WaitForSeconds(3);
     }

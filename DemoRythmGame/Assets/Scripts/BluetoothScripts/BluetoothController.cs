@@ -100,7 +100,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 
     public void nextPage(){
         Debug.Log(sceneName);
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("0Main");
     }
 
     public void OnGalleryOpen(){

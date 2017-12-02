@@ -154,51 +154,51 @@ public class IOManager : MonoBehaviour {
 
         if (GetData == ((char)temp).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch =  octave.ToString() + "C";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch +=  octave.ToString() + "C"+"/";
         }
         else if (GetData == ((char)(temp + 1)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "C#";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "C#"+ "/";
         }
         else if (GetData == ((char)(temp + 2)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "D";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "D"+ "/";
         }
         else if (GetData == ((char)(temp + 3)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "D#";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "D#"+ "/";
         }
         else if (GetData == ((char)(temp + 4)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "E";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "E"+ "/";
         }
         else if (GetData == ((char)(temp + 5)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "F";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "F"+ "/";
         }
         else if (GetData == ((char)(temp + 6)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "F#";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "F#"+ "/";
         }
         else if (GetData == ((char)(temp + 7)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "G";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "G"+ "/";
         }
         else if (GetData == ((char)(temp + 8)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "G#";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "G#"+ "/";
         }
         else if (GetData == ((char)(temp + 9)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "A";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "A"+ "/";
         }
         else if (GetData == ((char)(temp + 10)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "A#";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "A#"+ "/";
         }
         else if (GetData == ((char)(temp + 11)).ToString())
         {
-            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "B";
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch += octave.ToString() + "B"+ "/";
         }
 
         Debug.Log("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl>().pitch);

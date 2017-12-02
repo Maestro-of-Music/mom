@@ -87,6 +87,11 @@ public class FileControl
 
             object[] array = Resources.LoadAll("logs", typeof(TextAsset));
 
+            char[] text = music_name.ToCharArray();
+            string contain = (text[text.Length - 1]) .ToString();
+
+            Debug.Log("text : " + contain);
+
             if (array != null)
             {
 
@@ -94,12 +99,14 @@ public class FileControl
                 {
                     TextAsset arr = (TextAsset)array[i];
 
-                    if(arr.name.Contains(music_name)){
+                    if(arr.name.Contains("log") && arr.name.Contains(contain)){
+                        Debug.Log(arr.text);
                         temp.Add(arr.text);
                     }   
                 }
+            }else{
+                Debug.Log("No");
             }
-
 
         }
         else
