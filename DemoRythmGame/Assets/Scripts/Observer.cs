@@ -271,57 +271,6 @@ public class Observer : MonoBehaviour {
             case 4:
                 Debug.Log("4 Octave");
 
-                /*
-                if (_pitch == "C")
-                {
-                    result = 57;
-                }
-                else if (_pitch == "C#")
-                {
-                    result = 58;
-                }
-                else if (_pitch == "D")
-                {
-                    result = 59;
-                }
-                else if (_pitch == "D#")
-                {
-                    result = 60;
-                }
-                else if (_pitch == "E")
-                {
-                    result = 61;
-                }
-                else if (_pitch == "F")
-                {
-                    result = 62;
-                }
-                else if (_pitch == "F#")
-                {
-                    result = 63;
-                }
-                else if (_pitch == "G")
-                {
-                    result = 64;
-                }
-                else if (_pitch == "G#")
-                {
-                    result = 65;
-                }
-                else if (_pitch == "A")
-                {
-                    result = 66;
-                }
-                else if (_pitch == "A#")
-                {
-                    result = 67;
-                }
-                else if (_pitch == "B")
-                {
-                    result = 68;
-                }*/
-
-
                 if (_pitch == "C")
                 {
                     result = 45;

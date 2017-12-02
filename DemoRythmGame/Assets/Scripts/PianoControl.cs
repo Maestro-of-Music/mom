@@ -219,7 +219,7 @@ public class PianoControl : MonoBehaviour {
 		if (Play == true || Practice == true) {
 			speed = 0.0f;
 			move = false;
-			GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
+            GameManager.gameObject.GetComponent<MenuManager> ().PlayEnd ();
 		}
 		else if (Repeat) {
 			if (Repeat_Count < gameObject.GetComponent<RepeatControl> ().count) {
@@ -233,7 +233,7 @@ public class PianoControl : MonoBehaviour {
 				Debug.Log ("Repeat End!");
 				end = true;
                 //AudioListener.pause = true;
-				GameManager.gameObject.GetComponent<MenuManager> ().GameEnd ();
+                GameManager.gameObject.GetComponent<MenuManager> ().PlayEnd ();
 			}
 		}
 	

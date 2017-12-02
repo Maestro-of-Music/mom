@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MenuManager : MonoBehaviour {
 
@@ -59,11 +60,15 @@ public class MenuManager : MonoBehaviour {
         if (Application.platform == RuntimePlatform.Android)
         {
             Mode = this.scenechange.mode;
-        }else{
-            Mode = 1;
         }
-        GameStart(Mode);
-	}
+
+        if(Mode == 3){
+            Debug.Log("End Mode!");
+            GameEnd();
+        }else{
+            GameStart(Mode);        
+        }
+    }
 
 	void Update(){
         
@@ -81,7 +86,7 @@ public class MenuManager : MonoBehaviour {
 	public void GameMenu(){
 
         this.back_Btn.onClick.AddListener (()=>{
-            
+            Debug.Log("Go to the PlayModeList");
             SceneManager.LoadScene("PlayModeList");
 		});
 
@@ -97,11 +102,15 @@ public class MenuManager : MonoBehaviour {
         });
 
         this.Replay.onClick.AddListener(()=>{
-            SceneManager.LoadScene("PlayMode");
+            Debug.Log("Go to the replay");
+
+            //SceneManager.LoadScene("PlayMode");
 
         });
 
         this.Check.onClick.AddListener(()=>{
+            Debug.Log("Go to the PlayModeList");
+
             if(scenechange.mode == 1){
                 //play mode
                 SceneManager.LoadScene("PlayModeList");
@@ -131,70 +140,92 @@ public class MenuManager : MonoBehaviour {
 
 	}
 
+    public void PlayEnd(){
+        //save user's data
+        PianoManager.GetComponent<LogManager>().CollectLogObject(int.Parse(PianoManager.GetComponent<PianoControl>().Score.text), GameManager.GetComponent<LoadData>().noteinfo.Title);
+        CalculateScore(); // at first calculate score
+
+        if (Mode == 2 || Mode == 3)
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().Repeat = false;
+        }
+
+        SceneManager.LoadScene("8");
+    }
+
 	public void GameEnd(){
 		UIPanel.SetActive (true);
-        Title.text = gameObject.GetComponent<CreateNote>().title; //setting music's name
+        Title.text = this.scenechange.Music_title;
 
 		Music_Title.gameObject.SetActive (false);
-		Score.text = PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
+		//Score.text = PianoManager.gameObject.GetComponent<ScoreManager> ().score.ToString();
 
         ScoreTitlePanel.SetActive(false);
 		Pause_btn.gameObject.SetActive (false);
         back_Btn.gameObject.SetActive (false);
 
-
-        //save user's data
-        PianoManager.GetComponent<LogManager>().CollectLogObject(int.Parse(PianoManager.GetComponent<PianoControl>().Score.text),GameManager.GetComponent<LoadData>().noteinfo.Title);
-        CalculateScore(); // at first calculate score
-
-
-		if (Mode == 2 || Mode == 3) {
-			Score.gameObject.SetActive (false);
-			PianoManager.gameObject.GetComponent<PianoControl> ().Repeat = false;
-
-		}else{
-			Score.gameObject.SetActive (true);
-		}
+        LoadCalculateScore(this.scenechange.temp);
 	}
+
+    void LoadCalculateScore(History temp){
+        Debug.Log("Load Calculate");
+
+        try
+        {
+            if (temp.result_Alpha == "S" || temp.result_Alpha == "s")
+            {
+                Grade_S.SetActive(true);
+
+            }
+            else if (temp.result_Alpha == "A" || temp.result_Alpha == "a")
+            {
+                Grade_A.SetActive(true);
+
+            }
+            else if (temp.result_Alpha == "B" || temp.result_Alpha == "b")
+            {
+                Grade_B.SetActive(true);
+
+            }
+            else if (temp.result_Alpha == "C" || temp.result_Alpha == "c")
+            {
+                Grade_C.SetActive(true);
+
+            }
+
+            ExcellentScore.text = this.scenechange.Excellent_count.ToString();
+            MissScore.text = this.scenechange.Miss_count.ToString();
+            Score.text = temp.score.ToString();
+        }catch(Exception e){
+            Debug.Log("There is no History data!");
+        }
+    }
 
     void CalculateScore(){
 
-        //cal Total_result;
-        Debug.Log(PianoManager.gameObject.GetComponent<ScoreManager>().score);
-        Debug.Log(gameObject.GetComponent<CreateNote>().Total_Score);
-
         double propotion = ((double)PianoManager.gameObject.GetComponent<ScoreManager>().score / (double)gameObject.GetComponent<CreateNote>().Total_Score) * 100.0;
-        Debug.Log("propotion : " + propotion);
 
         if (propotion >= 0.5f){
             display_ScoreTitle = "S";
-            Grade_S.SetActive(true);
 
             Debug.Log("Player result : " + " S ");
         }else if (propotion >= 0.3f && propotion < 0.5f){
             Debug.Log("Player result : " + " A ");
             display_ScoreTitle = "A";
-            Grade_A.SetActive(true);
 
         }else if (propotion >= 0.1f && propotion < 0.3f){
             Debug.Log("Player result : " + " B ");
             display_ScoreTitle = "B";
-            Grade_B.SetActive(true);
 
 
         }else {
             Debug.Log("Player result : " + " C ");
             display_ScoreTitle = "C";
-            Grade_C.SetActive(true);
 
         }
 
-        //show perfect and miss
-        Debug.Log("Perfect Result : " + PianoManager.GetComponent<LogManager>().Perfect_Count);
-        Debug.Log("Miss Result : " + PianoManager.GetComponent<LogManager>().Miss_Count);
-
-        ExcellentScore.text = PianoManager.GetComponent<LogManager>().Perfect_Count.ToString();
-        MissScore.text = PianoManager.GetComponent<LogManager>().Miss_Count.ToString(); 
+        this.scenechange.Excellent_count = PianoManager.GetComponent<LogManager>().Perfect_Count;
+        this.scenechange.Miss_count = PianoManager.GetComponent<LogManager>().Miss_Count;
 
         History temp = new History();
         temp.result_Alpha = display_ScoreTitle;
@@ -204,6 +235,8 @@ public class MenuManager : MonoBehaviour {
 
         //save history
         this.filecontrol.SaveHistory(temp); //save adaption after
+
+        this.scenechange.temp = temp; //send history data to next scene
 
     }
 

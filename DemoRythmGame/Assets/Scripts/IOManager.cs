@@ -20,12 +20,14 @@ public class IOManager : MonoBehaviour {
         {
             this.bluetooth = Bluetooth.getInstance ();
         }
+
 	}
 
 	// Update is called once per frame
 	void Update () {
-        if (Application.platform == RuntimePlatform.Android)
-        {
+
+        if(Application.platform == RuntimePlatform.Android){
+            
         }
         else
         {
@@ -38,6 +40,7 @@ public class IOManager : MonoBehaviour {
 
 			/* White Key Input */ 
 			if (Input.GetKeyDown (KeyCode.A)) {
+            OctaveCheck(33, 3, "!");
 			PianoManager.gameObject.GetComponent<PianoControl>().pitch += keyboard_index  + "C" + "/" ;
 			Debug.Log ("------" + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 
@@ -108,6 +111,7 @@ public class IOManager : MonoBehaviour {
 	{
 		Debug.Log ("GETDATA : " + GetData);
 
+        /*
 		if (GetData == "A") {
 			Debug.Log ("C Clicked");
 				PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4C";
@@ -135,9 +139,70 @@ public class IOManager : MonoBehaviour {
 			PianoManager.gameObject.GetComponent<PianoControl> ().pitch = "4E";
 			Debug.Log ("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl> ().pitch);
 		}
-			
+        */
+
+        /*
+            3Octave
+        */
+        OctaveCheck(33, 3, GetData);
+        OctaveCheck(45, 4, GetData);
+
 	}
 
+    public void OctaveCheck(int temp,int octave,string GetData){
+        
+
+        if (GetData == ((char)temp).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch =  octave.ToString() + "C";
+        }
+        else if (GetData == ((char)(temp + 1)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "C#";
+        }
+        else if (GetData == ((char)(temp + 2)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "D";
+        }
+        else if (GetData == ((char)(temp + 3)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "D#";
+        }
+        else if (GetData == ((char)(temp + 4)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "E";
+        }
+        else if (GetData == ((char)(temp + 5)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "F";
+        }
+        else if (GetData == ((char)(temp + 6)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "F#";
+        }
+        else if (GetData == ((char)(temp + 7)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "G";
+        }
+        else if (GetData == ((char)(temp + 8)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "G#";
+        }
+        else if (GetData == ((char)(temp + 9)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "A";
+        }
+        else if (GetData == ((char)(temp + 10)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "A#";
+        }
+        else if (GetData == ((char)(temp + 11)).ToString())
+        {
+            PianoManager.gameObject.GetComponent<PianoControl>().pitch = octave.ToString() + "B";
+        }
+
+        Debug.Log("Pitch : " + PianoManager.gameObject.GetComponent<PianoControl>().pitch);
+    }
 
 
     //Do Re mi Fa sol Ra Si --select LED color Upload in Observer script 

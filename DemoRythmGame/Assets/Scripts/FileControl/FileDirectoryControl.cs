@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using LitJson;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FileDirectoryControl : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class FileDirectoryControl : MonoBehaviour {
     public Sprite Title_B;
     public Sprite Title_C;
 
+    public Button back;
 
     /* Play Mode
      * 1 - Play
@@ -40,6 +42,12 @@ public class FileDirectoryControl : MonoBehaviour {
 
     void Start()
     {
+
+        this.back.onClick.AddListener(()=>{
+            Debug.Log("Back Button Clicked");
+            SceneManager.LoadScene("0Main");
+        });
+
         if(History){
             OnHistoryLoad();
         }else{

@@ -8,6 +8,14 @@ public class SceneChange{
     public string Music_title; //selected Music title
     public int mode;
 
+    /*
+     * receive from playmode and show in the end play
+     * send seperate datas scene by scene
+     */
+    public History temp;
+    public int Excellent_count;
+    public int Miss_count;
+
     private static SceneChange _instance = null;
 
     public static SceneChange getInstance()
