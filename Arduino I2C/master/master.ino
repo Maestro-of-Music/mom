@@ -44,12 +44,11 @@ void loop() {
        delay(3);
        
         char s = Wire.read(); // Read data
+        //Serial.println(s);
         if((s>='A' && s<='Z') || (s>='a' && s<='z')){
         Serial.println(s);
         mySerial.write((i-1)*12+(s-'A')+33);
         }
-       
-       else break;
    }
 //
 /////////////////////////////////////////////////////////
