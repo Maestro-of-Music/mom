@@ -14,7 +14,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 
     private Bluetooth bluetooth;
     private SceneChange scenechange;
-    public RawImage m_image;
+    private RawImage m_image;
     public string sceneName;
 
 	public int number;
@@ -222,6 +222,8 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         Xmldoc.Load(strFilePath);
         Debug.Log("filename: " + strFilePath);
         Debug.Log("xmldoc : " + Xmldoc.InnerText);
+
+        //load xml file to json
     }
 
     IEnumerator ShowImage(string path){

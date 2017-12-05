@@ -250,6 +250,14 @@ public class CreateNote : MonoBehaviour {
                 index.duration = duration;                 index.pitch = pitch;                 index.sequence = sequence;
                 index.note_index = notenum;             }
 
+            char a = pitch[0];
+            int octave = (int)a;
+
+            if(octave < 4){
+                
+            }else{
+                
+            }
 
 			switch (duration) {
 			case 1: //white

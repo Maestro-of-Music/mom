@@ -88,7 +88,12 @@ public class FileControl
             object[] array = Resources.LoadAll("logs", typeof(TextAsset));
 
             char[] text = music_name.ToCharArray();
-            string contain = (text[text.Length - 1]) .ToString();
+            char[] temp_text = new char[3];
+            temp_text[0] = text[text.Length - 3];
+            temp_text[1] = text[text.Length - 2];
+            temp_text[2] = text[text.Length - 1];
+
+            string contain = new string(temp_text); 
 
             Debug.Log("text : " + contain);
 
@@ -99,9 +104,15 @@ public class FileControl
                 {
                     TextAsset arr = (TextAsset)array[i];
 
-                    if(arr.name.Contains("log") && arr.name.Contains(contain)){
-                        Debug.Log(arr.text);
-                        temp.Add(arr.text);
+                    if(arr.name.Contains("log")){
+                        string temp_title = arr.name;
+                        Debug.Log(temp_title);
+                        string[] title = temp_title.Split(')');
+                        Debug.Log(title[0] + " " + title[1]);
+
+                        if(title[0].Contains(contain) == true){
+                            temp.Add(arr.text);
+                        }
                     }   
                 }
             }else{

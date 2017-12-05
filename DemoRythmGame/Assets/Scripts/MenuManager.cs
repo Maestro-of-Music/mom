@@ -40,6 +40,7 @@ public class MenuManager : MonoBehaviour {
 
     private FileControl filecontrol;
     private SceneChange scenechange;
+    private Bluetooth bluetooth;
 
     public string display_ScoreTitle;
 
@@ -48,6 +49,7 @@ public class MenuManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
+        this.bluetooth = Bluetooth.getInstance();
         this.filecontrol = FileControl.getInstance();
         this.scenechange = SceneChange.getInstance();
 		GameMenu ();
@@ -284,6 +286,7 @@ public class MenuManager : MonoBehaviour {
 			Pause_btn.gameObject.SetActive (true);
 
         } else if (this.scenechange.mode == 2) {
+
 			Debug.Log ("Practice Start");
 			StartCoroutine ("StartInitMode");
 

@@ -59,7 +59,7 @@ public class X_Tutorial : MonoBehaviour {
             Debug.Log(MaxValue);
 
             graph.xAxis.AxisMaxValue = 10000;
-            graph.yAxis.AxisMaxValue = 10000;
+            graph.yAxis.AxisMaxValue = 30000;
 
             graph.groups.SetList(groups);
             graph.useGroups = true;

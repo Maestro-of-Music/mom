@@ -14,11 +14,13 @@ public class XMLManager : MonoBehaviour {
 
     public string _filename; 
 
+    /*
      void Awake()
     {
         StartCoroutine("Xml_load", _filename);
 		SetNodeJSON ();
     }
+    */
 
 	XmlDocument XMLread(){
 		

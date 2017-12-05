@@ -136,24 +136,26 @@ public class LogManager : MonoBehaviour {
         int a =  filecontrol.SearchDirectoryFile(music_name);
         Debug.Log(a);
         string url = "";
+
         if (Application.platform == RuntimePlatform.Android)
         {
             //persistence 
-
+            url = Application.persistentDataPath + "/";
         }
         else
         {
             url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
-
-            //Find data URL 
-
+        }
+        //Find data URL 
+        try
+        {
             if (File.Exists(url) == true)
             {
                 //rewrite
                 JsonData data = JsonMapper.ToJson(log);
                 a++;
 
-                url = Application.streamingAssetsPath + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
+                url = url + "/" + "(" + music_name + ")" + "log" + a.ToString() + ".txt";
                 File.WriteAllText(url, data.ToString());
             }
             else
@@ -162,6 +164,8 @@ public class LogManager : MonoBehaviour {
                 JsonData data = JsonMapper.ToJson(log);
                 File.WriteAllText(url, data.ToString());
             }
+        }catch(Exception e){
+            Debug.Log(e);
         }
     }
 }
