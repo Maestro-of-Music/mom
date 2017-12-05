@@ -201,7 +201,6 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         Debug.Log("in WriteXML");
         string strFile = "test_audiveris"; // test_audiveris(1).xml
         string strFilePath = Application.persistentDataPath + "/" + strFile + ".xml";
-      //  string strFilePath = "Assets/" + strFile;
 
         while(File.Exists(strFilePath))
         {
@@ -222,11 +221,12 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         }
         Debug.Log("File writing");
         File.WriteAllBytes(strFilePath, XmlFile.bytes);
-
+        
         XmlDocument Xmldoc = new XmlDocument();
-        Xmldoc.Load(strFilePath);
+        Xmldoc.LoadXml(System.IO.File.ReadAllText(strFilePath));
+
         Debug.Log("filename: " + strFilePath);
-        Debug.Log("xmldoc : " + Xmldoc.InnerText);
+        Debug.Log("xmldoc : " + Xmldoc.OuterXml);
 
         //load xml file to json
         try
@@ -245,7 +245,7 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
             Debug.Log(e);
         }
 
-        this.bluetooth.showMessage("악보파일을 변환했습니다! 앨범을 확인해주세요!");
+        this.bluetooth.showMessage("악보파일을 변환했습니다!!");
     }
 
     IEnumerator ShowImage(string path){

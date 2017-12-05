@@ -41,11 +41,14 @@ public class RadialMenuController : MonoBehaviour {
 
     public int shift_index = 0;
 
+    private XMLManager xmlmanager;
+
     public Vector3 [] _ButtonPosition;
 
     private void Awake()
     {
         this.scenechange = SceneChange.getInstance();
+        this.xmlmanager = XMLManager.getInstance();
         position = new Vector3[3];
 
         if(Application.platform == RuntimePlatform.Android){
@@ -221,6 +224,10 @@ public class RadialMenuController : MonoBehaviour {
         {
             gameObject.GetComponent<Transform>().Rotate(0, 0, speed * Time.deltaTime);
         }
+    }
+
+    public void TurnOn(){
+        this.xmlmanager.btn_clicked();
     }
 
 

@@ -105,7 +105,10 @@ public class FileDirectoryControl : MonoBehaviour {
                          Debug.Log(first);
                          string name = fileinfo[i].Name.Substring(0,first);
                          Debug.Log("Name : " + name);
+                        
+                        if(name != "history"){
                          Binding(name);
+                        }
                     }
                 }
             }
@@ -124,11 +127,14 @@ public class FileDirectoryControl : MonoBehaviour {
              for (int i = 0; i < fileinfo.Length; i++)
              {
                     if (fileinfo[i].Name.Contains(".txt") && fileinfo[i].Name.Contains(".meta") == false){
+                       
                          int first = fileinfo[i].Name.IndexOf(".txt");
-//                         Debug.Log(first);
+//                       Debug.Log(first);
                          string name = fileinfo[i].Name.Substring(0,first);
-                        // Debug.Log("Name : " + name);
-                         Binding(name);
+                        
+                        if(name != "history"){
+                            Binding(name);
+                        }
                     }
                 }
             }

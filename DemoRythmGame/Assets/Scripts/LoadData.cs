@@ -20,39 +20,41 @@ public class LoadData : MonoBehaviour {
 	void Awake () {
 
         this.scenechange = SceneChange.getInstance();
-        if (Application.platform == RuntimePlatform.Android)
+		
+    	 if (Application.platform == RuntimePlatform.Android)
         {
+            Debug.Log(this.scenechange.Music_title);
             JSON_load(this.scenechange.Music_title); //saved music title sending
-        }else{
-          //  JSON_load(this.scenechange.Music_title); //saved music title sending
+        }
+        else
+        {
+            //  JSON_load(this.scenechange.Music_title); //saved music title sending
         }
         filename = "jingleBell";
 
-        StartCoroutine("LoadJSON");
     }
-
 
     void JSON_load(string filename){
         Debug.Log(filename);
 
         if(Application.platform == RuntimePlatform.Android){
-            /*
-            string path = "jar:file://" + Application.dataPath + "!/assets" + "/" + filename + ".txt";
-            */
-            //string path = Application.persistentDataPath + filename + ".txt";
+           
+            string path = Application.persistentDataPath +"/" + filename + ".txt";
             // Byte[] bytes = File.ReadAllBytes(path); 
-            //this.jsonData = (TextAsset)Resources.Load(path);
-            Debug.Log(filename);
-            this.jsonData = (TextAsset)Resources.Load(filename);
+			Debug.Log("Path : " + path );
+           	string Temp_total = File.ReadAllText(path);
+			StartCoroutine("LoadJSON",Temp_total);
+
             Debug.Log("Load JSON Data");
         }else{
             this.jsonData = (TextAsset)Resources.Load(filename);
+			StartCoroutine("LoadJSON",this.jsonData.text);
         }
        // yield return null;
     }
 		
-	IEnumerator LoadJSON (){
-		JsonData getData = JsonMapper.ToObject (jsonData.text);
+	IEnumerator LoadJSON (string temp){
+		JsonData getData = JsonMapper.ToObject (temp);
 
 		noteinfo = new NoteInfo ();
 

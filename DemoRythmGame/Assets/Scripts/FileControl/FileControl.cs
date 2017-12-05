@@ -172,7 +172,6 @@ public class FileControl
 
         try
         {
-            //if (File.Exists(path + "history.txt")){
 
             //string LoadHistory = File.ReadAllText(path + "history.txt");
              TextAsset LoadHistory = (TextAsset)Resources.Load("history");
@@ -192,8 +191,26 @@ public class FileControl
                     }
                 }
 
+            if(File.Exists(path + "history.txt")){
+                Debug.Log("History Found!!");
+                string LoadAndroid = File.ReadAllText(path + "history.txt");
 
-           // }
+                JsonData load_2 = JsonMapper.ToObject(LoadAndroid);
+
+                for (int i = 0; i < load_2["historyList"].Count; i++)
+                {
+                    if (int.Parse(load_2["historyList"][i]["mode"].ToString()) == mode)
+                    {
+                        History temp = new History();
+                        temp.result_Alpha = load_2["historyList"][i]["result_Alpha"].ToString();
+                        temp.score = int.Parse(load_2["historyList"][i]["score"].ToString());
+                        temp.title = load_2["historyList"][i]["title"].ToString();
+                        temp.mode = int.Parse(load_2["historyList"][i]["mode"].ToString());
+
+                        historyList.Add(temp);
+                    }
+                }
+            }
 
         }catch(Exception e){
             Debug.Log(e);

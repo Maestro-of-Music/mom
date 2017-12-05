@@ -13,7 +13,7 @@ public class XMLManager : MonoBehaviour {
 	public List<NoteData> backarr;
     public XmlDocument _XmlDoc;
 
-    public string _filename = "";
+    public string _filename = "test_audiveris";
 
     private static XMLManager _instance = null;
 
@@ -26,34 +26,57 @@ public class XMLManager : MonoBehaviour {
 
     private void Awake()
     {
+		
         _instance = this;
     }
+
+	public void btn_clicked(){
+		if(Application.platform != RuntimePlatform.Android){
+			Xml_loading("test_audiveris");
+			SetNodeJSON();
+		}
+	}
 
     public void RunningXmlLoad(XmlDocument xmldoc, string file_name){
         Debug.Log(file_name);
         _XmlDoc = xmldoc;
 
         this._filename = file_name;
-        Debug.Log(xmldoc.InnerText);
-               
-        try
+        Debug.Log("OuterXml : " + xmldoc.OuterXml);
 
+        string temp = xmldoc.OuterXml;
+        Debug.Log("Temp : " +  temp);
+
+        xmldoc.LoadXml(temp);
+
+		Debug.Log(xmldoc.GetElementsByTagName ("beats").Item (0).InnerText);
+
+        try
         {
             SetNodeInfo(xmldoc);
             SetNodeData(xmldoc);
-            SetNodeJSON();
+
         }catch(Exception e){
             Debug.Log(e);
         }
 
         Debug.Log("XML converting Complete!");
+
+        SetNodeJSON();
+
+        Debug.Log("Save JSON converting Complete!");
+
 	}
 
 
-    IEnumerator Xml_load(string Filename)
-    {
+    IEnumerator WaitForTime(){
+        yield return new WaitForSeconds(3.0f);
+    }
+
+
+	public void Xml_loading(string Filename){
 		XmlDocument xmldoc;
-        xmldoc = _XmlDoc;
+      //  xmldoc = _XmlDoc;
 
 		if (Application.platform == RuntimePlatform.Android) {
 			Debug.Log ("Load in Android");
@@ -62,7 +85,31 @@ public class XMLManager : MonoBehaviour {
 
 		else {
 			Debug.Log ("Load in PC");
-			TextAsset textAsset = (TextAsset)Resources.Load(Filename);
+			TextAsset textAsset = (TextAsset)Resources.Load(Filename); 
+			xmldoc = new XmlDocument();
+			xmldoc.LoadXml(textAsset.text);		
+		}
+ 
+
+        SetNodeInfo(xmldoc);
+        SetNodeData(xmldoc);
+
+        Debug.Log("End!");
+	}
+
+    IEnumerator Xml_load(string Filename)
+    {
+		XmlDocument xmldoc;
+      //  xmldoc = _XmlDoc;
+
+		if (Application.platform == RuntimePlatform.Android) {
+			Debug.Log ("Load in Android");
+            xmldoc = _XmlDoc;
+		} 
+
+		else {
+			Debug.Log ("Load in PC");
+			TextAsset textAsset = (TextAsset)Resources.Load(Filename); 
 			xmldoc = new XmlDocument();
 			xmldoc.LoadXml(textAsset.text);		
 		}
@@ -76,7 +123,7 @@ public class XMLManager : MonoBehaviour {
         yield return null;
     }
 
-   /*
+   /* 
     XmlDocument XMLread()
     {
         if (File.Exists(StrFilePath))
@@ -99,8 +146,8 @@ public class XMLManager : MonoBehaviour {
 
         return Xmldoc;
     }
-
-    */
+*/
+    
 
 	public void SetNodeJSON(){
 
@@ -145,14 +192,18 @@ public class XMLManager : MonoBehaviour {
 
     public void SetNodeData(XmlDocument content){
         arr = new List<NoteData>();
+        backarr = new List<NoteData>();
 
 		XmlNodeList node = content.GetElementsByTagName("measure");
+
+        Debug.Log("Node Count!!! : " + node.Count);
 
 		for (int i = 0; i < node.Count; i++)
         {
 			Debug.Log("Meausure num : " + i);
 
 			XmlElement Ele = (XmlElement)node.Item(i);
+            Debug.Log("Ele : " + Ele.OuterXml);
 
 			string repeat = RepeatCheck (Ele);
 			bool backward = false;
@@ -161,66 +212,85 @@ public class XMLManager : MonoBehaviour {
 				Debug.Log ("!!!");
 			}				
 
-			for (int j = 0; j < Ele.GetElementsByTagName("note").Count; j++)
+            Debug.Log("Count : " + Ele.GetElementsByTagName("note").Count);
+
+            try
             {
-				string step = "";
-				int octave = 0;
-				int duration = 0;
-				bool rest = false;
-				bool alter = false;
-
-				XmlElement pitch = (XmlElement)Ele.GetElementsByTagName ("note").Item(j);
-				alter = SetAlter (pitch); //check alter 
-
-				Debug.Log (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText));
-
-				if (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText) == 1) {
-					//forward 
-					backward = false;
-				} else if (int.Parse (pitch.GetElementsByTagName ("staff").Item (0).InnerText) == 2) {
-					//backward
-					backward = true;
-				}
-
-                try
+                for (int j = 0; j < Ele.GetElementsByTagName("note").Count; j++)
                 {
-					step = pitch.GetElementsByTagName("step").Item(0).InnerText;
-					octave = int.Parse(pitch.GetElementsByTagName("octave").Item(0).InnerText);
-					rest = false;
+                    string step = "";
+                    int octave = 0;
+                    int duration = 0;
+                    bool rest = false;
+                    bool alter = false;
 
-                }catch(Exception){
-                    step = "";
-                    octave = -1;
-                    rest = true;
-                }
-				finally{
-					duration = 	int.Parse(pitch.GetElementsByTagName("duration").Item(0).InnerText);
-					Debug.Log (duration);
+                    XmlElement pitch = (XmlElement)Ele.GetElementsByTagName("note").Item(j);
+                    alter = SetAlter(pitch); //check alter 
 
-                    if(duration > 120){
-                        duration = duration / 120;
+                    Debug.Log("Pitch : " + pitch.OuterXml);
+                    //Debug.Log(int.Parse(pitch.GetElementsByTagName("staff").Item(0).InnerText));
+                    backward = false;
+/* 
+                    if (int.Parse(pitch.GetElementsByTagName("staff").Item(0).InnerText) == 1)
+                    {
+                        //forward 
+                        backward = false;
                     }
+                    else if (int.Parse(pitch.GetElementsByTagName("staff").Item(0).InnerText) == 2)
+                    {
+                        //backward
+                        backward = true;
+                    }
+*/
+                    try
+                    {
+                        step = pitch.GetElementsByTagName("step").Item(0).InnerText;
+                        octave = int.Parse(pitch.GetElementsByTagName("octave").Item(0).InnerText);
+                        rest = false;
 
-                    int default_x = int.Parse(pitch.Attributes.GetNamedItem("default-x").InnerText);
-                    //Debug.Log(default_x + " Default - x");
+                    }
+                    catch (Exception)
+                    {
+                        step = "";
+                        octave = -1;
+                        rest = true;
+                    }
+                    finally
+                    {
+                        duration = int.Parse(pitch.GetElementsByTagName("duration").Item(0).InnerText);
+                        Debug.Log(duration);
 
-                    NoteData temp = new NoteData();
-					temp.step = step;
-					temp.octave = octave;
-					temp.duration = duration;
-                    temp.default_x = default_x;
-					temp.measureIndex = (i+1) ;
-					temp.rest = rest;
-					temp.alter = alter;
-					temp.repeat = repeat; //repeat mode 
-					temp.backward = backward; //forward or backward 
+                        if (duration > 120)
+                        {
+                            duration = duration / 120;
+                        }
 
-					if (temp.backward == true) {
-						backarr.Add (temp);
-					} else {
-						arr.Add (temp);
-					}
+                        int default_x = int.Parse(pitch.Attributes.GetNamedItem("default-x").InnerText);
+                        Debug.Log(default_x + " Default - x");
+
+                        NoteData temp = new NoteData();
+                        temp.step = step;
+                        temp.octave = octave;
+                        temp.duration = duration;
+                        temp.default_x = default_x;
+                        temp.measureIndex = (i + 1);
+                        temp.rest = rest;
+                        temp.alter = alter;
+                        temp.repeat = repeat; //repeat mode 
+                        temp.backward = backward; //forward or backward 
+
+                        if (temp.backward == true)
+                        {
+                            backarr.Add(temp);
+                        }
+                        else
+                        {
+                            arr.Add(temp);
+                        }
+                    }
                 }
+            }catch(Exception e){
+                Debug.Log(e);
             }
 
 			/*
