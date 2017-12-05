@@ -11,40 +11,53 @@ public class XMLManager : MonoBehaviour {
     public NoteInfo noteinfo;
     public List<NoteData> arr;
 	public List<NoteData> backarr;
+    public XmlDocument _XmlDoc;
 
-    public string _filename; 
+    public string _filename = "";
 
-    /*
-     void Awake()
-    {
-        StartCoroutine("Xml_load", _filename);
-		SetNodeJSON ();
+    private static XMLManager _instance = null;
+
+    public static XMLManager getInstance(){
+        if(_instance == null){
+            _instance = new XMLManager();
+        }
+        return _instance;
     }
-    */
 
-	XmlDocument XMLread(){
-		
-		string strFile = _filename + ".xml"; 
-		string strFilePath = Application.persistentDataPath + "/" + strFile; 
-		if (!File.Exists(strFilePath)) 
-		{ 
-			WWW wwwUrl = new WWW("jar:file://" + Application.dataPath + "!/assets/" + strFile); 
-			File.WriteAllBytes(strFilePath, wwwUrl.bytes); 
-		} 
-		XmlDocument Xmldoc = new XmlDocument(); 
-		Xmldoc.Load(strFilePath);
+    private void Awake()
+    {
+        _instance = this;
+    }
 
-		return Xmldoc;
+    public void RunningXmlLoad(XmlDocument xmldoc, string file_name){
+        Debug.Log(file_name);
+        _XmlDoc = xmldoc;
+
+        this._filename = file_name;
+        Debug.Log(xmldoc.InnerText);
+               
+        try
+
+        {
+            SetNodeInfo(xmldoc);
+            SetNodeData(xmldoc);
+            SetNodeJSON();
+        }catch(Exception e){
+            Debug.Log(e);
+        }
+
+        Debug.Log("XML converting Complete!");
 	}
 
 
     IEnumerator Xml_load(string Filename)
     {
 		XmlDocument xmldoc;
+        xmldoc = _XmlDoc;
 
 		if (Application.platform == RuntimePlatform.Android) {
 			Debug.Log ("Load in Android");
-			xmldoc = XMLread ();
+            xmldoc = _XmlDoc;
 		} 
 
 		else {
@@ -63,6 +76,32 @@ public class XMLManager : MonoBehaviour {
         yield return null;
     }
 
+   /*
+    XmlDocument XMLread()
+    {
+        if (File.Exists(StrFilePath))
+        {
+            WWW wwwUrl = new WWW(StrFilePath);
+            yield return wwwUrl;
+
+            File.WriteAllBytes(StrFilePath, wwwUrl.bytes);
+        }else{
+            Debug.Log("File not Found!");
+
+        }
+
+        Debug.Log("File writing");
+        File.WriteAllBytes(StrFilePath, XmlFile.bytes);
+
+        Debug.Log("load!");
+        XmlDocument Xmldoc = new XmlDocument();
+        Xmldoc.Load(StrFilePath);
+
+        return Xmldoc;
+    }
+
+    */
+
 	public void SetNodeJSON(){
 
 
@@ -76,8 +115,20 @@ public class XMLManager : MonoBehaviour {
 
 		JsonData data = JsonMapper.ToJson (notejson);
 
-		File.WriteAllText(Application.dataPath + "/Resources/ " +_filename + ".txt",data.ToString());
+		try{
+
+		if(Application.platform == RuntimePlatform.Android){
+                Debug.Log("_filename : " + _filename);
+			File.WriteAllText(Application.persistentDataPath + "/" +_filename + ".txt",data.ToString());
+		}
+		else{
+			File.WriteAllText(Application.dataPath + "/Resources/ " +_filename + ".txt",data.ToString());
+		}
+
 		Debug.Log ("File Created");
+		}catch(Exception e){
+			Debug.Log(e);
+		}
 	}
 
     public void SetNodeInfo (XmlDocument content){

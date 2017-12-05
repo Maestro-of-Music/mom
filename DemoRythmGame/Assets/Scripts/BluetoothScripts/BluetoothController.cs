@@ -14,6 +14,8 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 
     private Bluetooth bluetooth;
     private SceneChange scenechange;
+    private XMLManager xmlmanager;
+
     private RawImage m_image;
     public string sceneName;
 
@@ -42,6 +44,8 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
     private void Awake() {
         this.bluetooth = Bluetooth.getInstance();
         this.scenechange = SceneChange.getInstance();
+        this.xmlmanager = XMLManager.getInstance();
+
     }
 
     private void Start() {
@@ -179,11 +183,12 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
 
         WWW upload = new WWW(serverUrl, postForm);
         yield return upload;
+        /*
         if (upload.error == null)
             Debug.Log("upload done");
         else
             Debug.Log("upload error" + upload.error);
-
+        */
         if(upload.isDone)
         {
             Debug.Log("complete!");
@@ -224,6 +229,23 @@ public class BluetoothController : MonoBehaviour, IBtObserver {
         Debug.Log("xmldoc : " + Xmldoc.InnerText);
 
         //load xml file to json
+        try
+        {   
+            int first = strFilePath.LastIndexOf('/') + 1;
+            int last = strFilePath.LastIndexOf('.') - 1;
+            int length = last - first + 1;
+
+            string data = strFilePath.Substring(first, length);
+
+            Debug.Log(data);
+
+            this.xmlmanager.RunningXmlLoad(Xmldoc, data);
+
+        }catch(Exception e){
+            Debug.Log(e);
+        }
+
+        this.bluetooth.showMessage("악보파일을 변환했습니다! 앨범을 확인해주세요!");
     }
 
     IEnumerator ShowImage(string path){

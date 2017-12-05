@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 public class MainMenuController : MonoBehaviour {
 
     private SceneChange scenechange;
-   // private Bluetooth bluetooth;
     public Button Setting;
+    public Button Up;
+
+    public GameObject RadialMenu;
 
     private void Awake()
     {
@@ -18,29 +20,26 @@ public class MainMenuController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        /*
-        this.Practice.onClick.AddListener(()=>{
-            Debug.Log("Practice Clicked");
-            this.scenechange.mode = 2;
-          //  this.bluetooth.Send("@");
-            SceneManager.LoadScene("8practice");
-        });
-        this.Play.onClick.AddListener(()=>{
-            Debug.Log("Play Clicked");
-            this.scenechange.mode = 1;
-          //  this.bluetooth.Send("!");
-            SceneManager.LoadScene("5play");
-        });
-
-        this.MyMusic.onClick.AddListener(()=>{
-            SceneManager.LoadScene("10MyMusic");
-        });
-        */
-
+        
         this.Setting.onClick.AddListener(()=>{
             SceneManager.LoadScene("Setting"); 
         });
 
+        this.Up.onClick.AddListener(()=>{
+            Debug.Log("Up Button Clicked");
+
+            if (RadialMenu.GetComponent<RadialMenuController>().shift_index < 2)
+            {
+                RadialMenu.GetComponent<RadialMenuController>().shift_index++;
+            }
+            else
+            {
+                RadialMenu.GetComponent<RadialMenuController>().shift_index = 0;
+            }
+
+            RadialMenu.GetComponent<RadialMenuController>().moveOn = true;
+
+        });
 
 	}
 

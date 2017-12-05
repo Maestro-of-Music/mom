@@ -144,8 +144,11 @@ public class IOManager : MonoBehaviour {
         /*
             3Octave
         */
-        OctaveCheck(33, 3, GetData);
-        OctaveCheck(45, 4, GetData);
+        OctaveCheck(33, 2, GetData);
+        OctaveCheck(45, 3, GetData);
+        OctaveCheck(57, 4, GetData);
+        OctaveCheck(69, 5, GetData);
+
 
 	}
 

@@ -172,10 +172,11 @@ public class FileControl
 
         try
         {
-            if (File.Exists(path + "history.txt")){
+            //if (File.Exists(path + "history.txt")){
 
-                string LoadHistory = File.ReadAllText(path + "history.txt");
-                JsonData load = JsonMapper.ToObject(LoadHistory);
+            //string LoadHistory = File.ReadAllText(path + "history.txt");
+             TextAsset LoadHistory = (TextAsset)Resources.Load("history");
+                JsonData load = JsonMapper.ToObject(LoadHistory.text);
 
                 for (int i = 0; i < load["historyList"].Count; i++)
                 {
@@ -192,7 +193,7 @@ public class FileControl
                 }
 
 
-            }
+           // }
 
         }catch(Exception e){
             Debug.Log(e);

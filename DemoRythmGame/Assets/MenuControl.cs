@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-
+using UnityEngine.SceneManagement;
 public class MenuControl : MonoBehaviour {
 
     public float speed = 2f;
@@ -15,15 +14,21 @@ public class MenuControl : MonoBehaviour {
     public GameObject top_1;
     public GameObject bottom_1;
 
+    public GameObject Description_background;
+
     public GameObject RadiaMenuManager;
 
     public bool swap = false;
 
     public int index;
+    private SceneChange scenechange;
+
+    void Awake(){
+        this.scenechange = SceneChange.getInstance();
+    }
 
     // Use this for initialization
 	void Start () {
-       // RadiaMenuManager.GetComponent<RadialMenuController>().SettingDescription("Play");
 
         this.gameObject.GetComponent<Button>().onClick.AddListener(()=>{
             OnClicked();
@@ -36,35 +41,27 @@ public class MenuControl : MonoBehaviour {
 
         if(this.gameObject.name.Contains("Practice")){
             Debug.Log("Practice open!");
-            RadiaMenuManager.GetComponent<RadialMenuController>().SettingDescription("Practice");
+
+            this.scenechange.mode = 2;
+            //  this.bluetooth.Send("@");
+            SceneManager.LoadScene("8practice");
 
 
         }else if(this.gameObject.name.Contains("Play")){
             Debug.Log("Play open!");
-            RadiaMenuManager.GetComponent<RadialMenuController>().SettingDescription("Play");
 
+            this.scenechange.mode = 1;
+            //  this.bluetooth.Send("!");
+            SceneManager.LoadScene("5play");
 
         }else if(this.gameObject.name.Contains("MyMusic")){
             Debug.Log("MyMusic open!");
-            RadiaMenuManager.GetComponent<RadialMenuController>().SettingDescription("MyMusic");
 
-           
+            SceneManager.LoadScene("10MyMusic");
         }
-        swap = true;
-    }
+        
+        Description_background.SetActive(false);
 
-    void MoveOn(){
-
-
-
-    }
-
-    private void Update()
-    {
-        if (swap)
-        {
-            MoveOn();
-        }
     }
 
 }

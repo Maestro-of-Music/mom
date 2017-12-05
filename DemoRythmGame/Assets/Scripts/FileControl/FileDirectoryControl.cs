@@ -172,15 +172,16 @@ public class FileDirectoryControl : MonoBehaviour {
         btnItemTemp.GetComponent<ItemObject>().Detail.text = temp.score.ToString();
         btnItemTemp.GetComponent<ItemObject>().Btn.name = temp.result_Alpha;
 
-        if(temp.result_Alpha == "S"){
+        if(temp.result_Alpha == "S" || temp.result_Alpha == "s"){
             btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_S;
-        }else if(temp.result_Alpha == "A"){
+
+        }else if(temp.result_Alpha == "A"|| temp.result_Alpha == "a"){
             btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_A;
 
-        }else if(temp.result_Alpha == "B"){
+        }else if(temp.result_Alpha == "B"|| temp.result_Alpha == "b"){
             btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_B;
 
-        }else if(temp.result_Alpha == "C"){
+        }else if(temp.result_Alpha == "C"|| temp.result_Alpha == "c"){
             btnItemTemp.GetComponent<ItemObject>().Icon.sprite = Title_C;
 
         }

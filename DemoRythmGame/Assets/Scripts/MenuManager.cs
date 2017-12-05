@@ -58,7 +58,9 @@ public class MenuManager : MonoBehaviour {
 	}
 
 	void Start () {
-        Debug.Log(this.scenechange.Music_title);
+
+         Debug.Log(this.scenechange.Music_title);
+        
         if (Application.platform == RuntimePlatform.Android)
         {
             //Mode = this.scenechange.mode;
